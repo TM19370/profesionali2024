@@ -23,6 +23,9 @@ namespace МИС__ГКБ_Большие_Кабаны_
         public MainWindow()
         {
             InitializeComponent();
+            DataBaseContext context = new DataBaseContext();
+            context.genders.Add(new Gender() { genderName = "мужской" });
+            context.SaveChanges();
         }
     }
 }
