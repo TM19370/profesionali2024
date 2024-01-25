@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "МИС «ГКБ Большие Кабаны»", "МИС «ГКБ Большие Кабаны»\МИС «ГКБ Большие Кабаны».csproj", "{CB052DA9-CC98-4C41-B547-DF9E47B19478}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{5E5C067C-00B3-41CE-8958-012C3B0EC9E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{5E5C067C-00B3-41CE-8958-012C3B0EC9E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
