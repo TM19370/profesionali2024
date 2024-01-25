@@ -27,7 +27,7 @@ namespace МИС__ГКБ_Большие_Кабаны_
         [Required] public DateTime nextVisitDate { get; set; }
         [Required] public int insurancePolicyNumber { get; set; }
         [Required] public DateTime insurancePolicyEndDate { get; set; }
-        [Required] public virtual Diagnosis diagnosis { get; set; }
+        //[Required] public virtual Diagnosis diagnosis { get; set; } выбирать последний элемент медикал хистори с каким нибудь условием
     }
 
     public class MedicalHistory
@@ -45,7 +45,7 @@ namespace МИС__ГКБ_Большие_Кабаны_
 
     public class Diagnosis
     {
-        [Key] public string diagnosisName { get; set;}
+        [Key] public string diagnosisName { get; set; }
     }
 
     public class Measure

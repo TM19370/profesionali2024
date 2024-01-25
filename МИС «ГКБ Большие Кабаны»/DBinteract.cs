@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace МИС__ГКБ_Большие_Кабаны_
 {
-    internal class DBinteract
+    public class DBInteract
     {
+        public static DataBaseContext db = new DataBaseContext();
     }
 }

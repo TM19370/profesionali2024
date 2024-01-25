@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static МИС__ГКБ_Большие_Кабаны_.DBInteract;
 
 namespace МИС__ГКБ_Большие_Кабаны_
 {
@@ -23,9 +24,6 @@ namespace МИС__ГКБ_Большие_Кабаны_
         public MainWindow()
         {
             InitializeComponent();
-            DataBaseContext context = new DataBaseContext();
-            context.genders.Add(new Gender() { genderName = "мужской" });
-            context.SaveChanges();
         }
     }
 }

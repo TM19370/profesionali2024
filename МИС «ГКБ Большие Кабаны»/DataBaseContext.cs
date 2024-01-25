@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace МИС__ГКБ_Большие_Кабаны_
 {
-    internal class DataBaseContext : DbContext
+    public class DataBaseContext : DbContext
     {
         public DataBaseContext()
             : base("DbConnection")
