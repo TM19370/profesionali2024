@@ -6,4 +6,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\МИС «ГКБ Большие Кабаны»\МИС «ГКБ Большие Кабаны».csproj" />
+  </ItemGroup>
+
 </Project>

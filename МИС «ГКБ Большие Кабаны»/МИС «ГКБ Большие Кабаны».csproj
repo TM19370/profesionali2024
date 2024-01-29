@@ -85,7 +85,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HintClass.cs" />
     <Compile Include="Migrations\202401250350151_InitialCreate.cs" />
     <Compile Include="Migrations\202401250350151_InitialCreate.designer.cs">
       <DependentUpon>202401250350151_InitialCreate.cs</DependentUpon>

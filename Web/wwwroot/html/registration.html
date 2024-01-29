@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="../css/main.css" />
+</head>
+<body>
+    <div class="main">
+        <h1>Регистрация пациента</h1>
+        <form enctype="multipart/form-data">
+            <label for="image">Выберите фото пациента</label>
+            <input type="file" name="image" id="image" accept="image/*" />
+        </form>
+        <form action="">
+            <label for="firstName">Имя:</label>
+            <input type="text" id="firstName"
+                   name="firstName"
+                   placeholder="Введите имя" required>
+
+            <label for="secondName">Фамилия:</label>
+            <input type="text" id="secondName"
+                   name="secondName"
+                   placeholder="Введите фамилию" required>
+
+            <label for="lastName">Отчество:</label>
+            <input type="text" id="lastName"
+                   name="lastName"
+                   placeholder="Введите отчество" required>
+
+            <label for="birthDate">Дата рождения:</label>
+            <input type="date"
+                   id="birthDate" name="birthDate"
+                   placeholder="Введите дату рождения" required>
+
+            <label for="passportNumberAndSeries">Серия и номер паспорта</label>
+            <input type="text" id="passportNumberAndSeries" name="passportNumberAndSeries" placeholder="Введите номер и серию паспорта" required />
+
+            <label for="workPlace">Место работы:</label>
+            <input type="text" id="workPlace"
+                   name="workPlace"
+                   placeholder="Введите место работы" required />
+
+            <label for="address">Адрес проживания:</label>
+            <input type="text" id="address"
+                   name="address"
+                   placeholder="Введите адресс проживания" required />
+
+            <label for="insurancePolicyNumber">Номер страхового полиса:</label>
+            <input type="text" id="insurancePolicyNumber"
+                   name="insurancePolicyNumber"
+                   placeholder="Введите номер страхового полиса" required />
+
+            <label for="insurancePolicyEndDate">Срок действия страхового полиса:</label>
+            <input type="date" id="insurancePolicyEndDate"
+                   name="insurancePolicyEndDate"
+                   placeholder="Введите срок действия страхового полиса" required />
+
+            <label for="insuranceCompany">Выберите страховую компанию</label>
+            <select id="insuranceCompany" name="insuranceCompany" required>
+                <option value="1">Росгосстрах</option>
+                <option value="2">Альфа страхование</option>
+            </select>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email"
+                   name="email"
+                   placeholder="Введите email" required>
+
+            <label for="phoneNumder">Номер телефона:</label>
+            <input type="text" id="phoneNumder"
+                   name="phoneNumder"
+                   placeholder="Введите номер телефона" required />
+
+            <label for="lastVisitDate">Дата последнего посещения:</label>
+            <input type="date" id="lastVisitDate"
+                   name="lastVisitDate" />
+
+            <label for="nextVisitDate">Дата следующего посещения:</label>
+            <input type="date" id="nextVisitDate"
+                   name="nextVisitDate" />
+
+            <label for="medicalCardNumber">Номер медицинской карты:</label>
+            <input type="text" id="medicalCardNumber"
+                   name="medicalCardNumber"
+                   placeholder="Введите номер медицинской карты" required />
+
+            <label for="getMedicalCardDate">Дата выдачи медицинской карты:</label>
+            <input type="date" id="getMedicalCardDate"
+                   name="getMedicalCardDate" required />
+
+            <label for="gender">Пол:</label>
+            <select id="gender" name="gender" required>
+                <option value="мужской">Мужской</option>
+                <option value="женский">Женский</option>
+            </select>
+
+            <div class="wrap">
+                <button id="sendButton" type="button">
+                    Добавить клиента
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("sendButton").addEventListener("click", async () => {
+            await CreateClient();
+        })
+
+        async function CreateClient() {
+            const fileInput = document.getElementById("image");
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            const options = {
+                method: "POST",
+                body: formData
+            };
+            await fetch("api/image", options);
+
+            const response = await fetch("api/clients", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body:
+                    JSON.stringify({
+                        firstName: document.getElementById("firstName").value,
+                        secondName: document.getElementById("secondName").value,
+                        lastName: document.getElementById("lastName").value,
+                        passportNumberAndSeries: document.getElementById("passportNumberAndSeries").value,
+                        birthDate: document.getElementById("birthDate").value,
+                        gender: document.getElementById("gender").value,
+                        address: document.getElementById("address").value,
+                        phoneNumder: document.getElementById("phoneNumder").value,
+                        email: document.getElementById("email").value,
+                        medicalCardNumber: document.getElementById("medicalCardNumber").value,
+                        getMedicalCardDate: document.getElementById("getMedicalCardDate").value,
+                        lastVisitDate: document.getElementById("lastVisitDate").value,
+                        nextVisitDate: document.getElementById("nextVisitDate").value,
+                        insurancePolicyNumber: document.getElementById("insurancePolicyNumber").value,
+                        insurancePolicyEndDate: document.getElementById("insurancePolicyEndDate").value
+                    })
+            });
+
+            if (response.ok) {
+                const client = await response.message;
+
+                console.log(client);
+                alert("Клиент добавлен");
+            }
+            else {
+                const responceMessage = await response.json();
+                console.log(responceMessage.error);
+                console.error(responceMessage.error);
+                alert("Не удалось добавить пациента ошибка: " + responceMessage.error);
+            }
+        }
+
+        async function PostImage() {
+            
+            const fileInput = document.getElementById("image");
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            const options = {
+                method: "POST",
+                body: formData
+            };
+            fetch("api/image", options);
+        }
+    </script>
+</body>
+</html>
