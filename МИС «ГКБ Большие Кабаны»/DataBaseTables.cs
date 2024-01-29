@@ -8,6 +8,12 @@ using System.Threading.Tasks;
 
 namespace МИС__ГКБ_Большие_Кабаны_
 {
+    public class Account
+    {
+        [Key] public string login { get; set; }
+        [Required] public string password { get; set; }
+    }
+
     public class Client
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int client_id { get; set; }

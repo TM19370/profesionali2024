@@ -13,6 +13,7 @@ namespace МИС__ГКБ_Большие_Кабаны_
             : base("DbConnection")
         { }
 
+        public DbSet<Account> accounts { get; set; }
         public DbSet<Client> clients { get; set; }
         public DbSet<MedicalHistory> medicalHistories { get; set; }
         public DbSet<Gender> genders { get; set; }

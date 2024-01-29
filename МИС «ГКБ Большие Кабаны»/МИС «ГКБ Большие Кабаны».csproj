@@ -79,9 +79,25 @@
     <Compile Include="EnterWindow.xaml.cs">
       <DependentUpon>EnterWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="PatientsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HintClass.cs" />
+    <Compile Include="Migrations\202401250350151_InitialCreate.cs" />
+    <Compile Include="Migrations\202401250350151_InitialCreate.designer.cs">
+      <DependentUpon>202401250350151_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401290544400_addAccount.cs" />
+    <Compile Include="Migrations\202401290544400_addAccount.designer.cs">
+      <DependentUpon>202401290544400_addAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="PatientsWindow.xaml.cs">
+      <DependentUpon>PatientsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -95,6 +111,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\202401250350151_InitialCreate.resx">
+      <DependentUpon>202401250350151_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401290544400_addAccount.resx">
+      <DependentUpon>202401290544400_addAccount.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static МИС__ГКБ_Большие_Кабаны_.DBInteract;
 
 namespace МИС__ГКБ_Большие_Кабаны_
 {
@@ -24,9 +25,9 @@ namespace МИС__ГКБ_Большие_Кабаны_
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void EnterButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("");
+            LogIn();
         }
 
         private void CloseWindowButton_Click(object sender, RoutedEventArgs e)
@@ -37,6 +38,27 @@ namespace МИС__ГКБ_Большие_Кабаны_
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
+        }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+                LogIn();
+        }
+
+        void LogIn()
+        {
+            Account account = db.accounts.Find(loginTextBox.Text);
+            if(account != null && account.password == passwordTextBox.Text)
+            {
+                PatientsWindow patientsWindow = new PatientsWindow();
+                patientsWindow.Show();
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Неверные логин или пароль", "", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

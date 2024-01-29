@@ -29,8 +29,8 @@
                                 Focusable="false"
                                 HorizontalScrollBarVisibility="Hidden"
                                 VerticalScrollBarVisibility="Hidden" Width="{TemplateBinding Width}"/>
-                                <Label Name="hintLabel" Margin="3,0,0,0" Content="{Binding Path=(local:HintClass.Caption), RelativeSource={RelativeSource AncestorType={x:Type Button}}}" 
-                                       VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" Visibility="Hidden"
+                                <TextBlock Name="hintLabel" Margin="8,0,0,0" 
+                                       VerticalAlignment="Center" HorizontalAlignment="Stretch" Visibility="Hidden"
                                        Foreground="#FF757575"/>
                             </Grid>
                         </Border>
@@ -40,7 +40,7 @@
                                 <Setter Property="BorderBrush" TargetName="border" Value="black"/>
                                 <Setter Property="BorderThickness" TargetName="border" Value="2"/>
                                 <Setter Property="Margin" TargetName="PART_ContentHost" Value="-1,0,0,0"/>
-                                <Setter Property="Margin" TargetName="hintLabel" Value="2,0,0,0"/>
+                                <Setter Property="Margin" TargetName="hintLabel" Value="7,0,0,0"/>
                             </Trigger>
                             <Trigger Property="Text" Value="">
                                 <Setter Property="Visibility" TargetName="hintLabel" Value="Visible"/>
@@ -76,10 +76,10 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <Button VerticalAlignment="Top" HorizontalAlignment="Right" Height="25" Width="25" FontSize="13" Content="X" BorderThickness="0" Background="Red" Style="{x:Null}" Click="CloseWindowButton_Click">
+        <Button VerticalAlignment="Top" HorizontalAlignment="Right" Height="25" Width="25" FontSize="13" Content="X" BorderThickness="0" Background="#FFC51515" Style="{x:Null}" Click="CloseWindowButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="0,5,0,3"/>
+                    <Setter Property="CornerRadius" Value="0,15,0,15"/>
                 </Style>
             </Button.Resources>
         </Button>
@@ -92,10 +92,22 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="Логин:" VerticalAlignment="Bottom"/>
-            <TextBox Grid.Row="1" Text="" local:HintClass.Caption="Введите логин"/>
+            <TextBox x:Name="loginTextBox" Grid.Row="1" Text="" KeyDown="TextBox_KeyDown">
+                <TextBox.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Text" Value="Введите логин"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
             <TextBlock Grid.Row="2" Text="Пароль:" VerticalAlignment="Bottom"/>
-            <TextBox Grid.Row="3" Text="" local:HintClass.Caption="Введите пароль"/>
-            <Button Grid.Row="4" Margin="0,10,0,0" Content="Войти" Click="Button_Click"/>
+            <TextBox x:Name="passwordTextBox" Grid.Row="3" Text="" KeyDown="TextBox_KeyDown">
+                <TextBox.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Text" Value="Введите пароль"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+            <Button Grid.Row="4" Margin="0,10,0,0" Content="Войти" Click="EnterButton_Click"/>
         </Grid>
     </Grid>
 </Window>
