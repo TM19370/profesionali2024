@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace МИС__ГКБ_Большие_Кабаны_
+namespace Webd
 {
     public class Account
     {
@@ -31,7 +31,7 @@ namespace МИС__ГКБ_Большие_Кабаны_
         [Required] public DateTime getMedicalCardDate { get; set; }
         [Required] public DateTime lastVisitDate { get; set; }
         [Required] public DateTime nextVisitDate { get; set; }
-        [Required] public string insurancePolicyNumber { get; set; }
+        [Required] public int insurancePolicyNumber { get; set; }
         [Required] public DateTime insurancePolicyEndDate { get; set; }
         //[Required] public virtual Diagnosis diagnosis { get; set; } выбирать последний элемент медикал хистори с каким нибудь условием
     }

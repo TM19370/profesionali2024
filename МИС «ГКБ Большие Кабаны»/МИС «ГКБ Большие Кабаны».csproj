@@ -93,6 +93,10 @@
     <Compile Include="Migrations\202401290544400_addAccount.designer.cs">
       <DependentUpon>202401290544400_addAccount.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202401300429570_insurancepolicynumbertostring.cs" />
+    <Compile Include="Migrations\202401300429570_insurancepolicynumbertostring.designer.cs">
+      <DependentUpon>202401300429570_insurancepolicynumbertostring.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PatientsWindow.xaml.cs">
       <DependentUpon>PatientsWindow.xaml</DependentUpon>
@@ -115,6 +119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202401290544400_addAccount.resx">
       <DependentUpon>202401290544400_addAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401300429570_insurancepolicynumbertostring.resx">
+      <DependentUpon>202401300429570_insurancepolicynumbertostring.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

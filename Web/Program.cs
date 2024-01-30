@@ -7,7 +7,13 @@ using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Hosting.Server;
 using System.Reflection;
 using МИС__ГКБ_Большие_Кабаны_;
-using static МИС__ГКБ_Большие_Кабаны_.DBInteract;
+//using static МИС__ГКБ_Большие_Кабаны_.DBInteract;
+using System.Drawing;
+using Web;
+using QRCoder;
+
+Web.DataBaseContext db = new Web.DataBaseContext();
+//DataBaseContext db = new DataBaseContext();
 
 string imageFileName = "NULL";
 
@@ -18,6 +24,7 @@ app.UseStaticFiles();
 
 app.Run(async (context) =>
 {
+    v();
     var response = context.Response;
     var request = context.Request;
     var path = request.Path;
@@ -44,12 +51,22 @@ app.Run(async (context) =>
     }
     else
     {
+        Client client = db.clients.Where(x => x.client_id == 333).First();
         response.ContentType = "text/html; charset=utf-8";
         await response.SendFileAsync("wwwroot/html/registration.html");
     }
 });
 
 app.Run();
+
+void v()
+{
+    QRCodeGenerator qrGenerator = new QRCodeGenerator();
+    QRCodeData qrCodeData = qrGenerator.CreateQrCode("2", QRCodeGenerator.ECCLevel.Q);
+    QRCode qrCode = new QRCode(qrCodeData);
+    Bitmap qrCodeImage = qrCode.GetGraphic(20, Color.Black, Color.Transparent, true);
+    qrCodeImage.Save("qr.png");
+}
 
 async Task CreateClient(HttpRequest request, HttpResponse response)
 {
@@ -124,6 +141,6 @@ public class ClientPost
     public DateTime getMedicalCardDate { get; set; }
     public DateTime lastVisitDate { get; set; }
     public DateTime nextVisitDate { get; set; }
-    public int insurancePolicyNumber { get; set; }
+    public string insurancePolicyNumber { get; set; }
     public DateTime insurancePolicyEndDate { get; set; }
 }

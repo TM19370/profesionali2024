@@ -4,8 +4,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using МИС__ГКБ_Большие_Кабаны_;
 
-namespace МИС__ГКБ_Большие_Кабаны_
+namespace Web
 {
     public class DataBaseContext : DbContext
     {
