@@ -11,6 +11,10 @@ using МИС__ГКБ_Большие_Кабаны_;
 using System.Drawing;
 using Web;
 using QRCoder;
+using MessagingToolkit.QRCode.Codec;
+using MessagingToolkit.QRCode.Codec.Data;
+using Microsoft.Win32;
+using System.Windows;
 
 Web.DataBaseContext db = new Web.DataBaseContext();
 //DataBaseContext db = new DataBaseContext();
@@ -24,7 +28,7 @@ app.UseStaticFiles();
 
 app.Run(async (context) =>
 {
-    v();
+    
     var response = context.Response;
     var request = context.Request;
     var path = request.Path;
@@ -49,6 +53,61 @@ app.Run(async (context) =>
 
         await response.WriteAsync("Изображение загруженно");
     }
+    else if (path == "/api/QRCode" && request.Method == "POST")
+    {
+        var qrCodeText = await request.ReadFromJsonAsync<qrCodeClass>();
+
+        QRCodeEncoder encoder = new QRCodeEncoder();
+        Bitmap qrCode = encoder.Encode(qrCodeText.id);
+        string qrpath = $"{Directory.GetCurrentDirectory()}/wwwroot/qr.png";
+        using (var fileStream = new FileStream(qrpath, FileMode.Create))
+        {
+            qrCode.Save(fileStream, System.Drawing.Imaging.ImageFormat.Png);
+        }
+
+        await response.SendFileAsync(Path.Combine(Directory.GetCurrentDirectory(), "qr.png"));
+        //response.ContentType = "multipart/form-data";
+    }
+    else if (path == "/api/DecodeQRCode" && request.Method == "POST")
+    {
+        IFormFile file = request.Form.Files[0];
+
+        string filePath = $"{Directory.GetCurrentDirectory()}/QRToDecode.png";
+
+        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        {
+            await file.CopyToAsync(fileStream);
+        }
+
+        string client_id;
+
+        using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
+        {
+            Bitmap img = new Bitmap(fileStream);
+            QRCodeDecoder decoder = new QRCodeDecoder();
+            client_id = decoder.Decode(new QRCodeBitmapImage(img));
+        }
+
+        Client client = db.clients.Find(Convert.ToInt32(client_id));
+        ClientPost clientPost = new ClientPost() { 
+            firstName = client.firstName,
+            secondName = client.secondName,
+            lastName = client.lastName,
+            passportNumberAndSeries = client.passportNumberAndSeries,
+            birthDate = client.birthDate,
+            gender = client.gender.genderName,
+            address = client.address,
+            phoneNumder = client.phoneNumder,
+            email = client.email,
+            medicalCardNumber = client.medicalCardNumber,
+            getMedicalCardDate = client.getMedicalCardDate,
+            lastVisitDate = client.lastVisitDate,
+            nextVisitDate = client.nextVisitDate,
+            insurancePolicyNumber = client.insurancePolicyNumber,
+            insurancePolicyEndDate = client.insurancePolicyEndDate
+        };
+        await response.WriteAsJsonAsync(clientPost);
+    }
     else
     {
         Client client = db.clients.Where(x => x.client_id == 333).First();
@@ -61,11 +120,26 @@ app.Run();
 
 void v()
 {
+    string qrCodeText = "333";
+
+    QRCodeEncoder encoder = new QRCodeEncoder();
+    Bitmap qrCode = encoder.Encode(qrCodeText);
+    qrCode.Save("qr.png");
+
+    using (FileStream fileStream = new FileStream($"{Directory.GetCurrentDirectory()}/qr.png", FileMode.Open))
+    {
+        Bitmap img = new Bitmap(fileStream);
+        QRCodeDecoder decoder = new QRCodeDecoder();
+        string mesage = decoder.Decode(new QRCodeBitmapImage(img));
+    }
+    
+    //MessageBox.Show(mesage);
+    /*
     QRCodeGenerator qrGenerator = new QRCodeGenerator();
     QRCodeData qrCodeData = qrGenerator.CreateQrCode("2", QRCodeGenerator.ECCLevel.Q);
     QRCode qrCode = new QRCode(qrCodeData);
     Bitmap qrCodeImage = qrCode.GetGraphic(20, Color.Black, Color.Transparent, true);
-    qrCodeImage.Save("qr.png");
+    qrCodeImage.Save("qr.png");*/
 }
 
 async Task CreateClient(HttpRequest request, HttpResponse response)
@@ -124,6 +198,11 @@ async Task CreateClient(HttpRequest request, HttpResponse response)
         await response.WriteAsJsonAsync(new { error = exception.Message });
     }
     imageFileName = "NULL";
+}
+
+public class qrCodeClass
+{
+    public string id { get; set;}
 }
 
 public class ClientPost

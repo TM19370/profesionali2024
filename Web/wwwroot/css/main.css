@@ -11,6 +11,18 @@ body {
     margin: 0;
 }
 
+.clientData {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    min-height: 46px;
+    font-weight: normal;
+}
+
 .main {
     background-color: #fff;
     border-radius: 15px;
@@ -19,6 +31,23 @@ body {
     transition: transform 0.2s;
     width: 500px;
     text-align: center;
+}
+
+.qrcodemain {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    padding: 10px 20px;
+    transition: transform 0.2s;
+    width: 1000px;
+    text-align: center;
+}
+
+.QR {
+    width: 47%;
+    display: inline-table;
+    padding: 0px 10px 0px 10px;
+    align-self: flex-start;
 }
 
 h1 {

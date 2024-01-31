@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>QRCode</title>
+    <link rel="stylesheet" href="../css/main.css" />
+</head>
+<body>
+    <div class="qrcodemain">
+        <h1>QR код</h1>
+        <div class="QR">
+            <img src="../qr.png" height="200" width="200" id="qrCodeImage" name="qrCodeImage"/>
+            <label for="client_id">Введите id клиента</label>
+            <input id="client_id" name="client_id" />
+            <button id="createQRCodeButton" type="submit">
+                Получить QR код
+            </button>
+        </div>
+        <div class="QR">
+            <form enctype="multipart/form-data">
+                <label for="image">Выберите QR код</label>
+                <input type="file" name="image" id="image" accept="image/png" />
+            </form>
+            <button id="readFromQRCodeButton" type="button">
+                Считать выбранный QR код
+            </button>
+            <label>ФИО:</label>
+            <label class="clientData" id="FIO"></label>
+            <label>Номер и серия паспорта:</label>
+            <label class="clientData" id="passportNumberAndSeries"></label>
+            <label>Дата рождения:</label>
+            <label class="clientData" id="birthDate"></label>
+            <label>Пол:</label>
+            <label class="clientData" id="gender"></label>
+            <label>Адресс проживания:</label>
+            <label class="clientData" id="address"></label>
+            <label>Номер телефона:</label>
+            <label class="clientData" id="phoneNumder"></label>
+            <label>Email:</label>
+            <label class="clientData" id="email"></label>
+            <label>Номер медицинской карты:</label>
+            <label class="clientData" id="medicalCardNumber"></label>
+            <label>Дата получения медицинской карты:</label>
+            <label class="clientData" id="getMedicalCardDate"></label>
+            <label>Дата последнего посещения:</label>
+            <label class="clientData" id="lastVisitDate"></label>
+            <label>Дата следующего посещения:</label>
+            <label class="clientData" id="nextVisitDate"></label>
+            <label>Номер страхового полиса:</label>
+            <label class="clientData" id="insurancePolicyNumber"></label>
+            <label>Срок действия страхового полиса:</label>
+            <label class="clientData" id="insurancePolicyEndDate"></label>
+        </div>
+    </div>
+    <script>
+        document.getElementById("createQRCodeButton").addEventListener("click", async () => {
+            await createQRCode();
+        })
+
+        document.getElementById("readFromQRCodeButton").addEventListener("click", async () => {
+            await readQRCode();
+        })
+
+        async function createQRCode() {
+            const response = await fetch("/api/QRCode", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body:
+                    JSON.stringify({
+                        id: document.getElementById("client_id").value
+                    })
+            });
+
+            if (response.ok) {
+                const asd = await response.files;
+                //const client = await response.message;
+                location.reload();
+                document.qrCodeImage.src = "../qr.png"
+                //var sd = document.getElementById("qrCodeImage");
+                //sd.value = asd;
+
+                console.log("qqqqqqqqqqqqqqqqqqq");
+                //alert("Клиент добавлен");
+            }
+            else {
+                alert("ERR");
+                /*
+                const responceMessage = await response.json();
+                console.log(responceMessage.error);
+                console.error(responceMessage.error);
+                alert("Не удалось добавить пациента ошибка: " + responceMessage.error);*/
+            }
+        }
+
+        async function readQRCode() {
+            const fileInput = document.getElementById("image");
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            const options = {
+                method: "POST",
+                body: formData
+            };
+            const responce = await fetch("/api/DecodeQRCode", options);
+
+            if (responce.ok) {
+                const clientInfo = await responce.json();
+
+                console.log(clientInfo.firstName);
+
+                document.getElementById("FIO").textContent = clientInfo.secondName + " " + clientInfo.firstName + " " + clientInfo.lastName;
+                document.getElementById("passportNumberAndSeries").textContent = clientInfo.passportNumberAndSeries;
+                document.getElementById("birthDate").textContent = clientInfo.birthDate;
+                document.getElementById("gender").textContent = clientInfo.gender;
+                document.getElementById("address").textContent = clientInfo.address;
+                document.getElementById("phoneNumder").textContent = clientInfo.phoneNumder;
+                document.getElementById("email").textContent = clientInfo.email;
+                document.getElementById("medicalCardNumber").textContent = clientInfo.medicalCardNumber;
+                document.getElementById("getMedicalCardDate").textContent = clientInfo.getMedicalCardDate;
+                document.getElementById("lastVisitDate").textContent = clientInfo.lastVisitDate;
+                document.getElementById("nextVisitDate").textContent = clientInfo.nextVisitDate;
+                document.getElementById("insurancePolicyNumber").textContent = clientInfo.insurancePolicyNumber;
+                document.getElementById("insurancePolicyEndDate").textContent = clientInfo.insurancePolicyEndDate;
+            }
+        }
+    </script>
+</body>
+</html>
