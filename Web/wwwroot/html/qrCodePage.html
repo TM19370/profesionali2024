@@ -9,11 +9,14 @@
     <div class="qrcodemain">
         <h1>QR код</h1>
         <div class="QR">
-            <img src="../qr.png" height="200" width="200" id="qrCodeImage" name="qrCodeImage"/>
+            <img src="../qr.png" height="200" width="200" id="qrCodeImage" name="qrCodeImage" />
             <label for="client_id">Введите id клиента</label>
             <input id="client_id" name="client_id" />
             <button id="createQRCodeButton" type="submit">
                 Получить QR код
+            </button>
+            <button id="getDoc" type="button">
+                Получить согласие на обработку персональных данных
             </button>
         </div>
         <div class="QR">
@@ -61,6 +64,40 @@
             await readQRCode();
         })
 
+        document.getElementById("getDoc").addEventListener("click", async () => {
+            await getPersonalDataDoc();
+
+        }) 
+
+        const download = (path, filename) => {
+            const anchor = document.createElement('a');
+            anchor.href = path;
+            anchor.download = filename;
+
+            document.body.appendChild(anchor);
+
+            anchor.click();
+
+            document.body.removeChild(anchor);
+        }
+
+        async function getPersonalDataDoc() {
+            const responce = await fetch("/api/personalData", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body:
+                    JSON.stringify({
+                        id: document.getElementById("client_id").value
+                    })
+            });
+
+            if (responce.ok) {
+                const answer = await responce.json();
+
+                download("../personalData.docx", answer.fileName);
+            }
+        }
+
         async function createQRCode() {
             const response = await fetch("/api/QRCode", {
                 method: "POST",
@@ -72,23 +109,11 @@
             });
 
             if (response.ok) {
-                const asd = await response.files;
-                //const client = await response.message;
                 location.reload();
                 document.qrCodeImage.src = "../qr.png"
-                //var sd = document.getElementById("qrCodeImage");
-                //sd.value = asd;
-
-                console.log("qqqqqqqqqqqqqqqqqqq");
-                //alert("Клиент добавлен");
             }
             else {
                 alert("ERR");
-                /*
-                const responceMessage = await response.json();
-                console.log(responceMessage.error);
-                console.error(responceMessage.error);
-                alert("Не удалось добавить пациента ошибка: " + responceMessage.error);*/
             }
         }
 

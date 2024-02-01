@@ -10,11 +10,11 @@ using МИС__ГКБ_Большие_Кабаны_;
 //using static МИС__ГКБ_Большие_Кабаны_.DBInteract;
 using System.Drawing;
 using Web;
-using QRCoder;
 using MessagingToolkit.QRCode.Codec;
 using MessagingToolkit.QRCode.Codec.Data;
 using Microsoft.Win32;
 using System.Windows;
+using Xceed.Words.NET;
 
 Web.DataBaseContext db = new Web.DataBaseContext();
 //DataBaseContext db = new DataBaseContext();
@@ -28,7 +28,6 @@ app.UseStaticFiles();
 
 app.Run(async (context) =>
 {
-    
     var response = context.Response;
     var request = context.Request;
     var path = request.Path;
@@ -55,7 +54,7 @@ app.Run(async (context) =>
     }
     else if (path == "/api/QRCode" && request.Method == "POST")
     {
-        var qrCodeText = await request.ReadFromJsonAsync<qrCodeClass>();
+        var qrCodeText = await request.ReadFromJsonAsync<ClientIdClass>();
 
         QRCodeEncoder encoder = new QRCodeEncoder();
         Bitmap qrCode = encoder.Encode(qrCodeText.id);
@@ -66,7 +65,6 @@ app.Run(async (context) =>
         }
 
         await response.SendFileAsync(Path.Combine(Directory.GetCurrentDirectory(), "qr.png"));
-        //response.ContentType = "multipart/form-data";
     }
     else if (path == "/api/DecodeQRCode" && request.Method == "POST")
     {
@@ -108,6 +106,33 @@ app.Run(async (context) =>
         };
         await response.WriteAsJsonAsync(clientPost);
     }
+    else if(path == "/api/personalData" && request.Method == "POST")
+    {
+        var clientIdClass = await request.ReadFromJsonAsync<ClientIdClass>();
+        int clientId = Convert.ToInt32(clientIdClass.id);
+
+        Client client = db.clients.Find(clientId);
+
+        string fileName = $"{Directory.GetCurrentDirectory()}/бланк согласия на обработку персональных данных.docx";
+
+        string FIO = $"{client.secondName} {client.firstName} {client.lastName}";
+
+        var doc = DocX.Load(fileName);
+
+        doc.ReplaceText("<FIO>", FIO);
+        doc.ReplaceText("<passportNumberAndSeries>", client.passportNumberAndSeries);
+        doc.ReplaceText("<passportGetInfo>", "/////////////////////////////");////////////////////////////////////////////////////////////
+        doc.ReplaceText("<address>", client.address);
+        doc.ReplaceText("<ORG>", "ГКБ Большие Кабаны");
+        doc.ReplaceText("<currentDate>", DateTime.Now.ToString("dd MMMM yyyyг."));
+        doc.ReplaceText("<target>", "медицинского обслуживания");
+
+        string newFileName = $"Согласие на обработку персоняльных данных {FIO} от {DateTime.Now.ToString("dd-M-yyyy")}.docx";
+
+        doc.SaveAs(Directory.GetCurrentDirectory() + "/wwwroot/personalData.docx");
+
+        await response.WriteAsJsonAsync(new { fileName = newFileName });
+    }
     else
     {
         Client client = db.clients.Where(x => x.client_id == 333).First();
@@ -132,14 +157,23 @@ void v()
         QRCodeDecoder decoder = new QRCodeDecoder();
         string mesage = decoder.Decode(new QRCodeBitmapImage(img));
     }
-    
-    //MessageBox.Show(mesage);
-    /*
-    QRCodeGenerator qrGenerator = new QRCodeGenerator();
-    QRCodeData qrCodeData = qrGenerator.CreateQrCode("2", QRCodeGenerator.ECCLevel.Q);
-    QRCode qrCode = new QRCode(qrCodeData);
-    Bitmap qrCodeImage = qrCode.GetGraphic(20, Color.Black, Color.Transparent, true);
-    qrCodeImage.Save("qr.png");*/
+}
+
+void word()
+{
+    string fileName = $"{Directory.GetCurrentDirectory()}/бланк согласия на обработку персональных данных.docx";
+
+    var doc = DocX.Load(fileName);
+
+    doc.ReplaceText("<FIO>", "Иванов Иван Иванович");
+    doc.ReplaceText("<passportNumberAndSeries>", "2222222222");
+    doc.ReplaceText("<passportGetInfo>", "11.01.2005 г Оренбург");
+    doc.ReplaceText("<address>", "г. Оренбург ул. Терешковой д. 2 кв. 12");
+    doc.ReplaceText("<ORG>", "ГКБ Большие Кабаны");
+    doc.ReplaceText("<currentDate>", DateTime.Now.ToString("dd MMMM yyyyг."));
+    doc.ReplaceText("<target>", "Медицинского обслуживания");
+
+    doc.SaveAs($"{Directory.GetCurrentDirectory()}/test.docx");
 }
 
 async Task CreateClient(HttpRequest request, HttpResponse response)
@@ -200,7 +234,7 @@ async Task CreateClient(HttpRequest request, HttpResponse response)
     imageFileName = "NULL";
 }
 
-public class qrCodeClass
+public class ClientIdClass
 {
     public string id { get; set;}
 }
