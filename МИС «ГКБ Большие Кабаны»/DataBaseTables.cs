@@ -22,6 +22,7 @@ namespace МИС__ГКБ_Большие_Кабаны_
         [Required] public string secondName { get; set; }
         [Required] public string lastName { get; set; }
         [Required] public string passportNumberAndSeries { get; set; }
+        public string passportGetInfo { get; set; }
         [Required] public DateTime birthDate { get; set; }
         [Required] public virtual Gender gender { get; set; }
         [Required] public string address { get; set; }

@@ -15,10 +15,12 @@ using MessagingToolkit.QRCode.Codec.Data;
 using Microsoft.Win32;
 using System.Windows;
 using Xceed.Words.NET;
+using Xceed.Document.NET;
 
 Web.DataBaseContext db = new Web.DataBaseContext();
 //DataBaseContext db = new DataBaseContext();
 
+string organizationName = "ГКБ Большие Кабаны";
 string imageFileName = "NULL";
 
 var builder = WebApplication.CreateBuilder(args);
@@ -57,7 +59,7 @@ app.Run(async (context) =>
         var qrCodeText = await request.ReadFromJsonAsync<ClientIdClass>();
 
         QRCodeEncoder encoder = new QRCodeEncoder();
-        Bitmap qrCode = encoder.Encode(qrCodeText.id);
+        Bitmap qrCode = encoder.Encode(qrCodeText!.id);
         string qrpath = $"{Directory.GetCurrentDirectory()}/wwwroot/qr.png";
         using (var fileStream = new FileStream(qrpath, FileMode.Create))
         {
@@ -109,7 +111,7 @@ app.Run(async (context) =>
     else if(path == "/api/personalData" && request.Method == "POST")
     {
         var clientIdClass = await request.ReadFromJsonAsync<ClientIdClass>();
-        int clientId = Convert.ToInt32(clientIdClass.id);
+        int clientId = Convert.ToInt32(clientIdClass!.id);
 
         Client client = db.clients.Find(clientId);
 
@@ -119,17 +121,94 @@ app.Run(async (context) =>
 
         var doc = DocX.Load(fileName);
 
+        StringReplaceTextOptions options = new StringReplaceTextOptions();
+        //options.SearchValue = "<FIO>";
+        //options.NewValue = FIO;
+        //doc.ReplaceText(options);
         doc.ReplaceText("<FIO>", FIO);
         doc.ReplaceText("<passportNumberAndSeries>", client.passportNumberAndSeries);
-        doc.ReplaceText("<passportGetInfo>", "/////////////////////////////");////////////////////////////////////////////////////////////
+        doc.ReplaceText("<passportGetInfo>", client.passportGetInfo);////////////////////////////////////////////////////////////
         doc.ReplaceText("<address>", client.address);
-        doc.ReplaceText("<ORG>", "ГКБ Большие Кабаны");
+        doc.ReplaceText("<ORG>", organizationName);
         doc.ReplaceText("<currentDate>", DateTime.Now.ToString("dd MMMM yyyyг."));
         doc.ReplaceText("<target>", "медицинского обслуживания");
 
         string newFileName = $"Согласие на обработку персоняльных данных {FIO} от {DateTime.Now.ToString("dd-M-yyyy")}.docx";
 
         doc.SaveAs(Directory.GetCurrentDirectory() + "/wwwroot/personalData.docx");
+
+        await response.WriteAsJsonAsync(new { fileName = newFileName });
+    }
+    else if (path == "/api/medicalCareContract" && request.Method == "POST")
+    {
+        var clientIdClass = await request.ReadFromJsonAsync<ClientIdClass>();
+        int clientId = Convert.ToInt32(clientIdClass!.id);
+
+        Client client = db.clients.Find(clientId);
+
+        string fileName = $"{Directory.GetCurrentDirectory()}/бланк договора предоставления платных медицинских услуг.docx";
+
+        string FIO = $"{client.secondName} {client.firstName} {client.lastName}";
+
+        var doc = DocX.Load(fileName);
+
+        StringReplaceTextOptions options = new StringReplaceTextOptions();
+
+        //<currentDate>
+        //<ORG>
+        //<position , full name>
+        //<osnovanie>
+        //<clientFIO>
+        //<license>
+        //<licenseStartDate>
+        //<licenseEndDate>
+        //<licenseORGNameAddressPhoneNumber>
+        //<licenseORGEndDate>
+        //<services>
+        //<waitingDays>
+        //<position>
+        //<ORGAddress>
+        //<ORGEmail>
+        //<OGRN>
+        //<INN>
+        //<IO FAM>
+        //<positionGW>
+        //<IO Fam>
+        //<clientFIO>
+        //<clientAddress>
+        //<clientOtherAddresses>
+        //<clientPassport>
+        //<clientPhoneNumber>
+        //<clientIO Fam>
+
+        doc.ReplaceText("<currentDate>", DateTime.Now.ToString("dd.MM.yyyy"));
+        doc.ReplaceText("<ORG>", organizationName);
+        doc.ReplaceText("<position , full name>", "/////////////////");
+        doc.ReplaceText("<osnovanie>", "/////////////////");
+        doc.ReplaceText("<clientFIO>", FIO);
+        doc.ReplaceText("<license>", "/////////////////");
+        doc.ReplaceText("<licenseStartDate>", "/////////////////");
+        doc.ReplaceText("<licenseEndDate>", "/////////////////");
+        doc.ReplaceText("<licenseORGNameAddressPhoneNumber>", "/////////////////");
+        doc.ReplaceText("<licenseORGEndDate>", "/////////////////");
+        doc.ReplaceText("<services>", "/////////////////");
+        doc.ReplaceText("<waitingDays>", "/////////////////");
+        doc.ReplaceText("<position>", "/////////////////");
+        doc.ReplaceText("<ORGAddress>", "/////////////////");
+        doc.ReplaceText("<ORGEmail>", "/////////////////");
+        doc.ReplaceText("<OGRN>", "/////////////////");
+        doc.ReplaceText("<INN>", "/////////////////");
+        doc.ReplaceText("<positionGW>", "/////////////////");
+        doc.ReplaceText("<IO Fam", "/////////////////");
+        doc.ReplaceText("<clientAddress>", client.address);
+        doc.ReplaceText("<clientOtherAddresses>", "/////////////////");
+        doc.ReplaceText("<clientPassport>", $"{client.passportNumberAndSeries} {client.passportGetInfo}");
+        doc.ReplaceText("<clientPhoneNumber>", client.phoneNumder);
+        doc.ReplaceText("<clientIO Fam>", $"{client.firstName[0]}{client.lastName[0]} {client.secondName}");
+
+        string newFileName = $"Договор предоставления платных медицинских услуг {FIO} от {DateTime.Now.ToString("dd-M-yyyy")}.docx";
+
+        doc.SaveAs(Directory.GetCurrentDirectory() + "/wwwroot/medicalCareContract.docx");
 
         await response.WriteAsJsonAsync(new { fileName = newFileName });
     }
@@ -142,7 +221,7 @@ app.Run(async (context) =>
 });
 
 app.Run();
-
+/*
 void v()
 {
     string qrCodeText = "333";
@@ -158,7 +237,7 @@ void v()
         string mesage = decoder.Decode(new QRCodeBitmapImage(img));
     }
 }
-
+/*
 void word()
 {
     string fileName = $"{Directory.GetCurrentDirectory()}/бланк согласия на обработку персональных данных.docx";
@@ -174,7 +253,7 @@ void word()
     doc.ReplaceText("<target>", "Медицинского обслуживания");
 
     doc.SaveAs($"{Directory.GetCurrentDirectory()}/test.docx");
-}
+}*/
 
 async Task CreateClient(HttpRequest request, HttpResponse response)
 {
@@ -185,7 +264,10 @@ async Task CreateClient(HttpRequest request, HttpResponse response)
             throw new Exception("Произошла ошибка при загрузке изображения");
         }
 
-        ClientPost clientPost = await request.ReadFromJsonAsync<ClientPost>();
+        ClientPost? clientPost = await request.ReadFromJsonAsync<ClientPost>();
+        if (clientPost == null)
+            return;
+
         Gender gender = db.genders.Find(clientPost.gender);
         Client client = new Client()
         {
@@ -236,24 +318,24 @@ async Task CreateClient(HttpRequest request, HttpResponse response)
 
 public class ClientIdClass
 {
-    public string id { get; set;}
+    public string? id { get; set;}
 }
 
 public class ClientPost
 {
-    public string firstName { get; set; }
-    public string secondName { get; set; }
-    public string lastName { get; set; }
-    public string passportNumberAndSeries { get; set; }
+    public string? firstName { get; set; }
+    public string? secondName { get; set; }
+    public string? lastName { get; set; }
+    public string? passportNumberAndSeries { get; set; }
     public DateTime birthDate { get; set; }
-    public string gender { get; set; }
-    public string address { get; set; }
-    public string phoneNumder { get; set; }
-    public string email { get; set; }
+    public string? gender { get; set; }
+    public string? address { get; set; }
+    public string? phoneNumder { get; set; }
+    public string? email { get; set; }
     public int medicalCardNumber { get; set; }
     public DateTime getMedicalCardDate { get; set; }
     public DateTime lastVisitDate { get; set; }
     public DateTime nextVisitDate { get; set; }
-    public string insurancePolicyNumber { get; set; }
+    public string? insurancePolicyNumber { get; set; }
     public DateTime insurancePolicyEndDate { get; set; }
 }

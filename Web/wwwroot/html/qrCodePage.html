@@ -18,6 +18,9 @@
             <button id="getDoc" type="button">
                 Получить согласие на обработку персональных данных
             </button>
+            <button id="getDog" type="button">
+                Получить договор предоставления платных медицинских услуг
+            </button>
         </div>
         <div class="QR">
             <form enctype="multipart/form-data">
@@ -69,6 +72,10 @@
 
         }) 
 
+        document.getElementById("getDog").addEventListener("click", async () => {
+            await getMedicalCareContract();
+        })
+
         const download = (path, filename) => {
             const anchor = document.createElement('a');
             anchor.href = path;
@@ -79,6 +86,23 @@
             anchor.click();
 
             document.body.removeChild(anchor);
+        }
+
+        async function getMedicalCareContract() {
+            const responce = await fetch("/api/medicalCareContract", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body:
+                    JSON.stringify({
+                        id: document.getElementById("client_id").value
+                    })
+            });
+
+            if (responce.ok) {
+                const answer = await responce.json();
+
+                download("../medicalCareContract.docx", answer.fileName);
+            }
         }
 
         async function getPersonalDataDoc() {

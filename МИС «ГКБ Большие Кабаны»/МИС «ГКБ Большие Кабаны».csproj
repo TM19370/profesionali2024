@@ -97,6 +97,10 @@
     <Compile Include="Migrations\202401300429570_insurancepolicynumbertostring.designer.cs">
       <DependentUpon>202401300429570_insurancepolicynumbertostring.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202402020355185_passportgetinfo.cs" />
+    <Compile Include="Migrations\202402020355185_passportgetinfo.designer.cs">
+      <DependentUpon>202402020355185_passportgetinfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PatientsWindow.xaml.cs">
       <DependentUpon>PatientsWindow.xaml</DependentUpon>
@@ -122,6 +126,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202401300429570_insurancepolicynumbertostring.resx">
       <DependentUpon>202401300429570_insurancepolicynumbertostring.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402020355185_passportgetinfo.resx">
+      <DependentUpon>202402020355185_passportgetinfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
