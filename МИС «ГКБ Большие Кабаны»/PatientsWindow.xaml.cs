@@ -24,7 +24,8 @@ namespace МИС__ГКБ_Большие_Кабаны_
         public PatientsWindow()
         {
             InitializeComponent();
-            generateClients();
+            dg.ItemsSource = db.clients.ToList();
+            //generateClients();
         }
 
         Random random = new Random();
