@@ -23,8 +23,9 @@ namespace МИС__ГКБ_Большие_Кабаны_
         public EnterWindow()
         {
             InitializeComponent();
-            Window1 window1 = new Window1();
+            Window2 window1 = new Window2();
             window1.Show();
+            Close();
         }
 
         private void EnterButton_Click(object sender, RoutedEventArgs e)

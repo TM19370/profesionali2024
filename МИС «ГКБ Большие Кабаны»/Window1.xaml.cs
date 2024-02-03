@@ -51,7 +51,7 @@ namespace МИС__ГКБ_Большие_Кабаны_
         {
             Canvas currentRoom;
             if (personLocation.LastSecurityPointDirection == "in")
-                currentRoom = (Canvas)mg.FindName("skud" + personLocation.lastSecurityPointNumber);
+                currentRoom = (Canvas)humansGrid.FindName("skud" + personLocation.lastSecurityPointNumber);
             else if (personLocation.lastSecurityPointNumber != "0" || personLocation.lastSecurityPointNumber != "1")
                 currentRoom = skud0;
             else

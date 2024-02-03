@@ -1,0 +1,92 @@
+﻿<Window x:Class="МИС__ГКБ_Большие_Кабаны_.Window2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:МИС__ГКБ_Большие_Кабаны_"
+        mc:Ignorable="d"
+        Title="Window2" Height="900" Width="1200"
+        FontFamily="sans-serif">
+    <Grid>
+        <Grid Height="840" Width="1072.8">
+            <Image Source="/план стационара.png" />
+            <Grid>
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="Д101"  Margin="128,0,0,9"  />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="Г101" Margin="128,0,0,131" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="А101" Margin="11,0,0,131" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="Б101" Margin="11,0,0,70" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="В101" Margin="11,0,0,9" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="В102" Margin="11,0,0,167" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="Д102" Margin="128,0,0,167" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="Б102" Margin="11,0,0,228" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="А102" Margin="11,0,0,289" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="Г102" Margin="128,0,0,289" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="Г103" Margin="11,0,0,325" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="В103" Margin="11,0,0,396" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="Е103" Margin="128,0,0,396" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="Д103" Margin="128,0,0,466" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="Б103" Margin="11,0,0,466" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="А103" Margin="11,0,0,536" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="Б104" Margin="22,0,0,778" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="В104" Margin="139,0,0,778" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="А104" Margin="22,0,0,672" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="Г104" Margin="139,0,0,672" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="Б105" Margin="204,0,0,778" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="В105" Margin="321,0,0,778" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="А105" Margin="204,0,0,672" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="Г105" Margin="321,0,0,672" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="Б106" Margin="384,0,0,778" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="В106" Margin="501,0,0,778" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="А106" Margin="384,0,0,672" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="Г106" Margin="501,0,0,672" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="Б107" Margin="564,0,0,778" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="В107" Margin="681,0,0,778" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="А107" Margin="564,0,0,672" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="Г107" Margin="681,0,0,672" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="В108" Margin="784,0,0,669" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="Б108" Margin="784,0,0,738" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="А108" Margin="784,0,0,805" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="А109" Margin="900,0,0,805" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="Б109" Margin="900,0,0,738" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="В109" Margin="900,0,0,669" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="В110" Margin="1014,0,0,669" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="Б110" Margin="1014,0,0,738" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="А110" Margin="1014,0,0,805" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="А111" Margin="1039,0,0,518" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="Б111" Margin="1039,0,0,413" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="В111" Margin="922,0,0,413" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="Г111" Margin="922,0,0,517" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="А112" Margin="883,0,0,517" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="Б112" Margin="883,0,0,413" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="В112" Margin="765,0,0,413" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="Г112" Margin="765,0,0,517" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="А113" Margin="727,0,0,518" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="Б113" Margin="727,0,0,413" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="В113" Margin="610,0,0,413" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="Г113" Margin="610,0,0,518" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="А114" Margin="568,0,0,518" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="Б114" Margin="568,0,0,413" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="В114" Margin="450,0,0,413" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="23" Height="47" x:Name="Г114" Margin="450,0,0,517" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="А115" Margin="380,0,0,539" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="Б115" Margin="380,0,0,469" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="В115" Margin="380,0,0,399" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="Г115" Margin="380,0,0,328" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="Е115" Margin="287,0,0,399" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="Д115" Margin="287,0,0,469" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="А116" Margin="384,0,0,289" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="Б116" Margin="384,0,0,221" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="А117" Margin="384,0,0,182" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="Б117" Margin="384,0,0,114" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="А118" Margin="384,0,0,77" />
+                <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="Б118" Margin="384,0,0,9" />
+            </Grid>
+            <Grid x:Name="mg"/>
+            <Border BorderThickness="1" BorderBrush="Black" CornerRadius="5" SnapsToDevicePixels="True" Height="100" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    Margin="600,0,0,200" Background="#FF8E8E8E" AllowDrop="True" Drop="Discharge_Drop">
+                <TextBlock TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="20" IsHitTestVisible="False" >Перетащите сюда для выписки</TextBlock>
+            </Border>
+        </Grid>
+        
+    </Grid>
+</Window>

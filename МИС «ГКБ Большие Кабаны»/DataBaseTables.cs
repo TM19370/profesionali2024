@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using МИС__ГКБ_Большие_Кабаны_.Migrations;
 
 namespace МИС__ГКБ_Большие_Кабаны_
 {
@@ -35,6 +36,19 @@ namespace МИС__ГКБ_Большие_Кабаны_
         [Required] public string insurancePolicyNumber { get; set; }
         [Required] public DateTime insurancePolicyEndDate { get; set; }
         //[Required] public virtual Diagnosis diagnosis { get; set; } выбирать последний элемент медикал хистори с каким нибудь условием
+    }
+
+    public class Bed
+    {
+        [Key] public int bed_id { get; set; }
+        [Required] public int roomNumber { get; set; }
+        [Required] public string bedCode { get; set; }
+        public virtual Client Client { get; set; }
+
+        public void EditClient(Client client)
+        {
+            this.Client = client;
+        }
     }
 
     public class MedicalHistory
