@@ -1,0 +1,23 @@
+﻿<Window x:Class="МИС__ГКБ_Большие_Кабаны_.Window3"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:МИС__ГКБ_Большие_Кабаны_"
+        mc:Ignorable="d"
+        Title="Window3" Height="450" Width="800">
+    <Grid>
+        <DataGrid x:Name="dataGrid">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="№ кабинета" Width="*"/>
+                <DataGridTextColumn Header="ФИО врача" Width="*"/>
+                <DataGridTextColumn Header="пн" Width="*"/>
+                <DataGridTextColumn Header="вт" Width="*"/>
+                <DataGridTextColumn Header="ср" Width="*"/>
+                <DataGridTextColumn Header="чт" Width="*"/>
+                <DataGridTextColumn Header="пт" Width="*"/>
+                <DataGridTextColumn Header="сб" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

@@ -13,6 +13,10 @@ namespace МИС__ГКБ_Большие_Кабаны_
             : base(@"Server=192.168.147.50\training;Database=MISGKBBolshieKabani;User=intern;Password=0000;Trusted_Connection=False")
         { }
 
+        public DbSet<Medicament> Medicaments { get; set; }
+        public DbSet<AppointmentInfo> appointmentsInfo { get; set; }
+        public DbSet<Prescription> prescriptions { get; set; }
+        public DbSet<Timetable> timetables { get; set; }
         public DbSet<Bed> Beds { get; set; }
         public DbSet<Account> accounts { get; set; }
         public DbSet<Client> clients { get; set; }

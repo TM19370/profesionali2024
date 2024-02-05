@@ -21,10 +21,13 @@ namespace МИС__ГКБ_Большие_Кабаны_
     /// </summary>
     public partial class PatientsWindow : Window
     {
+        private List<Client> clients;
+
         public PatientsWindow()
         {
             InitializeComponent();
-            dg.ItemsSource = db.clients.ToList();
+            clients = db.clients.ToList();
+            dg.ItemsSource = clients;
             //generateClients();
         }
 
@@ -91,6 +94,17 @@ namespace МИС__ГКБ_Большие_Кабаны_
             }
             db.SaveChanges();
             dg.ItemsSource = clients;
+        }
+
+        private void searchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(searchTextBox.Text == "")
+            {
+                dg.ItemsSource = clients.ToList();
+                return;
+            }
+
+            dg.ItemsSource = clients.Where(x => x.firstName == searchTextBox.Text || x.secondName == searchTextBox.Text || x.lastName == searchTextBox.Text).ToList();
         }
     }
 }

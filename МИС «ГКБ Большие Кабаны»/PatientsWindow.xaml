@@ -28,8 +28,9 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <TextBox Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Margin="10"/>
-        <DataGrid Margin="0,50,0,0" x:Name="dg" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True">
+        <TextBox Text="" x:Name="searchTextBox" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Margin="10" TextChanged="searchTextBox_TextChanged"
+                 VerticalContentAlignment="Center"/>
+        <DataGrid BorderThickness="0" Margin="0,50,0,0" x:Name="dg" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="1*" Binding="{Binding client_id}" Header="ID" HeaderStyle="{StaticResource header}"/>
                 <DataGridTextColumn Width="2*" Binding="{Binding firstName}" Header="Имя" HeaderStyle="{StaticResource header}"/>

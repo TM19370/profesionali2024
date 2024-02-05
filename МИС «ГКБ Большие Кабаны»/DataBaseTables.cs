@@ -93,4 +93,37 @@ namespace МИС__ГКБ_Большие_Кабаны_
     {
         [Key] public string measureTypeName { get; set; }
     }
+
+    public class Medicament
+    {
+        [Key] public string medicamentName { get; set; }
+    }
+
+    public class AppointmentInfo
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int appointmentInfo_id { get; set; }
+        [Required] public virtual Client client { get; set; }
+        [Required] public string anamnesis { get; set; }
+        [Required] public string symptoms { get; set; }
+        [Required] public string diagnosis { get; set; }
+        [Required] public string recommendations { get; set; }
+    }
+
+    public class Prescription
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int prescription_id { get; set;}
+        [Required] public virtual Medicament medicament { get; set; }
+        [Required] public double dose { get; set; }
+        [Required] public string format { get; set; }
+        [Required] public virtual AppointmentInfo appointmentInfo { get; set; }
+    }
+
+    public class Timetable
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int timetable_id { get; set; }
+        [Required] public virtual Doctor doctor { get; set; }
+        [Required] public string cabinet { get; set; }
+        [Required] public DayOfWeek dayOfWeek { get; set; }
+        [Required] public TimeSpan timeSpan { get; set; }
+    }
 }
