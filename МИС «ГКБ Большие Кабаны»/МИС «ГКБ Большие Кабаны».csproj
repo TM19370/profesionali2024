@@ -76,6 +76,14 @@
     <Compile Include="Migrations\202402050617434_0502.designer.cs">
       <DependentUpon>202402050617434_0502.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202402060721161_gospitalizacia.cs" />
+    <Compile Include="Migrations\202402060721161_gospitalizacia.designer.cs">
+      <DependentUpon>202402060721161_gospitalizacia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202402060806088_gospitalizaciagen.cs" />
+    <Compile Include="Migrations\202402060806088_gospitalizaciagen.designer.cs">
+      <DependentUpon>202402060806088_gospitalizaciagen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
@@ -84,6 +92,9 @@
     </Compile>
     <Compile Include="Window3.xaml.cs">
       <DependentUpon>Window3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window4.xaml.cs">
+      <DependentUpon>Window4.xaml</DependentUpon>
     </Compile>
     <Page Include="EnterWindow.xaml">
       <SubType>Designer</SubType>
@@ -112,6 +123,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Window3.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window4.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -167,6 +182,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202402050617434_0502.resx">
       <DependentUpon>202402050617434_0502.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402060721161_gospitalizacia.resx">
+      <DependentUpon>202402060721161_gospitalizacia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402060806088_gospitalizaciagen.resx">
+      <DependentUpon>202402060806088_gospitalizaciagen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

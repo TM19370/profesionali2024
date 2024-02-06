@@ -33,8 +33,11 @@ app.Run(async (context) =>
     var response = context.Response;
     var request = context.Request;
     var path = request.Path;
-
-    if (path == "/api/clients" && request.Method == "POST")
+    if(path == "/api/hospitalization" && request.Method == "POST")
+    {
+        await CreateHospitalization(request, response);
+    }
+    else if (path == "/api/clients" && request.Method == "POST")
     {
         await CreateClient(request, response);
     }
@@ -255,6 +258,52 @@ void word()
     doc.SaveAs($"{Directory.GetCurrentDirectory()}/test.docx");
 }*/
 
+async Task CreateHospitalization(HttpRequest request, HttpResponse response)
+{
+    try
+    {
+        ClientPost? clientPost = await request.ReadFromJsonAsync<ClientPost>();
+        if (clientPost == null)
+            return;
+
+        Gender gender = db.genders.Find(clientPost.gender);
+        Hospitalization hospitalization = new Hospitalization()
+        {
+            firstName = clientPost.firstName,
+            secondName = clientPost.secondName,
+            lastName = clientPost.lastName,
+            passportNumberAndSeries = clientPost.passportNumberAndSeries,
+            birthDate = clientPost.birthDate,
+            gender = gender,
+            workPlace = clientPost.workPlace,
+            address = clientPost.address,
+            phoneNumder = clientPost.phoneNumder,
+            email = clientPost.email,
+            medicalCardNumber = clientPost.medicalCardNumber,
+            getMedicalCardDate = clientPost.getMedicalCardDate,
+            lastVisitDate = clientPost.lastVisitDate,
+            nextVisitDate = clientPost.nextVisitDate,
+            insurancePolicyNumber = clientPost.insurancePolicyNumber,
+            insurancePolicyEndDate = clientPost.insurancePolicyEndDate,
+            hospitalizationStartDate = DateTime.Now,
+            hospitalizationEndDate = DateTime.Now
+        };
+        db.hospitalizations.Add(hospitalization);
+        db.SaveChanges();
+        if(hospitalization == null)
+        {
+            throw new Exception("Некоректные данные");
+        }
+    }
+    catch (Exception exception)
+    {
+        string fullPath = $"{Directory.GetCurrentDirectory()}/clientImages/{imageFileName}";
+        File.Delete(fullPath);
+        response.StatusCode = 400;
+        await response.WriteAsJsonAsync(new { error = exception.Message });
+    }
+}
+
 async Task CreateClient(HttpRequest request, HttpResponse response)
 {
     try
@@ -329,6 +378,7 @@ public class ClientPost
     public string? passportNumberAndSeries { get; set; }
     public DateTime birthDate { get; set; }
     public string? gender { get; set; }
+    public string? workPlace { get; set; }
     public string? address { get; set; }
     public string? phoneNumder { get; set; }
     public string? email { get; set; }

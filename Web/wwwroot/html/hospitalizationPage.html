@@ -30,7 +30,14 @@
                    placeholder="Введите дату рождения" required>
 
             <label for="passportNumberAndSeries">Серия и номер паспорта</label>
-            <input type="text" id="passportNumberAndSeries" name="passportNumberAndSeries" placeholder="Введите номер и серию паспорта" required />
+            <input type="text" id="passportNumberAndSeries"
+                   name="passportNumberAndSeries"
+                   placeholder="Введите номер и серию паспорта" required />
+
+            <label for="passportGetInfo">Информация о получении паспорта</label>
+            <input type="text" id="passportGetInfo"
+                   name="passportGetInfo"
+                   placeholder="Введите информацию о получении паспорта" required />
 
             <label for="workPlace">Место работы:</label>
             <input type="text" id="workPlace"
@@ -93,10 +100,56 @@
 
             <div class="wrap">
                 <button id="sendButton" type="button">
-                    Добавить клиента
+                    Записать на госпитализацию
                 </button>
             </div>
         </form>
     </div>
+
+    <script>
+        document.getElementById("sendButton").addEventListener("click", async () => {
+            await CreateHospitalization();
+        })
+
+        async function CreateHospitalization() {
+            const response = await fetch("/api/hospitalization", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body:
+                    JSON.stringify({
+                        firstName: document.getElementById("firstName").value,
+                        secondName: document.getElementById("secondName").value,
+                        lastName: document.getElementById("lastName").value,
+                        passportNumberAndSeries: document.getElementById("passportNumberAndSeries").value,
+                        passportGetInfo: document.getElementById("passportGetInfo").value,
+                        birthDate: document.getElementById("birthDate").value,
+                        gender: document.getElementById("gender").value,
+                        workPlace: document.getElementById("workPlace").value,
+                        address: document.getElementById("address").value,
+                        phoneNumder: document.getElementById("phoneNumder").value,
+                        email: document.getElementById("email").value,
+                        medicalCardNumber: document.getElementById("medicalCardNumber").value,
+                        getMedicalCardDate: document.getElementById("getMedicalCardDate").value,
+                        lastVisitDate: document.getElementById("lastVisitDate").value,
+                        nextVisitDate: document.getElementById("nextVisitDate").value,
+                        insurancePolicyNumber: document.getElementById("insurancePolicyNumber").value,
+                        insurancePolicyEndDate: document.getElementById("insurancePolicyEndDate").value
+                    })
+            });
+
+            if (response.ok) {
+                const hospitalization = await response.message;
+
+                console.log(hospitalization);
+                alert("Госпитализация добавлена");
+            }
+            else {
+                const responceMessage = await response.json();
+                console.log(responceMessage.error);
+                console.error(responceMessage.error);
+                alert("Не удалось добавить госпитализацию ошибка: " + responceMessage.error);
+            }
+        }
+    </script>
 </body>
 </html>

@@ -9,6 +9,37 @@ using МИС__ГКБ_Большие_Кабаны_.Migrations;
 
 namespace МИС__ГКБ_Большие_Кабаны_
 {
+    public class Hospitalization
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int hospitalization_id { get; set; }
+        [Required] public string firstName { get; set; }
+        [Required] public string secondName { get; set; }
+        [Required] public string lastName { get; set; }
+        [Required] public string passportNumberAndSeries { get; set; }
+        public string passportGetInfo { get; set; }
+        [Required] public DateTime birthDate { get; set; }
+        [Required] public virtual Gender gender { get; set; }
+        [Required] public string workPlace { get; set; }
+        [Required] public string address { get; set; }
+        [Required] public string phoneNumder { get; set; }
+        [Required] public string email { get; set; }
+        [Required] public int medicalCardNumber { get; set; }
+        [Required] public DateTime getMedicalCardDate { get; set; }
+        [Required] public DateTime lastVisitDate { get; set; }
+        [Required] public DateTime nextVisitDate { get; set; }
+        [Required] public string insurancePolicyNumber { get; set; }
+        [Required] public DateTime insurancePolicyEndDate { get; set; }
+        public string insuranceCompany { get; set; }
+        public string diagnosis { get; set; }
+        public string hospitalizationPurpose { get; set; }
+        public string hospitalizationDepartment { get; set; }
+        public string hospitalizationCondition { get; set; }
+        public DateTime hospitalizationStartDate { get; set; }
+        public DateTime hospitalizationEndDate { get; set; }
+        public string hospitalizationAddInfo { get; set; }
+        public string hospitalizationCancelInfo { get; set; }
+    }
+
     public class Account
     {
         [Key] public string login { get; set; }
