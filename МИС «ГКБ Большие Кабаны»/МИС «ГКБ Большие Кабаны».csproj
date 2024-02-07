@@ -84,6 +84,10 @@
     <Compile Include="Migrations\202402060806088_gospitalizaciagen.designer.cs">
       <DependentUpon>202402060806088_gospitalizaciagen.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202402070538362_tst.cs" />
+    <Compile Include="Migrations\202402070538362_tst.designer.cs">
+      <DependentUpon>202402070538362_tst.cs</DependentUpon>
+    </Compile>
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
@@ -188,6 +192,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202402060806088_gospitalizaciagen.resx">
       <DependentUpon>202402060806088_gospitalizaciagen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402070538362_tst.resx">
+      <DependentUpon>202402070538362_tst.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

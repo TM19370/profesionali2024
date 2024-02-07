@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using МИС__ГКБ_Большие_Кабаны_.Migrations;
+using static МИС__ГКБ_Большие_Кабаны_.DBInteract;
 
 namespace МИС__ГКБ_Большие_Кабаны_
 {
@@ -19,6 +20,16 @@ namespace МИС__ГКБ_Большие_Кабаны_
         public string passportGetInfo { get; set; }
         [Required] public DateTime birthDate { get; set; }
         [Required] public virtual Gender gender { get; set; }
+        /*{ 
+            get 
+            { 
+                return gender; 
+            } 
+            set
+            { 
+                gender = db.genders.Find(value); 
+            } 
+        }*/
         [Required] public string workPlace { get; set; }
         [Required] public string address { get; set; }
         [Required] public string phoneNumder { get; set; }
@@ -93,6 +104,24 @@ namespace МИС__ГКБ_Большие_Кабаны_
     public class Gender
     {
         [Key] public string genderName { get; set; }
+
+        public static implicit operator Gender(string v)
+        {
+            Gender gender = db.genders.Where(w => w.genderName == v).FirstOrDefault();
+            return gender;
+        }
+        /*
+        public static explicit operator Gender(string v)
+        {
+            Gender gender = db.genders.Find(v);
+            return gender;
+        }*/
+
+        public static Gender getGender(string v)
+        {
+            Gender gender = db.genders.Where(w => w.genderName == v).FirstOrDefault();
+            return gender;
+        }
     }
 
     public class Diagnosis

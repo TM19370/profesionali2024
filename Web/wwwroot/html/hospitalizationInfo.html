@@ -11,13 +11,57 @@
         <label for="hospitalizationCode">Код на госпитализацию:</label>
         <input type="text" id="hospitalizationCode"
                name="hospitalizationCode"
-               placeholder="Введите код на госпитализацию" required>
+               placeholder="Введите код на госпитализацию" required />
+
+        <div class="wrap">
+            <button id="getHospitalizationInfo" type="button">
+                Получить информацию о госпитализации
+            </button>
+        </div>
 
         <label for="hospitalizationStartDate">Дата и время госпитацизации</label>
         <input type="datetime-local" id="hospitalizationStartDate"
-               name="hospitalizationStartDate" />
+               name="hospitalizationStartDate" required />
 
-        
+        <div class="wrap">
+            <button id="setHospitalizationDateTime" type="button">
+                Задать дату и время госпитализации
+            </button>
+        </div>
+
     </div>
+
+    <script>
+        document.getElementById("getHospitalizationInfo").addEventListener("click", async () => {
+            await readQRCode();
+        })
+
+        async function readQRCode() {
+            const options = {
+                method: "GET"
+            };
+            const responce = await fetch("/api/hospitalization/" + document.getElementById("hospitalizationCode").value, options);
+
+            if (responce.ok) {/*
+                const clientInfo = await responce.json();
+
+                console.log(clientInfo.firstName);
+                
+                document.getElementById("FIO").textContent = clientInfo.secondName + " " + clientInfo.firstName + " " + clientInfo.lastName;
+                document.getElementById("passportNumberAndSeries").textContent = clientInfo.passportNumberAndSeries;
+                document.getElementById("birthDate").textContent = clientInfo.birthDate;
+                document.getElementById("gender").textContent = clientInfo.gender;
+                document.getElementById("address").textContent = clientInfo.address;
+                document.getElementById("phoneNumder").textContent = clientInfo.phoneNumder;
+                document.getElementById("email").textContent = clientInfo.email;
+                document.getElementById("medicalCardNumber").textContent = clientInfo.medicalCardNumber;
+                document.getElementById("getMedicalCardDate").textContent = clientInfo.getMedicalCardDate;
+                document.getElementById("lastVisitDate").textContent = clientInfo.lastVisitDate;
+                document.getElementById("nextVisitDate").textContent = clientInfo.nextVisitDate;
+                document.getElementById("insurancePolicyNumber").textContent = clientInfo.insurancePolicyNumber;
+                document.getElementById("insurancePolicyEndDate").textContent = clientInfo.insurancePolicyEndDate;*/
+            }
+        }
+    </script>
 </body>
 </html>

@@ -112,6 +112,10 @@
         })
 
         async function CreateHospitalization() {
+
+            const gender = new Gender();
+            gender.genderName = document.getElementById("gender").value;
+
             const response = await fetch("/api/hospitalization", {
                 method: "POST",
                 headers: { "Accept": "application/json", "Content-Type": "application/json" },
@@ -149,6 +153,10 @@
                 console.error(responceMessage.error);
                 alert("Не удалось добавить госпитализацию ошибка: " + responceMessage.error);
             }
+        }
+
+        class Gender {
+            genderName;
         }
     </script>
 </body>
