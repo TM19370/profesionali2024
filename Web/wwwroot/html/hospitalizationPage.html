@@ -113,32 +113,33 @@
 
         async function CreateHospitalization() {
 
-            const gender = new Gender();
-            gender.genderName = document.getElementById("gender").value;
+            const client = {
+                firstName: document.getElementById("firstName").value,
+                secondName: document.getElementById("secondName").value,
+                lastName: document.getElementById("lastName").value,
+                passportNumberAndSeries: document.getElementById("passportNumberAndSeries").value,
+                passportGetInfo: document.getElementById("passportGetInfo").value,
+                birthDate: document.getElementById("birthDate").value,
+                gender: {
+                    genderName: document.getElementById("gender").value
+                },
+                workPlace: document.getElementById("workPlace").value,
+                address: document.getElementById("address").value,
+                phoneNumder: document.getElementById("phoneNumder").value,
+                email: document.getElementById("email").value,
+                medicalCardNumber: document.getElementById("medicalCardNumber").value,
+                getMedicalCardDate: document.getElementById("getMedicalCardDate").value,
+                lastVisitDate: document.getElementById("lastVisitDate").value,
+                nextVisitDate: document.getElementById("nextVisitDate").value,
+                insurancePolicyNumber: document.getElementById("insurancePolicyNumber").value,
+                insurancePolicyEndDate: document.getElementById("insurancePolicyEndDate").value
+            }
 
             const response = await fetch("/api/hospitalization", {
                 method: "POST",
                 headers: { "Accept": "application/json", "Content-Type": "application/json" },
                 body:
-                    JSON.stringify({
-                        firstName: document.getElementById("firstName").value,
-                        secondName: document.getElementById("secondName").value,
-                        lastName: document.getElementById("lastName").value,
-                        passportNumberAndSeries: document.getElementById("passportNumberAndSeries").value,
-                        passportGetInfo: document.getElementById("passportGetInfo").value,
-                        birthDate: document.getElementById("birthDate").value,
-                        gender: document.getElementById("gender").value,
-                        workPlace: document.getElementById("workPlace").value,
-                        address: document.getElementById("address").value,
-                        phoneNumder: document.getElementById("phoneNumder").value,
-                        email: document.getElementById("email").value,
-                        medicalCardNumber: document.getElementById("medicalCardNumber").value,
-                        getMedicalCardDate: document.getElementById("getMedicalCardDate").value,
-                        lastVisitDate: document.getElementById("lastVisitDate").value,
-                        nextVisitDate: document.getElementById("nextVisitDate").value,
-                        insurancePolicyNumber: document.getElementById("insurancePolicyNumber").value,
-                        insurancePolicyEndDate: document.getElementById("insurancePolicyEndDate").value
-                    })
+                    JSON.stringify(client)
             });
 
             if (response.ok) {
@@ -153,10 +154,6 @@
                 console.error(responceMessage.error);
                 alert("Не удалось добавить госпитализацию ошибка: " + responceMessage.error);
             }
-        }
-
-        class Gender {
-            genderName;
         }
     </script>
 </body>

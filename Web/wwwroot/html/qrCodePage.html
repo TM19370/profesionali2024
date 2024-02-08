@@ -89,13 +89,8 @@
         }
 
         async function getMedicalCareContract() {
-            const responce = await fetch("/api/medicalCareContract", {
-                method: "POST",
-                headers: { "Accept": "application/json", "Content-Type": "application/json" },
-                body:
-                    JSON.stringify({
-                        id: document.getElementById("client_id").value
-                    })
+            const responce = await fetch("/api/medicalCareContract/" + document.getElementById("client_id").value, {
+                method: "GET"
             });
 
             if (responce.ok) {
@@ -106,13 +101,8 @@
         }
 
         async function getPersonalDataDoc() {
-            const responce = await fetch("/api/personalData", {
-                method: "POST",
-                headers: { "Accept": "application/json", "Content-Type": "application/json" },
-                body:
-                    JSON.stringify({
-                        id: document.getElementById("client_id").value
-                    })
+            const responce = await fetch("/api/personalData/" + document.getElementById("client_id").value, {
+                method: "GET"
             });
 
             if (responce.ok) {
@@ -123,13 +113,8 @@
         }
 
         async function createQRCode() {
-            const response = await fetch("/api/QRCode", {
-                method: "POST",
-                headers: { "Accept": "application/json", "Content-Type": "application/json" },
-                body:
-                    JSON.stringify({
-                        id: document.getElementById("client_id").value
-                    })
+            const response = await fetch("/api/QRCode/" + document.getElementById("client_id").value, {
+                method: "GET"
             });
 
             if (response.ok) {
@@ -159,7 +144,7 @@
                 document.getElementById("FIO").textContent = clientInfo.secondName + " " + clientInfo.firstName + " " + clientInfo.lastName;
                 document.getElementById("passportNumberAndSeries").textContent = clientInfo.passportNumberAndSeries;
                 document.getElementById("birthDate").textContent = clientInfo.birthDate;
-                document.getElementById("gender").textContent = clientInfo.gender;
+                document.getElementById("gender").textContent = clientInfo.gender.genderName;
                 document.getElementById("address").textContent = clientInfo.address;
                 document.getElementById("phoneNumder").textContent = clientInfo.phoneNumder;
                 document.getElementById("email").textContent = clientInfo.email;

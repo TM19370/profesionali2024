@@ -88,6 +88,18 @@
     <Compile Include="Migrations\202402070538362_tst.designer.cs">
       <DependentUpon>202402070538362_tst.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202402080434373_addId.cs" />
+    <Compile Include="Migrations\202402080434373_addId.designer.cs">
+      <DependentUpon>202402080434373_addId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202402080500183_hospRepair.cs" />
+    <Compile Include="Migrations\202402080500183_hospRepair.designer.cs">
+      <DependentUpon>202402080500183_hospRepair.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202402080636484_clientFix.cs" />
+    <Compile Include="Migrations\202402080636484_clientFix.designer.cs">
+      <DependentUpon>202402080636484_clientFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
@@ -195,6 +207,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202402070538362_tst.resx">
       <DependentUpon>202402070538362_tst.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402080434373_addId.resx">
+      <DependentUpon>202402080434373_addId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402080500183_hospRepair.resx">
+      <DependentUpon>202402080500183_hospRepair.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402080636484_clientFix.resx">
+      <DependentUpon>202402080636484_clientFix.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

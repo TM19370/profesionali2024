@@ -13,6 +13,29 @@ namespace МИС__ГКБ_Большие_Кабаны_
     public class Hospitalization
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int hospitalization_id { get; set; }
+        public virtual Client client { get; set; }
+        public string insuranceCompany { get; set; }
+        public string diagnosis { get; set; }
+        public string hospitalizationPurpose { get; set; }
+        public string hospitalizationDepartment { get; set; }
+        public string hospitalizationCondition { get; set; }
+        public DateTime hospitalizationStartDate { get; set; } = DateTime.Now;
+        public DateTime hospitalizationEndDate { get; set; } = DateTime.Now;
+        public string hospitalizationAddInfo { get; set; }
+        public string hospitalizationCancelInfo { get; set; }
+    }
+
+    public class Account
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int account_id { get; set; }
+        [Required] public string login { get; set; }
+        [Required] public string password { get; set; }
+    }
+
+    public class Client
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int client_id { get; set; }
+        public string photoPath { get; set; }
         [Required] public string firstName { get; set; }
         [Required] public string secondName { get; set; }
         [Required] public string lastName { get; set; }
@@ -20,17 +43,7 @@ namespace МИС__ГКБ_Большие_Кабаны_
         public string passportGetInfo { get; set; }
         [Required] public DateTime birthDate { get; set; }
         [Required] public virtual Gender gender { get; set; }
-        /*{ 
-            get 
-            { 
-                return gender; 
-            } 
-            set
-            { 
-                gender = db.genders.Find(value); 
-            } 
-        }*/
-        [Required] public string workPlace { get; set; }
+        public string workPlace { get; set; }
         [Required] public string address { get; set; }
         [Required] public string phoneNumder { get; set; }
         [Required] public string email { get; set; }
@@ -41,48 +54,14 @@ namespace МИС__ГКБ_Большие_Кабаны_
         [Required] public string insurancePolicyNumber { get; set; }
         [Required] public DateTime insurancePolicyEndDate { get; set; }
         public string insuranceCompany { get; set; }
-        public string diagnosis { get; set; }
-        public string hospitalizationPurpose { get; set; }
-        public string hospitalizationDepartment { get; set; }
-        public string hospitalizationCondition { get; set; }
-        public DateTime hospitalizationStartDate { get; set; }
-        public DateTime hospitalizationEndDate { get; set; }
-        public string hospitalizationAddInfo { get; set; }
-        public string hospitalizationCancelInfo { get; set; }
-    }
-
-    public class Account
-    {
-        [Key] public string login { get; set; }
-        [Required] public string password { get; set; }
-    }
-
-    public class Client
-    {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int client_id { get; set; }
-        [Required] public string photoPath { get; set; }
-        [Required] public string firstName { get; set; }
-        [Required] public string secondName { get; set; }
-        [Required] public string lastName { get; set; }
-        [Required] public string passportNumberAndSeries { get; set; }
-        public string passportGetInfo { get; set; }
-        [Required] public DateTime birthDate { get; set; }
-        [Required] public virtual Gender gender { get; set; }
-        [Required] public string address { get; set; }
-        [Required] public string phoneNumder { get; set; }
-        [Required] public string email { get; set; }
-        [Required] public int medicalCardNumber { get; set; }
-        [Required] public DateTime getMedicalCardDate { get; set; }
-        [Required] public DateTime lastVisitDate { get; set; }
-        [Required] public DateTime nextVisitDate { get; set; }
-        [Required] public string insurancePolicyNumber { get; set; }
-        [Required] public DateTime insurancePolicyEndDate { get; set; }
         //[Required] public virtual Diagnosis diagnosis { get; set; } выбирать последний элемент медикал хистори с каким нибудь условием
+
+
     }
 
     public class Bed
     {
-        [Key] public int bed_id { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int bed_id { get; set; }
         [Required] public int roomNumber { get; set; }
         [Required] public string bedCode { get; set; }
         public virtual Client Client { get; set; }
@@ -103,30 +82,14 @@ namespace МИС__ГКБ_Большие_Кабаны_
 
     public class Gender
     {
-        [Key] public string genderName { get; set; }
-
-        public static implicit operator Gender(string v)
-        {
-            Gender gender = db.genders.Where(w => w.genderName == v).FirstOrDefault();
-            return gender;
-        }
-        /*
-        public static explicit operator Gender(string v)
-        {
-            Gender gender = db.genders.Find(v);
-            return gender;
-        }*/
-
-        public static Gender getGender(string v)
-        {
-            Gender gender = db.genders.Where(w => w.genderName == v).FirstOrDefault();
-            return gender;
-        }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int gender_id { get; private set; }
+        [Required] public string genderName { get; set; }
     }
 
     public class Diagnosis
     {
-        [Key] public string diagnosisName { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int diagnosis_id { get; set; }
+        [Required] public string diagnosisName { get; set; }
     }
 
     public class Measure
@@ -151,12 +114,14 @@ namespace МИС__ГКБ_Большие_Кабаны_
 
     public class MeasureType
     {
-        [Key] public string measureTypeName { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int measureType_id { get; set; }
+        [Required] public string measureTypeName { get; set; }
     }
 
     public class Medicament
     {
-        [Key] public string medicamentName { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int medicament_id { get; set; }
+        [Required] public string medicamentName { get; set; }
     }
 
     public class AppointmentInfo
