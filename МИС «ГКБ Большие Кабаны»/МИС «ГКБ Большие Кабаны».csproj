@@ -100,6 +100,10 @@
     <Compile Include="Migrations\202402080636484_clientFix.designer.cs">
       <DependentUpon>202402080636484_clientFix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202402080708047_hospDateFix.cs" />
+    <Compile Include="Migrations\202402080708047_hospDateFix.designer.cs">
+      <DependentUpon>202402080708047_hospDateFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
@@ -216,6 +220,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202402080636484_clientFix.resx">
       <DependentUpon>202402080636484_clientFix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402080708047_hospDateFix.resx">
+      <DependentUpon>202402080708047_hospDateFix.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

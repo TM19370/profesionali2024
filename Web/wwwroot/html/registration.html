@@ -113,13 +113,6 @@
             <a href="/html/qrCodePage.html">QR code</a>
             <a href="/html/hospitalizationPage.html">Госпитализация</a>
             <a href="/html/hospitalizationInfo.html">Информация о госпитализации</a>
-            <button onclick="location.href = qrCodePage.html">QR code</button>
-            <form action="qrCodePage.html">
-                <input type="submit" value="QR code" />
-            </form>
-            <form action="hospitalizationPage.html">
-                <input type="submit" value="Госпитализация" />
-            </form>
         </div>
     </div>
 
@@ -175,7 +168,6 @@
             }
             else {
                 const responceMessage = await response.json();
-                console.log(responceMessage.error);
                 console.error(responceMessage.error);
                 alert("Не удалось добавить пациента ошибка: " + responceMessage.error);
             }

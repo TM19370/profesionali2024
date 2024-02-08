@@ -20,7 +20,7 @@
         </div>
 
         <label for="hospitalizationStartDate">Дата и время госпитацизации</label>
-        <input type="datetime-local" id="hospitalizationStartDate"
+        <input type="datetime-local" id="hospitalizationStartDateInput"
                name="hospitalizationStartDate" required />
 
         <div class="wrap">
@@ -29,6 +29,49 @@
             </button>
         </div>
 
+        <label>ФИО:</label>
+        <label class="clientData" id="FIO"></label>
+        <label>Номер и серия паспорта:</label>
+        <label class="clientData" id="passportNumberAndSeries"></label>
+        <label>Дата рождения:</label>
+        <label class="clientData" id="birthDate"></label>
+        <label>Пол:</label>
+        <label class="clientData" id="gender"></label>
+        <label>Адресс проживания:</label>
+        <label class="clientData" id="address"></label>
+        <label>Номер телефона:</label>
+        <label class="clientData" id="phoneNumder"></label>
+        <label>Email:</label>
+        <label class="clientData" id="email"></label>
+        <label>Номер медицинской карты:</label>
+        <label class="clientData" id="medicalCardNumber"></label>
+        <label>Дата получения медицинской карты:</label>
+        <label class="clientData" id="getMedicalCardDate"></label>
+        <label>Дата последнего посещения:</label>
+        <label class="clientData" id="lastVisitDate"></label>
+        <label>Дата следующего посещения:</label>
+        <label class="clientData" id="nextVisitDate"></label>
+        <label>Номер страхового полиса:</label>
+        <label class="clientData" id="insurancePolicyNumber"></label>
+        <label>Срок действия страхового полиса:</label>
+        <label class="clientData" id="insurancePolicyEndDate"></label>
+
+        <label>Диагноз:</label>
+        <label class="clientData" id="diagnosis"></label>
+        <label>Цель госпитализации:</label>
+        <label class="clientData" id="hospitalizationPurpose"></label>
+        <label>Отдел госпитализации:</label>
+        <label class="clientData" id="hospitalizationDepartment"></label>
+        <label>Условия госпитализации:</label>
+        <label class="clientData" id="hospitalizationCondition"></label>
+        <label>Дата начала госпитализации:</label>
+        <label class="clientData" id="hospitalizationStartDate"></label>
+        <label>Дата конца госпитализации:</label>
+        <label class="clientData" id="hospitalizationEndDate"></label>
+        <label>Дополнительная информация о госпитализации:</label>
+        <label class="clientData" id="hospitalizationAddInfo"></label>
+        <label>Причина отмены госпитализации:</label>
+        <label class="clientData" id="hospitalizationCancelInfo"></label>
     </div>
 
     <script>
@@ -36,30 +79,65 @@
             await readQRCode();
         })
 
+        document.getElementById("setHospitalizationDateTime").addEventListener("click", async () => {
+            await SetHospitalizationDateTime();
+        })
+
+        async function SetHospitalizationDateTime() {
+            const options = {
+                method: "POST"
+            };
+            const response = await fetch("/api/hospitalization/" + document.getElementById("hospitalizationCode").value + "/"
+                + document.getElementById("hospitalizationStartDateInput").value, options);
+
+            if (response.ok) {
+                alert("Дата госпитализации установлена");
+            }
+            else {
+                const responceMessage = await response.json();
+                console.error(responceMessage.error);
+                alert("Не удалось установить дату госпитализации, ошибка: " + responceMessage.error);
+            }
+        }
+
         async function readQRCode() {
             const options = {
                 method: "GET"
             };
-            const responce = await fetch("/api/hospitalization/" + document.getElementById("hospitalizationCode").value, options);
+            const response = await fetch("/api/hospitalization/" + document.getElementById("hospitalizationCode").value, options);
 
-            if (responce.ok) {/*
-                const clientInfo = await responce.json();
+            if (response.ok) {
 
-                console.log(clientInfo.firstName);
-                
-                document.getElementById("FIO").textContent = clientInfo.secondName + " " + clientInfo.firstName + " " + clientInfo.lastName;
-                document.getElementById("passportNumberAndSeries").textContent = clientInfo.passportNumberAndSeries;
-                document.getElementById("birthDate").textContent = clientInfo.birthDate;
-                document.getElementById("gender").textContent = clientInfo.gender;
-                document.getElementById("address").textContent = clientInfo.address;
-                document.getElementById("phoneNumder").textContent = clientInfo.phoneNumder;
-                document.getElementById("email").textContent = clientInfo.email;
-                document.getElementById("medicalCardNumber").textContent = clientInfo.medicalCardNumber;
-                document.getElementById("getMedicalCardDate").textContent = clientInfo.getMedicalCardDate;
-                document.getElementById("lastVisitDate").textContent = clientInfo.lastVisitDate;
-                document.getElementById("nextVisitDate").textContent = clientInfo.nextVisitDate;
-                document.getElementById("insurancePolicyNumber").textContent = clientInfo.insurancePolicyNumber;
-                document.getElementById("insurancePolicyEndDate").textContent = clientInfo.insurancePolicyEndDate;*/
+                const hospitalizationInfo = await response.json();
+
+                console.log(hospitalizationInfo);
+
+                document.getElementById("FIO").textContent = hospitalizationInfo.client.secondName + " " + hospitalizationInfo.client.firstName + " " + hospitalizationInfo.client.lastName;
+                document.getElementById("passportNumberAndSeries").textContent = hospitalizationInfo.client.passportNumberAndSeries;
+                document.getElementById("birthDate").textContent = hospitalizationInfo.client.birthDate;
+                document.getElementById("gender").textContent = hospitalizationInfo.client.gender.genderName;
+                document.getElementById("address").textContent = hospitalizationInfo.client.address;
+                document.getElementById("phoneNumder").textContent = hospitalizationInfo.client.phoneNumder;
+                document.getElementById("email").textContent = hospitalizationInfo.client.email;
+                document.getElementById("medicalCardNumber").textContent = hospitalizationInfo.client.medicalCardNumber;
+                document.getElementById("getMedicalCardDate").textContent = hospitalizationInfo.client.getMedicalCardDate;
+                document.getElementById("lastVisitDate").textContent = hospitalizationInfo.client.lastVisitDate;
+                document.getElementById("nextVisitDate").textContent = hospitalizationInfo.client.nextVisitDate;
+                document.getElementById("insurancePolicyNumber").textContent = hospitalizationInfo.client.insurancePolicyNumber;
+                document.getElementById("insurancePolicyEndDate").textContent = hospitalizationInfo.client.insurancePolicyEndDate;
+                document.getElementById("diagnosis").textContent = hospitalizationInfo.diagnosis;
+                document.getElementById("hospitalizationPurpose").textContent = hospitalizationInfo.hospitalizationPurpose;
+                document.getElementById("hospitalizationDepartment").textContent = hospitalizationInfo.hospitalizationDepartment;
+                document.getElementById("hospitalizationCondition").textContent = hospitalizationInfo.hospitalizationCondition;
+                document.getElementById("hospitalizationStartDate").textContent = hospitalizationInfo.hospitalizationStartDate;
+                document.getElementById("hospitalizationEndDate").textContent = hospitalizationInfo.hospitalizationEndDate;
+                document.getElementById("hospitalizationAddInfo").textContent = hospitalizationInfo.hospitalizationAddInfo;
+                document.getElementById("hospitalizationCancelInfo").textContent = hospitalizationInfo.hospitalizationCancelInfo;
+            }
+            else {
+                const responceMessage = await response.json();
+                console.error(responceMessage.error);
+                alert("Не удалось получить данные о госпитализации, ошибка: " + responceMessage.error);
             }
         }
     </script>

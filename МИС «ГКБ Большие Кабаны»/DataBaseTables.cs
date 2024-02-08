@@ -14,15 +14,27 @@ namespace МИС__ГКБ_Большие_Кабаны_
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int hospitalization_id { get; set; }
         public virtual Client client { get; set; }
-        public string insuranceCompany { get; set; }
         public string diagnosis { get; set; }
         public string hospitalizationPurpose { get; set; }
         public string hospitalizationDepartment { get; set; }
         public string hospitalizationCondition { get; set; }
-        public DateTime hospitalizationStartDate { get; set; } = DateTime.Now;
-        public DateTime hospitalizationEndDate { get; set; } = DateTime.Now;
+        public DateTime? hospitalizationStartDate { get; set; }
+        public DateTime? hospitalizationEndDate { get; set; }
         public string hospitalizationAddInfo { get; set; }
         public string hospitalizationCancelInfo { get; set; }
+
+        public void Edit(Hospitalization hospitalization)
+        {
+            this.client = hospitalization.client;
+            this.diagnosis = hospitalization.diagnosis;
+            this.hospitalizationPurpose = hospitalization.hospitalizationPurpose;
+            this.hospitalizationDepartment = hospitalization.hospitalizationDepartment;
+            this.hospitalizationCondition = hospitalization.hospitalizationCondition;
+            this.hospitalizationStartDate = hospitalization.hospitalizationStartDate;
+            this.hospitalizationEndDate = hospitalization.hospitalizationEndDate;
+            this.hospitalizationAddInfo = hospitalization.hospitalizationAddInfo;
+            this.hospitalizationCancelInfo = hospitalization.hospitalizationCancelInfo;
+        }
     }
 
     public class Account

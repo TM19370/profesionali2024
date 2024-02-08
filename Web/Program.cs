@@ -17,6 +17,7 @@ using System.Windows;
 using Xceed.Words.NET;
 using Xceed.Document.NET;
 using System.Text.RegularExpressions;
+using System;
 
 Web.DataBaseContext db = new Web.DataBaseContext();
 //DataBaseContext db = new DataBaseContext();
@@ -39,6 +40,10 @@ app.Run(async (context) =>
     {
         response.ContentType = "text/html; charset=utf-8";
         await response.SendFileAsync("wwwroot/html/registration.html");
+    }
+    else if (Regex.IsMatch(path, @"/api/hospitalization/\d{1,}/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}") && request.Method == "POST")
+    {
+        await SetHospitalizationDateTime(request, response);
     }
     else if (Regex.IsMatch(path, @"/api/hospitalization/\d{1,}") && request.Method == "GET")
     {
@@ -72,13 +77,18 @@ app.Run(async (context) =>
     {
         await MedicalCareContract(request, response);
     }
+    else
+    {
+        response.StatusCode = 404;
+        await response.WriteAsJsonAsync(new { error = "API не найдено" });
+    }
 });
 
 app.Run();
 
 int GetIdFromPath(string path)
 {
-    return Convert.ToInt32(path.Split('/').Last());
+    return Convert.ToInt32(path.Split('/')[3]);
 }
 
 void ReplaceText(DocX file, string searchText, string newText)
@@ -89,11 +99,41 @@ void ReplaceText(DocX file, string searchText, string newText)
     file.ReplaceText(replaceOptions);
 }
 
+async Task SetHospitalizationDateTime(HttpRequest request, HttpResponse response)
+{
+    try
+    {
+        int hospitalizationId = GetIdFromPath(request.Path);
+        List<Hospitalization> hospitalizations = db.hospitalizations.Where(x => x.hospitalization_id == hospitalizationId).ToList();
+        if (hospitalizations.Count == 0)
+            throw new Exception("√оспитацизации с таким кодом не существует");
+        Hospitalization hospitalization = hospitalizations.First();
+        hospitalization.hospitalizationStartDate = Convert.ToDateTime(((string)request.Path).Split('/').Last());
+        db.hospitalizations.Find(hospitalization.hospitalization_id).Edit(hospitalization);
+        db.SaveChanges();
+    }
+    catch (Exception exception)
+    {
+        response.StatusCode = 400;
+        await response.WriteAsJsonAsync(new { error = exception.Message });
+    }
+}
+
 async Task GetHospitalizationInfo(HttpRequest request, HttpResponse response)
 {
-    int hospitalizationId = GetIdFromPath(request.Path);
-    Hospitalization hospitalization = db.hospitalizations.Find(hospitalizationId);
-    await response.WriteAsJsonAsync(hospitalization);
+    try
+    {
+        int hospitalizationId = GetIdFromPath(request.Path);
+        List<Hospitalization> hospitalizations = db.hospitalizations.Where(x => x.hospitalization_id == hospitalizationId).ToList();
+        if (hospitalizations.Count == 0)
+            throw new Exception("√оспитацизации с таким кодом не существует");
+        await response.WriteAsJsonAsync(hospitalizations.First());
+    }
+    catch (Exception exception)
+    {
+        response.StatusCode = 400;
+        await response.WriteAsJsonAsync(new { error = exception.Message });
+    }
 }
 
 async Task MedicalCareContract(HttpRequest request, HttpResponse response)
