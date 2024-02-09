@@ -109,10 +109,18 @@
             </div>
         </form>
 
-        <div class="wrap">
-            <a href="/html/qrCodePage.html">QR code</a>
-            <a href="/html/hospitalizationPage.html">Госпитализация</a>
-            <a href="/html/hospitalizationInfo.html">Информация о госпитализации</a>
+        <hr />
+
+        <div>
+            <button onclick="window.location.href='/html/qrCodePage.html'">
+                QR код
+            </button>
+            <button onclick="window.location.href='/html/hospitalizationPage.html'">
+                Госпитализация
+            </button>
+            <button onclick="window.location.href='/html/hospitalizationInfo.html'">
+                Информация о госпитализации
+            </button>
         </div>
     </div>
 
@@ -150,7 +158,8 @@
                 lastVisitDate: document.getElementById("lastVisitDate").value,
                 nextVisitDate: document.getElementById("nextVisitDate").value,
                 insurancePolicyNumber: document.getElementById("insurancePolicyNumber").value,
-                insurancePolicyEndDate: document.getElementById("insurancePolicyEndDate").value
+                insurancePolicyEndDate: document.getElementById("insurancePolicyEndDate").value,
+                insuranceCompany: document.getElementById("insuranceCompany").value
             }
 
             const response = await fetch("api/clients", {
@@ -171,18 +180,6 @@
                 console.error(responceMessage.error);
                 alert("Не удалось добавить пациента ошибка: " + responceMessage.error);
             }
-        }
-
-        async function PostImage() {
-            
-            const fileInput = document.getElementById("image");
-            const formData = new FormData();
-            formData.append('file', fileInput.files[0]);
-            const options = {
-                method: "POST",
-                body: formData
-            };
-            fetch("api/image", options);
         }
     </script>
 </body>

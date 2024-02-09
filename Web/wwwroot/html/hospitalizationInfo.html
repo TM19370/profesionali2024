@@ -19,6 +19,18 @@
             </button>
         </div>
 
+        <label for="hospitalizationCancelInfoInput">Причина отмены госпитализации:</label>
+        <input type="text" id="hospitalizationCancelInfoInput"
+               name="hospitalizationCancelInfoInput"
+               placeholder="Введите причину отмены госпитализации" required />
+
+        <div class="wrap">
+            <button id="cancelHospitalization" type="button">
+                Отменинть госпитализацию
+            </button>
+        </div>
+
+
         <label for="hospitalizationStartDate">Дата и время госпитацизации</label>
         <input type="datetime-local" id="hospitalizationStartDateInput"
                name="hospitalizationStartDate" required />
@@ -76,12 +88,51 @@
 
     <script>
         document.getElementById("getHospitalizationInfo").addEventListener("click", async () => {
+            if (document.getElementById("hospitalizationCode").value == "") {
+                alert("Введите код на госпитализацию");
+                return;
+            }
             await readQRCode();
         })
 
         document.getElementById("setHospitalizationDateTime").addEventListener("click", async () => {
+            if (document.getElementById("hospitalizationCode").value == "") {
+                alert("Введите код на госпитализацию");
+                return;
+            }
             await SetHospitalizationDateTime();
         })
+
+        document.getElementById("cancelHospitalization").addEventListener("click", async () => {
+            if (document.getElementById("hospitalizationCode").value == "") {
+                alert("Введите код на госпитализацию");
+                return;
+            }
+            await cancelHospitalization();
+        })
+
+        async function cancelHospitalization() {
+            const hospitalizationCancelInfoInput = document.getElementById("hospitalizationCancelInfoInput").value;
+            if (hospitalizationCancelInfoInput == "") {
+                alert("Введите причину отмены госпитализации")
+                return;
+            }
+
+            const options = {
+                method: "POST"
+            };
+            const response = await fetch("/api/cancelHospitalization/" + document.getElementById("hospitalizationCode").value
+                + "/" + hospitalizationCancelInfoInput, options);
+
+            if (response.ok) {
+                alert("Госпитализация отменена")
+            }
+            else {
+                const responceMessage = await response.json();
+                console.error(responceMessage.error);
+                alert("Не удалось отменить госпитализацию, ошибка: " + responceMessage.error);
+            }
+        }
 
         async function SetHospitalizationDateTime() {
             const options = {

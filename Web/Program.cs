@@ -53,6 +53,10 @@ app.Run(async (context) =>
     {
         await CreateHospitalization(request, response);
     }
+    else if (Regex.IsMatch(path, @"/api/cancelHospitalization/\d{1,}/\w{1,}") && request.Method == "POST")
+    {
+        await CancelHospitalization(request, response);
+    }
     else if (path == "/api/clients" && request.Method == "POST")
     {
         await CreateClient(request, response);
@@ -93,10 +97,33 @@ int GetIdFromPath(string path)
 
 void ReplaceText(DocX file, string searchText, string newText)
 {
-    StringReplaceTextOptions replaceOptions = new StringReplaceTextOptions();
-    replaceOptions.SearchValue = searchText;
-    replaceOptions.NewValue = newText;
-    file.ReplaceText(replaceOptions);
+    try
+    {
+        StringReplaceTextOptions replaceOptions = new StringReplaceTextOptions();
+        replaceOptions.SearchValue = searchText;
+        replaceOptions.NewValue = newText;
+        file.ReplaceText(replaceOptions);
+    }
+    catch (Exception ex) { }
+    
+}
+
+async Task CancelHospitalization(HttpRequest request, HttpResponse response)
+{
+    try
+    {
+        string path = request.Path;
+        int hospitalizationId = GetIdFromPath(path);
+        Hospitalization hospitalization = db.hospitalizations.Find(hospitalizationId);
+        hospitalization.hospitalizationCancelInfo = path.Split('/')[4];
+        db.hospitalizations.Find(hospitalizationId).Edit(hospitalization);
+        db.SaveChanges();
+    }
+    catch (Exception exception)
+    {
+        response.StatusCode = 400;
+        await response.WriteAsJsonAsync(new { error = exception.Message });
+    }
 }
 
 async Task SetHospitalizationDateTime(HttpRequest request, HttpResponse response)
@@ -163,7 +190,7 @@ async Task MedicalCareContract(HttpRequest request, HttpResponse response)
     ReplaceText(doc, "<OGRN>", "/////////////////");
     ReplaceText(doc, "<INN>", "/////////////////");
     ReplaceText(doc, "<positionGW>", "/////////////////");
-    ReplaceText(doc, "<IO Fam", "/////////////////");
+    ReplaceText(doc, "<IO Fam>", "/////////////////");
     ReplaceText(doc, "<clientAddress>", client.address);
     ReplaceText(doc, "<clientOtherAddresses>", "/////////////////");
     ReplaceText(doc, "<clientPassport>", $"{client.passportNumberAndSeries} {client.passportGetInfo}");
@@ -262,11 +289,13 @@ async Task CreateHospitalization(HttpRequest request, HttpResponse response)
         if(hospitalization == null)
             throw new Exception("Некоректные данные");
 
-        List<Client> clients = db.clients.Where(x => x.passportNumberAndSeries == hospitalization.client.passportNumberAndSeries).ToList();
+        string passportNumberAndSeries = hospitalization.client.passportNumberAndSeries;
+
+        List<Client> clients = db.clients.Where(x => x.passportNumberAndSeries == passportNumberAndSeries).ToList();
         Client client;
         if (clients.Count == 0)
         {
-            client = clients.First();
+            client = hospitalization.client;
             client.gender = db.genders.Where(x => x.genderName == client.gender.genderName).First();
             db.clients.Add(client);
             db.SaveChanges();

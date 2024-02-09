@@ -136,6 +136,20 @@ namespace МИС__ГКБ_Большие_Кабаны_
         [Required] public string medicamentName { get; set; }
     }
 
+    public class WarehouseForMedicament
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int warehouseForMedicament_id { get; set; }
+        [Required] public virtual Warehouse warehouse { get; set; }
+        [Required] public virtual Medicament medicament { get; set; }
+        [Required] public int medicamentCount { get; set; }
+    }
+
+    public class Warehouse
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int warehouse_id { get; set; }
+        [Required] public string warehouseName { get; set; }
+    }
+
     public class AppointmentInfo
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int appointmentInfo_id { get; set; }

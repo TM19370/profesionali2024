@@ -15,6 +15,8 @@ namespace МИС__ГКБ_Большие_Кабаны_
 
         public DbSet<Hospitalization> hospitalizations { get; set; }
         public DbSet<Medicament> Medicaments { get; set; }
+        public DbSet<Warehouse> Warehouses { get; set; }
+        public DbSet<WarehouseForMedicament> WarehouseForMedicaments { get; set; }
         public DbSet<AppointmentInfo> appointmentsInfo { get; set; }
         public DbSet<Prescription> prescriptions { get; set; }
         public DbSet<Timetable> timetables { get; set; }

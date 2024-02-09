@@ -15,10 +15,10 @@
             <button id="createQRCodeButton" type="submit">
                 Получить QR код
             </button>
-            <button id="getDoc" type="button">
+            <button id="getPersonalDataDoc" type="button">
                 Получить согласие на обработку персональных данных
             </button>
-            <button id="getDog" type="button">
+            <button id="getMedicalCareContract" type="button">
                 Получить договор предоставления платных медицинских услуг
             </button>
         </div>
@@ -67,12 +67,12 @@
             await readQRCode();
         })
 
-        document.getElementById("getDoc").addEventListener("click", async () => {
+        document.getElementById("getPersonalDataDoc").addEventListener("click", async () => {
             await getPersonalDataDoc();
 
         }) 
 
-        document.getElementById("getDog").addEventListener("click", async () => {
+        document.getElementById("getMedicalCareContract").addEventListener("click", async () => {
             await getMedicalCareContract();
         })
 

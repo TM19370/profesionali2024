@@ -104,6 +104,10 @@
     <Compile Include="Migrations\202402080708047_hospDateFix.designer.cs">
       <DependentUpon>202402080708047_hospDateFix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202402090758371_addwarehouses.cs" />
+    <Compile Include="Migrations\202402090758371_addwarehouses.designer.cs">
+      <DependentUpon>202402090758371_addwarehouses.cs</DependentUpon>
+    </Compile>
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
@@ -223,6 +227,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202402080708047_hospDateFix.resx">
       <DependentUpon>202402080708047_hospDateFix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402090758371_addwarehouses.resx">
+      <DependentUpon>202402090758371_addwarehouses.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
