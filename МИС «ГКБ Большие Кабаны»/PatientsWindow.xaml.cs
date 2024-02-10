@@ -36,6 +36,9 @@ namespace МИС__ГКБ_Большие_Кабаны_
             { "Тимофей", "Данил", "Олег", "Юра", "Артем", "Саша", "Роман", "Никита", "Дмитрий", "Егор" } };
         string[] sNames = { "Тимофеев", "Данилов", "Олегов", "Юрьев", "Артемов", "Сашев", "Романов", "Никитов", "Дмитриев", "Егоров" };
         string[] streets = { "Пушкина", "Московская", "Советская" };
+        string[] insuranceCompanies = { "Росгосстрах", "Альфа страхование" };
+        string getInfo = "УМВД России по республике Татарстан";
+        string[] work = { "ООО Инвестор", "ООО Закусочная", "ООО ООО" };
         int mImage = 1;
         int fImage = 1;
         void generateClients()
@@ -62,6 +65,9 @@ namespace МИС__ГКБ_Большие_Кабаны_
 
                 DateTime birthDate = DateTime.Parse($"{random.Next(1, 29)}.{random.Next(1, 13)}.{random.Next(1990, 2016)}");
 
+                string workPlace = work[random.Next(0, 3)];
+                string insuranceCompany = insuranceCompanies[random.Next(0, 2)];
+
                 //копировать изображения
                 Client newClient = new Client()
                 {
@@ -71,7 +77,7 @@ namespace МИС__ГКБ_Большие_Кабаны_
                     lastName = sNames[random.Next(0, 10)] + (gender == 0 ? "на" : "ич"),
                     passportNumberAndSeries = $"{random.Next(1, 100).ToString("G2")}{random.Next(1, 100).ToString("G2")}{random.Next(1, 1000000).ToString("G6")}",
                     birthDate = birthDate,
-                    gender = db.genders.Find(gender == 0? "женский": "мужской"),
+                    gender = db.genders.Find(random.Next(1, 3)),
                     address = $"г. Большие Кабаны ул. {streets[random.Next(0,3)]} д. {random.Next(1,100).ToString("G2")} кв. {random.Next(1,100).ToString("G2")}",
                     phoneNumder = $"+7{random.Next(0, 1000).ToString("G3")}{random.Next(0, 1000).ToString("G3")}{random.Next(0, 100).ToString("G2")}{random.Next(0, 100).ToString("G2")}",
                     email = $"{random.Next(0, 1000).ToString("G3")}{DateTime.Now.ToString("fffffff")}@mail.ru",
@@ -81,7 +87,10 @@ namespace МИС__ГКБ_Большие_Кабаны_
                     nextVisitDate = DateTime.Now.AddDays(random.Next(1, 10)).AddMinutes(random.Next(1, 200)),
                     insurancePolicyNumber = $"{random.Next(0, 10000).ToString("G4")}{random.Next(0, 10000).ToString("G4")}" +
                     $"{random.Next(0, 10000).ToString("G4")}{random.Next(0, 10000).ToString("G4")}",
-                    insurancePolicyEndDate = DateTime.Now.AddDays(random.Next(1, 100))
+                    insurancePolicyEndDate = DateTime.Now.AddDays(random.Next(1, 100)),
+                    passportGetInfo = getInfo,
+                    workPlace = workPlace,
+                    insuranceCompany = insuranceCompany
                 };
 
                 if (gender == 0)

@@ -4,6 +4,38 @@
              xmlns:local="clr-namespace:МИС__ГКБ_Большие_Кабаны_"
              StartupUri="EnterWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="Window">
+            <Setter Property="FontFamily" Value="sans-serif"/>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="CanUserDeleteRows" Value="False"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="CanUserReorderColumns" Value="False"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+        </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <Border BorderThickness="1" BorderBrush="Black"
+                                    SnapsToDevicePixels="True">
+                                <Label Content="{Binding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Foreground="{TemplateBinding Foreground}"
+                                       FontWeight="{TemplateBinding FontWeight}"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>

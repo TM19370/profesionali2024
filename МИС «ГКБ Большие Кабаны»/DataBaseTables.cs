@@ -122,6 +122,11 @@ namespace МИС__ГКБ_Большие_Кабаны_
         [Required] public string firstName { get; set; }
         [Required] public string secondName { get; set; }
         [Required] public string lastName { get; set; }
+
+        public string GetFullName()
+        {
+            return $"{secondName} {firstName} {lastName}";
+        }
     }
 
     public class MeasureType
@@ -172,9 +177,24 @@ namespace МИС__ГКБ_Большие_Кабаны_
     public class Timetable
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int timetable_id { get; set; }
-        [Required] public virtual Doctor doctor { get; set; }
-        [Required] public string cabinet { get; set; }
+        [Required] public virtual WeekTimetable weekTimetable { get; set; }
         [Required] public DayOfWeek dayOfWeek { get; set; }
-        [Required] public TimeSpan timeSpan { get; set; }
+        public string cabinet { get; set; }
+        public DateTime? startTime { get; set; }
+        public DateTime? endTime { get; set; }
+
+        public string GetAsString()
+        {
+            if (startTime == null || endTime == null)
+                return "";
+            return $"{((DateTime)startTime).TimeOfDay} - {((DateTime)endTime).TimeOfDay} {cabinet} каб.";
+        }
+    }
+
+    public class WeekTimetable
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int weekTimeTable_id { get; set; }
+        [Required] public virtual Doctor doctor { get; set; }
+        [Required] public DateTime weekFirstDayDate { get; set; }
     }
 }

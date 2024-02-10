@@ -20,6 +20,7 @@ namespace МИС__ГКБ_Большие_Кабаны_
         public DbSet<AppointmentInfo> appointmentsInfo { get; set; }
         public DbSet<Prescription> prescriptions { get; set; }
         public DbSet<Timetable> timetables { get; set; }
+        public DbSet<WeekTimetable> weekTimetable { get; set; }
         public DbSet<Bed> Beds { get; set; }
         public DbSet<Account> accounts { get; set; }
         public DbSet<Client> clients { get; set; }

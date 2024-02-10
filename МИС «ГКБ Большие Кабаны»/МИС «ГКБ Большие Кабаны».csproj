@@ -108,6 +108,22 @@
     <Compile Include="Migrations\202402090758371_addwarehouses.designer.cs">
       <DependentUpon>202402090758371_addwarehouses.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202402100445320_timetableeditet.cs" />
+    <Compile Include="Migrations\202402100445320_timetableeditet.designer.cs">
+      <DependentUpon>202402100445320_timetableeditet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202402100731166_m.cs" />
+    <Compile Include="Migrations\202402100731166_m.designer.cs">
+      <DependentUpon>202402100731166_m.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202402100741090_m1.cs" />
+    <Compile Include="Migrations\202402100741090_m1.designer.cs">
+      <DependentUpon>202402100741090_m1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202402100812094_m2.cs" />
+    <Compile Include="Migrations\202402100812094_m2.designer.cs">
+      <DependentUpon>202402100812094_m2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
@@ -230,6 +246,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202402090758371_addwarehouses.resx">
       <DependentUpon>202402090758371_addwarehouses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402100445320_timetableeditet.resx">
+      <DependentUpon>202402100445320_timetableeditet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402100731166_m.resx">
+      <DependentUpon>202402100731166_m.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402100741090_m1.resx">
+      <DependentUpon>202402100741090_m1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402100812094_m2.resx">
+      <DependentUpon>202402100812094_m2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

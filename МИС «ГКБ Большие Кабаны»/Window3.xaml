@@ -6,17 +6,224 @@
         xmlns:local="clr-namespace:МИС__ГКБ_Большие_Кабаны_"
         mc:Ignorable="d"
         Title="Window3" Height="450" Width="800">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Padding" Value="6"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="border" BorderBrush="#000" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True" CornerRadius="0">
+                            <Grid>
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                Focusable="false"
+                                HorizontalScrollBarVisibility="Hidden"
+                                VerticalScrollBarVisibility="Hidden" Width="{TemplateBinding Width}"/>
+                                <TextBlock Name="hintLabel" Margin="8,0,0,0" 
+                                       VerticalAlignment="Center" HorizontalAlignment="Stretch" Visibility="Hidden"
+                                       Foreground="#FF757575"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter Property="Visibility" TargetName="hintLabel" Value="Visible"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <DataGrid x:Name="dataGrid">
+        <DataGrid x:Name="dataGrid" Visibility="Visible" IsReadOnly="False">
             <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding doctorFullName}" Header="ФИО врача" Width="*"/>
+                <DataGridTextColumn Binding="{Binding monday}" Header="пн" Width="*"/>
+                <DataGridTextColumn Binding="{Binding tuesday}" Header="вт" Width="*"/>
+                <DataGridTextColumn Binding="{Binding wednesday}" Header="ср" Width="*"/>
+                <DataGridTextColumn Binding="{Binding thursday}" Header="чт" Width="*"/>
+                <DataGridTextColumn Binding="{Binding friday}" Header="пт" Width="*"/>
+                <DataGridTextColumn Binding="{Binding saturday}" Header="сб" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid x:Name="qwe" Visibility="Hidden">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding cabinet}" Header="№ кабинета" Width="*"/>
+                <DataGridTextColumn Binding="{Binding doctor.GetFullName}" Header="ФИО врача" Width="*"/>
+                <DataGridTextColumn Binding="{Binding startTime.TimeOfDay}" Header="Время начала работы" Width="*"/>
+                <DataGridTextColumn Binding="{Binding endTime.TimeOfDay}" Header="Время конца работы" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid x:Name="dg" Visibility="Hidden">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ФИО врача" Width="*" Binding="{Binding firstName}"/>
                 <DataGridTextColumn Header="№ кабинета" Width="*"/>
-                <DataGridTextColumn Header="ФИО врача" Width="*"/>
-                <DataGridTextColumn Header="пн" Width="*"/>
-                <DataGridTextColumn Header="вт" Width="*"/>
-                <DataGridTextColumn Header="ср" Width="*"/>
-                <DataGridTextColumn Header="чт" Width="*"/>
-                <DataGridTextColumn Header="пт" Width="*"/>
-                <DataGridTextColumn Header="сб" Width="*"/>
+                <DataGridTemplateColumn Header="пн" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Margin="0, -1, 0, -1" BorderBrush="Black" BorderThickness="0,0,1,0">
+                                    <TextBox.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="Введите время начала"/>
+                                        </Style>
+                                    </TextBox.Resources>
+                                </TextBox>
+                                <TextBox Margin="0, -1, 0, -1" BorderThickness="0" Grid.Column="1">
+                                    <TextBox.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="Введите время конца"/>
+                                        </Style>
+                                    </TextBox.Resources>
+                                </TextBox>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="вт" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Margin="0, -1, 0, -1" BorderBrush="Black" BorderThickness="0,0,1,0">
+                                    <TextBox.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="Введите время начала"/>
+                                        </Style>
+                                    </TextBox.Resources>
+                                </TextBox>
+                                <TextBox Margin="0, -1, 0, -1" BorderThickness="0" Grid.Column="1">
+                                    <TextBox.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="Введите время конца"/>
+                                        </Style>
+                                    </TextBox.Resources>
+                                </TextBox>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="ср" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Margin="0, -1, 0, -1" BorderBrush="Black" BorderThickness="0,0,1,0">
+                                    <TextBox.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="Введите время начала"/>
+                                        </Style>
+                                    </TextBox.Resources>
+                                </TextBox>
+                                <TextBox Margin="0, -1, 0, -1" BorderThickness="0" Grid.Column="1">
+                                    <TextBox.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="Введите время конца"/>
+                                        </Style>
+                                    </TextBox.Resources>
+                                </TextBox>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="чт" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Margin="0, -1, 0, -1" BorderBrush="Black" BorderThickness="0,0,1,0">
+                                    <TextBox.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="Введите время начала"/>
+                                        </Style>
+                                    </TextBox.Resources>
+                                </TextBox>
+                                <TextBox Margin="0, -1, 0, -1" BorderThickness="0" Grid.Column="1">
+                                    <TextBox.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="Введите время конца"/>
+                                        </Style>
+                                    </TextBox.Resources>
+                                </TextBox>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="пт" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Margin="0, -1, 0, -1" BorderBrush="Black" BorderThickness="0,0,1,0">
+                                    <TextBox.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="Введите время начала"/>
+                                        </Style>
+                                    </TextBox.Resources>
+                                </TextBox>
+                                <TextBox Margin="0, -1, 0, -1" BorderThickness="0" Grid.Column="1">
+                                    <TextBox.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="Введите время конца"/>
+                                        </Style>
+                                    </TextBox.Resources>
+                                </TextBox>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="сб" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Margin="0, -1, 0, -1" BorderBrush="Black" BorderThickness="0,0,1,0">
+                                    <TextBox.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="Введите время начала"/>
+                                        </Style>
+                                    </TextBox.Resources>
+                                </TextBox>
+                                <TextBox Margin="0, -1, 0, -1" BorderThickness="0" Grid.Column="1">
+                                    <TextBox.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="Введите время конца"/>
+                                        </Style>
+                                    </TextBox.Resources>
+                                </TextBox>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid Visibility="Hidden">
+            <DataGrid.Columns>
+                <DataGridTextColumn></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
