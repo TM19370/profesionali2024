@@ -25,7 +25,7 @@ namespace МИС__ГКБ_Большие_Кабаны_
             InitializeComponent();
             Window3 window4 = new Window3();
             window4.Show();
-            Close();
+            //Close();
         }
 
         private void EnterButton_Click(object sender, RoutedEventArgs e)

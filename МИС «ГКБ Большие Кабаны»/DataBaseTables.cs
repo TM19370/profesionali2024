@@ -22,7 +22,7 @@ namespace МИС__ГКБ_Большие_Кабаны_
         public DateTime? hospitalizationEndDate { get; set; }
         public string hospitalizationAddInfo { get; set; }
         public string hospitalizationCancelInfo { get; set; }
-
+        
         public void Edit(Hospitalization hospitalization)
         {
             this.client = hospitalization.client;

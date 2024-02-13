@@ -22,7 +22,7 @@ namespace МИС__ГКБ_Большие_Кабаны_
     {
         List<WeekTimetablee> weekTimetableList;
 
-        List<WeekStringTimeTable> weekStringTimeTableList;
+        List<WeekStringTimeTable> weekStringTimeTableList = new List<WeekStringTimeTable>();
 
         public Window3()
         {
