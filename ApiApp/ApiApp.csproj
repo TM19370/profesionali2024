@@ -8,16 +8,14 @@
 
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
-    <PackageReference Include="PresentationFramework" Version="4.6.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\МИС «ГКБ Большие Кабаны»\МИС «ГКБ Большие Кабаны».csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Reference Include="DataBaseClasses">
+      <HintPath>..\DataBaseClasses\bin\Debug\net6.0\DataBaseClasses.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>

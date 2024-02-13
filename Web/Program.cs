@@ -1,26 +1,11 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Net.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using System.Net.Http.Headers;
-using Microsoft.AspNetCore.Hosting.Server;
-using System.Reflection;
-using МИС__ГКБ_Большие_Кабаны_;
-//using static МИС__ГКБ_Большие_Кабаны_.DBInteract;
 using System.Drawing;
-using Web;
 using MessagingToolkit.QRCode.Codec;
 using MessagingToolkit.QRCode.Codec.Data;
-using Microsoft.Win32;
-using System.Windows;
 using Xceed.Words.NET;
 using Xceed.Document.NET;
 using System.Text.RegularExpressions;
-using System;
-
-Web.DataBaseContext db = new Web.DataBaseContext();
-//DataBaseContext db = new DataBaseContext();
+using DataBaseClasses;
+using static DataBaseClasses.DBInteract;
 
 string organizationName = "ГКБ Большие Кабаны";
 string imageFileName = "NULL";
@@ -261,7 +246,6 @@ async Task CreateQRCode(HttpRequest request, HttpResponse response)
     }
 
     await response.WriteAsync("QR код создан");
-    //await response.SendFileAsync(Path.Combine(Directory.GetCurrentDirectory() + "/qr.png"));
 }
 
 async Task CreateImage(HttpRequest request, HttpResponse response)

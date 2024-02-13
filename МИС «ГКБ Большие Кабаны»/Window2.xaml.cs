@@ -11,7 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using static МИС__ГКБ_Большие_Кабаны_.DBInteract;
+using DataBaseClasses;
+using static DataBaseClasses.DBInteract;
 
 namespace МИС__ГКБ_Большие_Кабаны_
 {

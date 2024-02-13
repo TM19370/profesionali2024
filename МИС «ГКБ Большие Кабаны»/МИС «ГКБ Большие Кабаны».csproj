@@ -38,6 +38,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DataBaseClasses">
+      <HintPath>..\DataBaseClasses\bin\Debug\net6.0\DataBaseClasses.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -68,62 +71,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Migrations\202402030604040_bed.cs" />
-    <Compile Include="Migrations\202402030604040_bed.designer.cs">
-      <DependentUpon>202402030604040_bed.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202402050617434_0502.cs" />
-    <Compile Include="Migrations\202402050617434_0502.designer.cs">
-      <DependentUpon>202402050617434_0502.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202402060721161_gospitalizacia.cs" />
-    <Compile Include="Migrations\202402060721161_gospitalizacia.designer.cs">
-      <DependentUpon>202402060721161_gospitalizacia.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202402060806088_gospitalizaciagen.cs" />
-    <Compile Include="Migrations\202402060806088_gospitalizaciagen.designer.cs">
-      <DependentUpon>202402060806088_gospitalizaciagen.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202402070538362_tst.cs" />
-    <Compile Include="Migrations\202402070538362_tst.designer.cs">
-      <DependentUpon>202402070538362_tst.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202402080434373_addId.cs" />
-    <Compile Include="Migrations\202402080434373_addId.designer.cs">
-      <DependentUpon>202402080434373_addId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202402080500183_hospRepair.cs" />
-    <Compile Include="Migrations\202402080500183_hospRepair.designer.cs">
-      <DependentUpon>202402080500183_hospRepair.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202402080636484_clientFix.cs" />
-    <Compile Include="Migrations\202402080636484_clientFix.designer.cs">
-      <DependentUpon>202402080636484_clientFix.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202402080708047_hospDateFix.cs" />
-    <Compile Include="Migrations\202402080708047_hospDateFix.designer.cs">
-      <DependentUpon>202402080708047_hospDateFix.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202402090758371_addwarehouses.cs" />
-    <Compile Include="Migrations\202402090758371_addwarehouses.designer.cs">
-      <DependentUpon>202402090758371_addwarehouses.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202402100445320_timetableeditet.cs" />
-    <Compile Include="Migrations\202402100445320_timetableeditet.designer.cs">
-      <DependentUpon>202402100445320_timetableeditet.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202402100731166_m.cs" />
-    <Compile Include="Migrations\202402100731166_m.designer.cs">
-      <DependentUpon>202402100731166_m.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202402100741090_m1.cs" />
-    <Compile Include="Migrations\202402100741090_m1.designer.cs">
-      <DependentUpon>202402100741090_m1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202402100812094_m2.cs" />
-    <Compile Include="Migrations\202402100812094_m2.designer.cs">
-      <DependentUpon>202402100812094_m2.cs</DependentUpon>
-    </Compile>
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
@@ -144,9 +91,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataBaseContext.cs" />
-    <Compile Include="DataBaseTables.cs" />
-    <Compile Include="DBInteract.cs" />
     <Compile Include="EnterWindow.xaml.cs">
       <DependentUpon>EnterWindow.xaml</DependentUpon>
     </Compile>
@@ -172,23 +116,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\202401250350151_InitialCreate.cs" />
-    <Compile Include="Migrations\202401250350151_InitialCreate.designer.cs">
-      <DependentUpon>202401250350151_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202401290544400_addAccount.cs" />
-    <Compile Include="Migrations\202401290544400_addAccount.designer.cs">
-      <DependentUpon>202401290544400_addAccount.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202401300429570_insurancepolicynumbertostring.cs" />
-    <Compile Include="Migrations\202401300429570_insurancepolicynumbertostring.designer.cs">
-      <DependentUpon>202401300429570_insurancepolicynumbertostring.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202402020355185_passportgetinfo.cs" />
-    <Compile Include="Migrations\202402020355185_passportgetinfo.designer.cs">
-      <DependentUpon>202402020355185_passportgetinfo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PatientsWindow.xaml.cs">
       <DependentUpon>PatientsWindow.xaml</DependentUpon>
     </Compile>
@@ -205,60 +132,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\202401250350151_InitialCreate.resx">
-      <DependentUpon>202401250350151_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202401290544400_addAccount.resx">
-      <DependentUpon>202401290544400_addAccount.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202401300429570_insurancepolicynumbertostring.resx">
-      <DependentUpon>202401300429570_insurancepolicynumbertostring.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202402020355185_passportgetinfo.resx">
-      <DependentUpon>202402020355185_passportgetinfo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202402030604040_bed.resx">
-      <DependentUpon>202402030604040_bed.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202402050617434_0502.resx">
-      <DependentUpon>202402050617434_0502.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202402060721161_gospitalizacia.resx">
-      <DependentUpon>202402060721161_gospitalizacia.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202402060806088_gospitalizaciagen.resx">
-      <DependentUpon>202402060806088_gospitalizaciagen.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202402070538362_tst.resx">
-      <DependentUpon>202402070538362_tst.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202402080434373_addId.resx">
-      <DependentUpon>202402080434373_addId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202402080500183_hospRepair.resx">
-      <DependentUpon>202402080500183_hospRepair.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202402080636484_clientFix.resx">
-      <DependentUpon>202402080636484_clientFix.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202402080708047_hospDateFix.resx">
-      <DependentUpon>202402080708047_hospDateFix.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202402090758371_addwarehouses.resx">
-      <DependentUpon>202402090758371_addwarehouses.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202402100445320_timetableeditet.resx">
-      <DependentUpon>202402100445320_timetableeditet.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202402100731166_m.resx">
-      <DependentUpon>202402100731166_m.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202402100741090_m1.resx">
-      <DependentUpon>202402100741090_m1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202402100812094_m2.resx">
-      <DependentUpon>202402100812094_m2.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

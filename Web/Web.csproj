@@ -15,10 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\МИС «ГКБ Большие Кабаны»\МИС «ГКБ Большие Кабаны».csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Reference Include="DataBaseClasses">
+      <HintPath>..\DataBaseClasses\bin\Debug\net6.0\DataBaseClasses.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationFramework">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\PresentationFramework.dll</HintPath>
     </Reference>

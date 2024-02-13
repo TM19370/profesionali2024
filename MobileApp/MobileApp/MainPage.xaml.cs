@@ -12,13 +12,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using DataBaseClasses;
+using System.Diagnostics;
 
 namespace MobileApp
 {
     
     public partial class MainPage : ContentPage
     {
-        MediaRecorder recorder;
+        //MediaRecorder recorder;
 
         public MainPage()
         {
@@ -40,17 +41,20 @@ namespace MobileApp
                 {
                     HttpContent responseContent = response.Content;
                     var json = await responseContent.ReadAsStringAsync();
-                    Client client = JsonConvert.DeserializeObject<Client>(json);
-                    clientInfoStackLayout.BindingContext = client;
-                    DisplayAlert("", client.fullName, "Ok");
+                    Client client = new Client();
+                    await DisplayAlert("", json, "Ok");
+                    var a = JsonConvert.DeserializeObject<DataBaseClasses.Client>(json);
+                    //Client client = JsonConvert.DeserializeObject<Client>(json);
+                    //clientInfoStackLayout.BindingContext = client;
+                    //DisplayAlert("", client.FullName, "Ok");
                 }
             }
             catch (Exception ex)
             {
-                DisplayAlert("Ошибка", ex.Message, "Ok");
+                DisplayAlert("Ошибка", $"HelpLink:\n{ex.HelpLink}\n\nSource:\n{ex.Source}\n\nStackTrace:\n{ex.StackTrace}\n\nMessage:\n{ex.Message}", "Ok");
             }
         }
-
+        /*
         private void StartRecording()
         {
             recorder = new MediaRecorder();
@@ -88,8 +92,9 @@ namespace MobileApp
         private void Button_Released(object sender, EventArgs e)
         {
             StopRecording();
-        }
+        }*/
     }
+
     /*
     public class Client
     {
