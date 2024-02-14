@@ -65,12 +65,7 @@ namespace DataBaseClasses
         [Required] public string insuranceCompany { get; set; }
         //[Required] public virtual Diagnosis diagnosis { get; set; } выбирать последний элемент медикал хистори с каким нибудь условием
 
-        public string FullName { get { return $"{secondName} {firstName} {lastName}"; } set 
-            {
-                secondName = secondName;
-                firstName = firstName;
-                lastName = lastName;
-            } }
+        public string FullName { get { return $"{secondName} {firstName} {lastName}"; } }
     }
 
     public class Bed

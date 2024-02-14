@@ -5,226 +5,158 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:МИС__ГКБ_Большие_Кабаны_"
         mc:Ignorable="d"
-        Title="Window3" Height="450" Width="800">
+        Title="Window3" Height="450" Width="800" MinWidth="730">
     <Window.Resources>
-        <Style TargetType="TextBox">
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="Padding" Value="6"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="TextAlignment" Value="Left"/>
-            <Setter Property="Template">
+        <Style x:Key="Header" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style TargetType="ListBox">
+            <Setter Property="ItemContainerStyle">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TextBox}">
-                        <Border x:Name="border" BorderBrush="#000" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True" CornerRadius="0">
-                            <Grid>
-                                <ScrollViewer x:Name="PART_ContentHost"
-                                Focusable="false"
-                                HorizontalScrollBarVisibility="Hidden"
-                                VerticalScrollBarVisibility="Hidden" Width="{TemplateBinding Width}"/>
-                                <TextBlock Name="hintLabel" Margin="8,0,0,0" 
-                                       VerticalAlignment="Center" HorizontalAlignment="Stretch" Visibility="Hidden"
-                                       Foreground="#FF757575"/>
-                            </Grid>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="Text" Value="">
-                                <Setter Property="Visibility" TargetName="hintLabel" Value="Visible"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                    <ContentPresenter/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
                 </Setter.Value>
             </Setter>
         </Style>
     </Window.Resources>
     <Grid>
-        <DataGrid x:Name="dataGrid" Visibility="Visible" IsReadOnly="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding doctorFullName}" Header="ФИО врача" Width="*"/>
-                <DataGridTextColumn Binding="{Binding monday}" Header="пн" Width="*"/>
-                <DataGridTextColumn Binding="{Binding tuesday}" Header="вт" Width="*"/>
-                <DataGridTextColumn Binding="{Binding wednesday}" Header="ср" Width="*"/>
-                <DataGridTextColumn Binding="{Binding thursday}" Header="чт" Width="*"/>
-                <DataGridTextColumn Binding="{Binding friday}" Header="пт" Width="*"/>
-                <DataGridTextColumn Binding="{Binding saturday}" Header="сб" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <Button Click="Button_Click"/>
 
-        <DataGrid x:Name="qwe" Visibility="Hidden">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding cabinet}" Header="№ кабинета" Width="*"/>
-                <DataGridTextColumn Binding="{Binding doctor.GetFullName}" Header="ФИО врача" Width="*"/>
-                <DataGridTextColumn Binding="{Binding startTime.TimeOfDay}" Header="Время начала работы" Width="*"/>
-                <DataGridTextColumn Binding="{Binding endTime.TimeOfDay}" Header="Время конца работы" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <TextBox VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10" Height="30" Width="150">
+            <TextBox.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Text" Value="Введите ФИО врача"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
 
-        <DataGrid x:Name="dg" Visibility="Hidden">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ФИО врача" Width="*" Binding="{Binding firstName}"/>
-                <DataGridTextColumn Header="№ кабинета" Width="*"/>
-                <DataGridTemplateColumn Header="пн" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
+        <ListBox x:Name="mainList" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,50,0,10">
+            <ListBox.Template>
+                <ControlTemplate>
+                    <Grid>
+                        <ScrollViewer Padding="0" VerticalScrollBarVisibility="Visible">
                             <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBox Margin="0, -1, 0, -1" BorderBrush="Black" BorderThickness="0,0,1,0">
-                                    <TextBox.Resources>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Text" Value="Введите время начала"/>
-                                        </Style>
-                                    </TextBox.Resources>
-                                </TextBox>
-                                <TextBox Margin="0, -1, 0, -1" BorderThickness="0" Grid.Column="1">
-                                    <TextBox.Resources>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Text" Value="Введите время конца"/>
-                                        </Style>
-                                    </TextBox.Resources>
-                                </TextBox>
-                            </Grid>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="вт" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBox Margin="0, -1, 0, -1" BorderBrush="Black" BorderThickness="0,0,1,0">
-                                    <TextBox.Resources>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Text" Value="Введите время начала"/>
-                                        </Style>
-                                    </TextBox.Resources>
-                                </TextBox>
-                                <TextBox Margin="0, -1, 0, -1" BorderThickness="0" Grid.Column="1">
-                                    <TextBox.Resources>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Text" Value="Введите время конца"/>
-                                        </Style>
-                                    </TextBox.Resources>
-                                </TextBox>
-                            </Grid>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="ср" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBox Margin="0, -1, 0, -1" BorderBrush="Black" BorderThickness="0,0,1,0">
-                                    <TextBox.Resources>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Text" Value="Введите время начала"/>
-                                        </Style>
-                                    </TextBox.Resources>
-                                </TextBox>
-                                <TextBox Margin="0, -1, 0, -1" BorderThickness="0" Grid.Column="1">
-                                    <TextBox.Resources>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Text" Value="Введите время конца"/>
-                                        </Style>
-                                    </TextBox.Resources>
-                                </TextBox>
-                            </Grid>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="чт" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBox Margin="0, -1, 0, -1" BorderBrush="Black" BorderThickness="0,0,1,0">
-                                    <TextBox.Resources>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Text" Value="Введите время начала"/>
-                                        </Style>
-                                    </TextBox.Resources>
-                                </TextBox>
-                                <TextBox Margin="0, -1, 0, -1" BorderThickness="0" Grid.Column="1">
-                                    <TextBox.Resources>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Text" Value="Введите время конца"/>
-                                        </Style>
-                                    </TextBox.Resources>
-                                </TextBox>
-                            </Grid>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="пт" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBox Margin="0, -1, 0, -1" BorderBrush="Black" BorderThickness="0,0,1,0">
-                                    <TextBox.Resources>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Text" Value="Введите время начала"/>
-                                        </Style>
-                                    </TextBox.Resources>
-                                </TextBox>
-                                <TextBox Margin="0, -1, 0, -1" BorderThickness="0" Grid.Column="1">
-                                    <TextBox.Resources>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Text" Value="Введите время конца"/>
-                                        </Style>
-                                    </TextBox.Resources>
-                                </TextBox>
-                            </Grid>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="сб" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBox Margin="0, -1, 0, -1" BorderBrush="Black" BorderThickness="0,0,1,0">
-                                    <TextBox.Resources>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Text" Value="Введите время начала"/>
-                                        </Style>
-                                    </TextBox.Resources>
-                                </TextBox>
-                                <TextBox Margin="0, -1, 0, -1" BorderThickness="0" Grid.Column="1">
-                                    <TextBox.Resources>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Text" Value="Введите время конца"/>
-                                        </Style>
-                                    </TextBox.Resources>
-                                </TextBox>
-                            </Grid>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
 
-        <DataGrid Visibility="Hidden">
-            <DataGrid.Columns>
-                <DataGridTextColumn></DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1.3*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Style="{StaticResource Header}" Grid.Column="0" Text="ФИО врача"/>
+                                    <TextBlock Style="{StaticResource Header}" Grid.Column="1" Text="День недели"/>
+                                    <TextBlock Style="{StaticResource Header}" Grid.Column="2" Text="Время работы"/>
+                                    <TextBlock Style="{StaticResource Header}" Grid.Column="3" Text="Записи на прием"/>
+
+                                    <Border Grid.Column="0"/>
+                                    <Border Grid.Column="1"/>
+                                    <Border Grid.Column="2"/>
+                                    <Border Grid.Column="3"/>
+                                </Grid>
+
+                                <ItemsPresenter Grid.Row="1"/>
+                            </Grid>
+                        </ScrollViewer>
+                    </Grid>
+                </ControlTemplate>
+            </ListBox.Template>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.3*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.ColumnSpan="4" Margin="0"/>
+
+                        <TextBlock Text="{Binding doctorFullName}" Grid.Column="0" />
+
+                        <Border Grid.Column="1" Grid.ColumnSpan="3" BorderThickness="2,1,1,1" Margin="-1,0,0,0"/>
+                        <ListBox Margin="0" IsHitTestVisible="True" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" Background="Black" Grid.Column="1" Grid.ColumnSpan="3" ItemsSource="{Binding doc}">
+                            <ListBox.Template>
+                                <ControlTemplate>
+                                    <Grid HorizontalAlignment="Stretch">
+                                        <ItemsPresenter HorizontalAlignment="Stretch"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </ListBox.Template>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border>
+                                        <Grid HorizontalAlignment="Stretch">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="3*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Border Grid.Column="1" BorderThickness="2,0,2,0" Margin="-1,0,-1,0"/>
+
+                                            <TextBlock Text="{Binding dayOfWeek}" Grid.Column="0"/>
+                                            <TextBlock Text="{Binding workTime}" Grid.Column="1"/>
+
+                                            <ListBox Grid.Column="2" ItemsSource="{Binding zapisi}" HorizontalContentAlignment="Stretch" Margin="0,-1,0,-1">
+                                                <ListBox.Template>
+                                                    <ControlTemplate>
+                                                        <Grid HorizontalAlignment="Stretch">
+                                                            <ItemsPresenter HorizontalAlignment="Stretch"/>
+                                                        </Grid>
+                                                    </ControlTemplate>
+                                                </ListBox.Template>
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Border BorderThickness="1">
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="2*"/>
+                                                                </Grid.ColumnDefinitions>
+
+                                                                <Border Margin="0,0,-1,0" BorderThickness="0,0,2,0"/>
+
+                                                                <TextBlock Grid.Column="0" Text="{Binding time}"/>
+                                                                <TextBlock Grid.Column="1" Text="{Binding clientFullName}"/>
+                                                            </Grid>
+                                                        </Border>
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                            </ListBox>
+                                            
+                                            <!--
+                                            <DataGrid HorizontalContentAlignment="Stretch" ItemsSource="{Binding zapisi}"  HorizontalAlignment="Stretch" 
+                                                      Grid.Column="2" AutoGenerateColumns="False" HeadersVisibility="None" BorderThickness="1,0,0,0" Margin="0,0,0,-1">
+                                                <DataGrid.Columns>
+                                                    <DataGridTextColumn Binding="{Binding time}"/>
+                                                    <DataGridTextColumn Binding="{Binding clientFullName}"/>
+                                                </DataGrid.Columns>
+                                            </DataGrid>-->
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>

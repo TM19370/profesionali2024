@@ -24,7 +24,7 @@
     </ContentPage.Resources>
     <StackLayout>
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,10,0,0">
-            <Entry x:Name="clientIdEntry" WidthRequest="200" Placeholder="Введите код пациента" Completed="FindClient"/>
+            <Entry x:Name="clientIdEntry" WidthRequest="200" Placeholder="Введите код пациента" Completed="FindClient" Text="450"/>
             <Button WidthRequest="150" Text="Найти клиента" FontAttributes="Bold" BackgroundColor="#4CAF50" CornerRadius="10" Clicked="FindClient"/>
         </StackLayout>
 

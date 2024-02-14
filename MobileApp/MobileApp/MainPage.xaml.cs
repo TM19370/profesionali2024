@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using DataBaseClasses;
 using System.Diagnostics;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MobileApp
 {
@@ -32,7 +34,7 @@ namespace MobileApp
             {
                 HttpClient httpClient = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage();
-                request.RequestUri = new Uri("http://192.168.147.66:5120/getClient/" + clientIdEntry.Text);
+                request.RequestUri = new Uri("http://192.168.147.66:5120/Client/" + clientIdEntry.Text);
                 request.Method = HttpMethod.Get;
                 request.Headers.Add("Accept", "application/json");
                 //await client.SendAsync(request);
@@ -41,11 +43,9 @@ namespace MobileApp
                 {
                     HttpContent responseContent = response.Content;
                     var json = await responseContent.ReadAsStringAsync();
-                    Client client = new Client();
                     await DisplayAlert("", json, "Ok");
-                    var a = JsonConvert.DeserializeObject<DataBaseClasses.Client>(json);
-                    //Client client = JsonConvert.DeserializeObject<Client>(json);
-                    //clientInfoStackLayout.BindingContext = client;
+                    Client client = JsonConvert.DeserializeObject<Client>(json);
+                    clientInfoStackLayout.BindingContext = client;
                     //DisplayAlert("", client.FullName, "Ok");
                 }
             }
@@ -95,35 +95,35 @@ namespace MobileApp
         }*/
     }
 
-    /*
+    
     public class Client
     {
-        public int client_id { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int client_id { get; set; }
         public string photoPath { get; set; }
-        public string firstName { get; set; }
-        public string secondName { get; set; }
-        public string lastName { get; set; }
-        public string passportNumberAndSeries { get; set; }
-        public string passportGetInfo { get; set; }
-        public DateTime birthDate { get; set; }
-        public virtual Gender gender { get; set; }
-        public string workPlace { get; set; }
-        public string address { get; set; }
-        public string phoneNumder { get; set; }
-        public string email { get; set; }
-        public int medicalCardNumber { get; set; }
-        public DateTime getMedicalCardDate { get; set; }
-        public DateTime lastVisitDate { get; set; }
-        public DateTime nextVisitDate { get; set; }
-        public string insurancePolicyNumber { get; set; }
-        public DateTime insurancePolicyEndDate { get; set; }
-        public string insuranceCompany { get; set; }
-        public string fullName { get { return $"{secondName} {firstName} {lastName}"; } }
+        [Required] public string firstName { get; set; }
+        [Required] public string secondName { get; set; }
+        [Required] public string lastName { get; set; }
+        [Required] public string passportNumberAndSeries { get; set; }
+        [Required] public string passportGetInfo { get; set; }
+        [Required] public DateTime birthDate { get; set; }
+        [Required] public virtual Gender gender { get; set; }
+        [Required] public string workPlace { get; set; }
+        [Required] public string address { get; set; }
+        [Required] public string phoneNumder { get; set; }
+        [Required] public string email { get; set; }
+        [Required] public int medicalCardNumber { get; set; }
+        [Required] public DateTime getMedicalCardDate { get; set; }
+        [Required] public DateTime lastVisitDate { get; set; }
+        [Required] public DateTime nextVisitDate { get; set; }
+        [Required] public string insurancePolicyNumber { get; set; }
+        [Required] public DateTime insurancePolicyEndDate { get; set; }
+        [Required] public string insuranceCompany { get; set; }
+        public string FullName { get { return $"{secondName} {firstName} {lastName}"; } }
     }
-
+    
     public class Gender
     {
-        public int gender_id { get; private set; }
-        public string genderName { get; set; }
-    }*/
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int gender_id { get; private set; }
+        [Required] public string genderName { get; set; }
+    }
 }

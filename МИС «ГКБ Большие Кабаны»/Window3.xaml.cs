@@ -20,15 +20,61 @@ namespace МИС__ГКБ_Большие_Кабаны_
     /// Логика взаимодействия для Window3.xaml
     /// </summary>
     public partial class Window3 : Window
-    {
+    {/*
         List<WeekTimetablee> weekTimetableList;
 
         List<WeekStringTimeTable> weekStringTimeTableList = new List<WeekStringTimeTable>();
-
+        */
         public Window3()
         {
             InitializeComponent();
 
+            List<tst> tstList = new List<tst>();
+
+            for (int i = 0; i < 10; i++)
+            {
+                tstList.Add(new tst()
+                {
+                    doctorFullName = "Иванов Иван Иванович",
+                    doc = new List<doc>()
+                    {
+                        new doc() {
+                            dayOfWeek = DayOfWeek.Monday,
+                            workTime = "12:00 - 14:00",
+                            zapisi = new List<Zapisi>()
+                            {
+                                new Zapisi()
+                                {
+                                    time = "12:00 - 12:10",
+                                    clientFullName = "Данилов Данил Данилович"
+                                },
+                                new Zapisi()
+                                {
+                                    time = "12:10 - 12:20",
+                                    clientFullName = "Егоров Егор Егорович"
+                                }
+                            }
+                        },
+                        new doc() {
+                            dayOfWeek = DayOfWeek.Tuesday,
+                            workTime = "12:00 - 14:00",
+                            zapisi = new List<Zapisi>()
+                            {
+                                new Zapisi()
+                                {
+                                    time = "13:30 - 13:40",
+                                    clientFullName = "Денисов Денис Денисович"
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+
+            mainList.ItemsSource = tstList;
+
+            /*
             List<Doctor> doctors = db.doctors.ToList();
 
             foreach (Doctor doctor in doctors)
@@ -51,7 +97,7 @@ namespace МИС__ГКБ_Большие_Кабаны_
             }
 
             dataGrid.ItemsSource = weekStringTimeTableList;
-
+            */
             /*
             List<Doctor> doctors = db.doctors.ToList();
 
@@ -81,8 +127,32 @@ namespace МИС__ГКБ_Большие_Кабаны_
 
             qwe.ItemsSource = timetables;*/
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(((Client)DBInteract.GetClientByID(450)).FullName);
+        }
     }
 
+    public class tst
+    {
+        public string doctorFullName { get; set; }
+        public virtual List<doc> doc { get; set; }
+    }
+
+    public class doc
+    {
+        public DayOfWeek dayOfWeek { get; set; }
+        public string workTime { get; set; }
+        public virtual List<Zapisi> zapisi { get; set; }
+    }
+
+    public class Zapisi
+    {
+        public string time { get; set; }
+        public string clientFullName { get; set; }
+    }
+    /*
     public class WeekStringTimeTable
     {
         public string doctorFullName { get; set; }
@@ -104,5 +174,5 @@ namespace МИС__ГКБ_Большие_Кабаны_
         public Timetable thursday { get; set; }
         public Timetable friday { get; set; }
         public Timetable saturday { get; set; }
-    }
+    }*/
 }
