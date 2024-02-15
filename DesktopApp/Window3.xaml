@@ -1,0 +1,162 @@
+﻿<Window x:Class="DesktopApp.Window3"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DesktopApp"
+        mc:Ignorable="d"
+        Title="Window3" Height="450" Width="800" MinWidth="730">
+    <Window.Resources>
+        <Style x:Key="Header" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style TargetType="ListBox">
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                    <ContentPresenter/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Button Click="Button_Click"/>
+
+        <TextBox VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10" Height="30" Width="150">
+            <TextBox.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Text" Value="Введите ФИО врача"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+
+        <ListBox x:Name="mainList" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,50,0,10">
+            <ListBox.Template>
+                <ControlTemplate>
+                    <Grid>
+                        <ScrollViewer Padding="0" VerticalScrollBarVisibility="Visible">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1.3*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Style="{StaticResource Header}" Grid.Column="0" Text="ФИО врача"/>
+                                    <TextBlock Style="{StaticResource Header}" Grid.Column="1" Text="День недели"/>
+                                    <TextBlock Style="{StaticResource Header}" Grid.Column="2" Text="Время работы"/>
+                                    <TextBlock Style="{StaticResource Header}" Grid.Column="3" Text="Записи на прием"/>
+
+                                    <Border Grid.Column="0"/>
+                                    <Border Grid.Column="1"/>
+                                    <Border Grid.Column="2"/>
+                                    <Border Grid.Column="3"/>
+                                </Grid>
+
+                                <ItemsPresenter Grid.Row="1"/>
+                            </Grid>
+                        </ScrollViewer>
+                    </Grid>
+                </ControlTemplate>
+            </ListBox.Template>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.3*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.ColumnSpan="4" Margin="0"/>
+
+                        <TextBlock Text="{Binding doctorFullName}" Grid.Column="0" />
+
+                        <Border Grid.Column="1" Grid.ColumnSpan="3" BorderThickness="2,1,1,1" Margin="-1,0,0,0"/>
+                        <ListBox Margin="0" IsHitTestVisible="True" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" Background="Black" Grid.Column="1" Grid.ColumnSpan="3" ItemsSource="{Binding doc}">
+                            <ListBox.Template>
+                                <ControlTemplate>
+                                    <Grid HorizontalAlignment="Stretch">
+                                        <ItemsPresenter HorizontalAlignment="Stretch"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </ListBox.Template>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border>
+                                        <Grid HorizontalAlignment="Stretch">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="3*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Border Grid.Column="1" BorderThickness="2,0,2,0" Margin="-1,0,-1,0"/>
+
+                                            <TextBlock Text="{Binding dayOfWeek}" Grid.Column="0"/>
+                                            <TextBlock Text="{Binding workTime}" Grid.Column="1"/>
+
+                                            <ListBox Grid.Column="2" ItemsSource="{Binding zapisi}" HorizontalContentAlignment="Stretch" Margin="0,-1,0,-1">
+                                                <ListBox.Template>
+                                                    <ControlTemplate>
+                                                        <Grid HorizontalAlignment="Stretch">
+                                                            <ItemsPresenter HorizontalAlignment="Stretch"/>
+                                                        </Grid>
+                                                    </ControlTemplate>
+                                                </ListBox.Template>
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Border BorderThickness="1">
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="2*"/>
+                                                                </Grid.ColumnDefinitions>
+
+                                                                <Border Margin="0,0,-1,0" BorderThickness="0,0,2,0"/>
+
+                                                                <TextBlock Grid.Column="0" Text="{Binding time}"/>
+                                                                <TextBlock Grid.Column="1" Text="{Binding clientFullName}"/>
+                                                            </Grid>
+                                                        </Border>
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                            </ListBox>
+                                            
+                                            <!--
+                                            <DataGrid HorizontalContentAlignment="Stretch" ItemsSource="{Binding zapisi}"  HorizontalAlignment="Stretch" 
+                                                      Grid.Column="2" AutoGenerateColumns="False" HeadersVisibility="None" BorderThickness="1,0,0,0" Margin="0,0,0,-1">
+                                                <DataGrid.Columns>
+                                                    <DataGridTextColumn Binding="{Binding time}"/>
+                                                    <DataGridTextColumn Binding="{Binding clientFullName}"/>
+                                                </DataGrid.Columns>
+                                            </DataGrid>-->
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>

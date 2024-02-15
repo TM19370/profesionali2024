@@ -18,6 +18,7 @@ app.Run(async (context) =>
     }
     else if (Regex.IsMatch(path, @"/Client/\d{1,}") && request.Method == "GET")
     {
+        Console.WriteLine(path);
         await GetClient(request, response);
     }
 });
@@ -34,4 +35,5 @@ async Task GetClient(HttpRequest request, HttpResponse response)
     int id = GetIdFromPath((string)request.Path);
     Client client = db.clients.Find(id);
     await response.WriteAsJsonAsync(client);
+    Console.WriteLine(client.FullName);
 }

@@ -54,9 +54,36 @@ namespace MobileApp
                 DisplayAlert("Ошибка", $"HelpLink:\n{ex.HelpLink}\n\nSource:\n{ex.Source}\n\nStackTrace:\n{ex.StackTrace}\n\nMessage:\n{ex.Message}", "Ok");
             }
         }
-        /*
-        private void StartRecording()
+
+
+        protected MediaRecorder recorder;
+
+
+        private void StartRecording(string filePath)
         {
+            try
+            {
+                if(recorder == null)
+                {
+                    recorder = new MediaRecorder();
+                }
+                else
+                {
+                    recorder.Reset();
+                    recorder.SetAudioSource(AudioSource.Mic);
+                    recorder.SetOutputFormat(OutputFormat.ThreeGpp);
+                    recorder.SetAudioEncoder(AudioEncoder.AmrNb);
+
+                    recorder.SetOutputFile(filePath);
+                    recorder.Prepare();
+                    recorder.Start();
+                }
+            }
+            catch (Exception ex)
+            {
+                DisplayAlert("", ex.Message, "Ok");
+            }
+            /*
             recorder = new MediaRecorder();
             recorder.SetAudioSource(AudioSource.Default);
             recorder.SetOutputFormat(OutputFormat.ThreeGpp);
@@ -72,27 +99,35 @@ namespace MobileApp
                 Log.Error("", ioe.ToString());
             }
 
-            recorder.Start();
+            recorder.Start();*/
         }
 
         void StopRecording()
-        {
+        {/*
             if (recorder == null)
                 return;
             recorder.Stop();
             recorder.Release();
-            recorder = null;
+            recorder = null;*/
         }
 
         private void Button_Pressed(object sender, EventArgs e)
         {
-            StartRecording();
+            /*if (ActivityCompat.checkSelfPermission(activity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)
+            {
+                ActivityCompat.requestPermissions(activity(), new String[] { Manifest.permission.RECORD_AUDIO }, BuildDev.RECORD_AUDIO);
+            }
+            else
+            {
+                startRecording();
+            }*/
+            StartRecording("test.mp3");
         }
 
         private void Button_Released(object sender, EventArgs e)
         {
             StopRecording();
-        }*/
+        }
     }
 
     

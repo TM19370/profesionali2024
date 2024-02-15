@@ -15,6 +15,8 @@ var app = builder.Build();
 
 app.UseStaticFiles();
 
+//можно поменять на hullable переменные вместо листов чтобы проверять существует ли
+
 app.Run(async (context) =>
 {
     var response = context.Response;
@@ -80,6 +82,12 @@ int GetIdFromPath(string path)
     return Convert.ToInt32(path.Split('/')[3]);
 }
 
+async Task ReturnError(HttpResponse response, Exception exception)
+{
+    response.StatusCode = 400;
+    await response.WriteAsJsonAsync(new { error = exception.Message });
+}
+
 void ReplaceText(DocX file, string searchText, string newText)
 {
     try
@@ -90,7 +98,6 @@ void ReplaceText(DocX file, string searchText, string newText)
         file.ReplaceText(replaceOptions);
     }
     catch (Exception ex) { }
-    
 }
 
 async Task CancelHospitalization(HttpRequest request, HttpResponse response)
@@ -106,8 +113,7 @@ async Task CancelHospitalization(HttpRequest request, HttpResponse response)
     }
     catch (Exception exception)
     {
-        response.StatusCode = 400;
-        await response.WriteAsJsonAsync(new { error = exception.Message });
+        await ReturnError(response, exception);
     }
 }
 
@@ -116,6 +122,9 @@ async Task SetHospitalizationDateTime(HttpRequest request, HttpResponse response
     try
     {
         int hospitalizationId = GetIdFromPath(request.Path);
+
+        Hospitalization? hospitalization1 = db.hospitalizations.Find(hospitalizationId);
+
         List<Hospitalization> hospitalizations = db.hospitalizations.Where(x => x.hospitalization_id == hospitalizationId).ToList();
         if (hospitalizations.Count == 0)
             throw new Exception("Госпитацизации с таким кодом не существует");
@@ -123,11 +132,11 @@ async Task SetHospitalizationDateTime(HttpRequest request, HttpResponse response
         hospitalization.hospitalizationStartDate = Convert.ToDateTime(((string)request.Path).Split('/').Last());
         db.hospitalizations.Find(hospitalization.hospitalization_id).Edit(hospitalization);
         db.SaveChanges();
+
     }
     catch (Exception exception)
     {
-        response.StatusCode = 400;
-        await response.WriteAsJsonAsync(new { error = exception.Message });
+        await ReturnError(response, exception);
     }
 }
 
@@ -143,8 +152,7 @@ async Task GetHospitalizationInfo(HttpRequest request, HttpResponse response)
     }
     catch (Exception exception)
     {
-        response.StatusCode = 400;
-        await response.WriteAsJsonAsync(new { error = exception.Message });
+        await ReturnError(response, exception);
     }
 }
 
@@ -192,12 +200,11 @@ async Task PersonalData(HttpRequest request, HttpResponse response)
 {
     int clientId = GetIdFromPath(request.Path);
     Client client = db.clients.Find(clientId);
-    string FIO = $"{client.secondName} {client.firstName} {client.lastName}";
 
     string fileName = $"{Directory.GetCurrentDirectory()}/бланк согласия на обработку персональных данных.docx";
     var doc = DocX.Load(fileName);
 
-    ReplaceText(doc, "<FIO>", FIO);
+    ReplaceText(doc, "<FIO>", client.FullName);
     ReplaceText(doc, "<passportNumberAndSeries>", client.passportNumberAndSeries);
     ReplaceText(doc, "<passportGetInfo>", client.passportGetInfo);
     ReplaceText(doc, "<address>", client.address);
@@ -205,7 +212,7 @@ async Task PersonalData(HttpRequest request, HttpResponse response)
     ReplaceText(doc, "<currentDate>", DateTime.Now.ToString("dd MMMM yyyyг."));
     ReplaceText(doc, "<target>", "медицинского обслуживания");
 
-    string newFileName = $"Согласие на обработку персоняльных данных {FIO} от {DateTime.Now.ToString("dd-M-yyyy")}.docx";
+    string newFileName = $"Согласие на обработку персоняльных данных {client.FullName} от {DateTime.Now.ToString("dd-M-yyyy")}.docx";
     doc.SaveAs(Directory.GetCurrentDirectory() + "/wwwroot/personalData.docx");
 
     await response.WriteAsJsonAsync(new { fileName = newFileName });
@@ -295,8 +302,7 @@ async Task CreateHospitalization(HttpRequest request, HttpResponse response)
     }
     catch (Exception exception)
     {
-        response.StatusCode = 400;
-        await response.WriteAsJsonAsync(new { error = exception.Message });
+        await ReturnError(response, exception);
     }
 }
 
@@ -330,8 +336,7 @@ async Task CreateClient(HttpRequest request, HttpResponse response)
     {
         string fullPath = $"{Directory.GetCurrentDirectory()}/clientImages/{imageFileName}";
         File.Delete(fullPath);
-        response.StatusCode = 400;
-        await response.WriteAsJsonAsync(new { error = exception.Message });
+        await ReturnError(response, exception);
     }
     imageFileName = "NULL";
 }

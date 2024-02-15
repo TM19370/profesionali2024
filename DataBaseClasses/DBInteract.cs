@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace DataBaseClasses
             request.RequestUri = new Uri(apiServerUrl + "/Client/" + client_id);
             request.Method = HttpMethod.Get;
             request.Headers.Add("Accept", "application/json");
-            HttpResponseMessage response = await SendRequest(request);
+            HttpResponseMessage response = await httpClient.SendAsync(request);
             Client? client;
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -39,7 +40,16 @@ namespace DataBaseClasses
 
         private static async Task<HttpResponseMessage> SendRequest(HttpRequestMessage httpRequestMessage)
         {
-            HttpResponseMessage response = await httpClient.SendAsync(httpRequestMessage);
+            HttpResponseMessage response = new HttpResponseMessage();
+            try
+            {
+                response = await httpClient.SendAsync(httpRequestMessage);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            
             return response;
         }
     }
