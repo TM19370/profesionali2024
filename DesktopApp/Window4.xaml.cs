@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DataBaseClasses;
+using static DataBaseClasses.DBInteract;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 namespace DesktopApp
 {
     /// <summary>
@@ -19,11 +22,17 @@ namespace DesktopApp
     /// </summary>
     public partial class Window4 : Window
     {
-        public Window4()
+        AppointmentInfo appointmentInfo;
+
+        public Window4(Client client)
         {
             InitializeComponent();
+            appointmentInfo = new AppointmentInfo()
+            {
+                client = client
+            };
 
-            dat.ItemsSource = new List<cl> { new cl { medicamentName = "tst", dose = "1", format = "asdasda" } };
+            UpdateList();
         }
 
         private void dat_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
@@ -31,6 +40,40 @@ namespace DesktopApp
             DataGrid dataGrid = (DataGrid)sender;
             cl a = dataGrid.Items[dataGrid.Items.Count - 1] as cl;
             MessageBox.Show(a.ToString() + "\n" + sender.ToString() + "\ndat_RowEditEnding");
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new testWindow();
+            if(dialog.ShowDialog() == true)
+            {
+                Medicament? medicament = db.Medicaments.Where(x => x.medicamentName == dialog.MedicamentName).First();
+                if(medicament == null)
+                {
+                    medicament = new Medicament() 
+                    {
+                        medicamentName = dialog.MedicamentName
+                    };
+                    db.Medicaments.Add(medicament);
+                    db.SaveChanges();
+                    medicament = db.Medicaments.Where(x => x.medicamentName == dialog.MedicamentName).First();
+                }
+
+                Prescription prescription = new Prescription()
+                {
+                    medicament = medicament,
+                    dose = dialog.Dose,
+                    format = dialog.Format,
+                };
+
+                db.prescriptions.Add(prescription);
+                db.SaveChanges();
+            }
+        }
+
+        void UpdateList()
+        {
+            prescriptionList.ItemsSource = db.prescriptions.Where(x => x.appointmentInfo.appointmentInfo_id == appointmentInfo.appointmentInfo_id).ToList();
         }
     }
 

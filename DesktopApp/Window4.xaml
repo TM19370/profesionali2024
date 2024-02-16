@@ -37,15 +37,17 @@
             <TextBlock Grid.Row="4" Text="Рекомендации по лечению:"/>
             <TextBox Grid.Row="5"/>
             <TextBlock Grid.Column="1" Text="Рецепты:"/>
-            <Border Grid.Column="1" Grid.Row="1" Grid.RowSpan="5" BorderBrush="Black" BorderThickness="0" Margin="10">
-                <DataGrid x:Name="dat" AutoGenerateColumns="False" RowEditEnding="dat_RowEditEnding" HeadersVisibility="Column" FontSize="12">
+            <Border Grid.Column="1" Grid.Row="1" Grid.RowSpan="5" BorderBrush="Black" BorderThickness="0" Margin="10,10,10,50">
+                <DataGrid x:Name="prescriptionList" AutoGenerateColumns="False" RowEditEnding="dat_RowEditEnding" HeadersVisibility="Column" FontSize="12">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Название препарата" Width="1.2*" Binding="{Binding medicamentName}"/>
+                        <DataGridTextColumn Header="Название препарата" Width="1.2*" Binding="{Binding medicament.medicamentName}"/>
                         <DataGridTextColumn Header="Дозировка" Width="*" Binding="{Binding dose}"/>
                         <DataGridTextColumn Header="Формат приема" Width="*" Binding="{Binding format}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Border>
+
+            <Button Grid.Column="1" Grid.Row="6" Height="30" VerticalAlignment="Bottom" Margin="10" Content="Добавить рецепт" Click="Button_Click"/>
         </Grid>
         
 

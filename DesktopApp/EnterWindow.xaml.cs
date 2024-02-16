@@ -24,7 +24,7 @@ namespace DesktopApp
         public EnterWindow()
         {
             InitializeComponent();
-            Window3 window4 = new Window3();
+            Window4 window4 = new Window4(db.clients.Find(450));
             window4.Show();
             Close();
         }

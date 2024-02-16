@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileApp.AppointmentPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView>
+                <StackLayout>
+                    <Label Style="{StaticResource InfoHeader}" Text="Симптомы:" Margin="0,10,0,0"/>
+                    <Frame Padding="0" HeightRequest="200">
+                        <Editor/>
+                    </Frame>
+                    <Label Style="{StaticResource InfoHeader}" Text="Диагноз:"/>
+                    <Frame Padding="0" HeightRequest="200">
+                        <Editor/>
+                    </Frame>
+                    <Label Style="{StaticResource InfoHeader}" Text="Рекомендации по лечению:"/>
+                    <Frame Padding="0" HeightRequest="200">
+                        <Editor/>
+                    </Frame>
+                    <Label Style="{StaticResource InfoHeader}" Text="Рецепты:"/>
+                    <Frame HeightRequest="500"/>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,35 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MobileApp.MainPage">
+             x:Class="MobileApp.EMCPage">
     <ContentPage.Resources>
-        <Style TargetType="Label">
-            <Setter Property="TextColor" Value="#000"/>
-            <Setter Property="HorizontalOptions" Value="Center"/>
-            <Setter Property="FontFamily" Value="sans-serif"/>
-            <Setter Property="FontSize" Value="16"/>
-        </Style>
-        <Style TargetType="Label" x:Key="InfoHeader">
-            <Setter Property="TextColor" Value="#999"/>
-            <Setter Property="FontAttributes" Value="Bold"/>
-            <Setter Property="HorizontalOptions" Value="Center"/>
-            <Setter Property="FontFamily" Value="sans-serif"/>
-            <Setter Property="FontSize" Value="16"/>
-        </Style>
-        <Style TargetType="Frame">
-            <Setter Property="HorizontalOptions" Value="Fill"/>
-            <Setter Property="BorderColor" Value="#ccc"/>
-            <Setter Property="Margin" Value="20,0"/>
-        </Style>
+        
     </ContentPage.Resources>
     <StackLayout>
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,10,0,0">
-            <Entry x:Name="clientIdEntry" WidthRequest="200" Placeholder="Введите код пациента" Completed="FindClient" Text="450"/>
-            <Button WidthRequest="150" Text="Найти клиента" FontAttributes="Bold" BackgroundColor="#4CAF50" CornerRadius="10" Clicked="FindClient"/>
+            <Entry x:Name="clientIdEntry" WidthRequest="200" Placeholder="Введите код пациента" Completed="FindClient"/>
+            <Button WidthRequest="150" Text="Найти клиента" Clicked="FindClient"/>
         </StackLayout>
 
         <ScrollView>
             <StackLayout x:Name="clientInfoStackLayout" Orientation="Vertical">
+                <Frame Padding="0" HeightRequest="160" WidthRequest="160" CornerRadius="20" HorizontalOptions="Center">
+                    <Grid>
+                        <Label Text="Изображение отсутствует" VerticalOptions="Center" HorizontalTextAlignment="Center" TextColor="#DDD" Margin="10"/>
+                        <Image x:Name="clientImage" IsVisible="true"/>
+                    </Grid>
+                </Frame>
                 <Label Style="{StaticResource InfoHeader}" Text="ФИО:"/>
                 <Frame>
                     <Label Text="{Binding FullName}"/>
@@ -96,8 +85,5 @@
                 </Frame>
             </StackLayout>
         </ScrollView>
-        
-        <Button Text="record" Pressed="Button_Pressed" Released="Button_Released"/>
-        
     </StackLayout>
 </ContentPage>

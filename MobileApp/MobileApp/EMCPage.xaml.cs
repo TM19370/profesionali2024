@@ -15,15 +15,17 @@ using DataBaseClasses;
 using System.Diagnostics;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Android.Security;
+using Android.Content.Res;
 
 namespace MobileApp
 {
     
-    public partial class MainPage : ContentPage
+    public partial class EMCPage : ContentPage
     {
-        //MediaRecorder recorder;
+        private string apiServerPath = "http://192.168.147.66:5120";
 
-        public MainPage()
+        public EMCPage()
         {
             InitializeComponent();
         }
@@ -34,103 +36,38 @@ namespace MobileApp
             {
                 HttpClient httpClient = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage();
-                request.RequestUri = new Uri("http://192.168.147.66:5120/Client/" + clientIdEntry.Text);
+                request.RequestUri = new Uri(apiServerPath + "/Client/" + clientIdEntry.Text);
                 request.Method = HttpMethod.Get;
                 request.Headers.Add("Accept", "application/json");
-                //await client.SendAsync(request);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
+                HttpContent responseContent = response.Content;
+                var json = await responseContent.ReadAsStringAsync();
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    HttpContent responseContent = response.Content;
-                    var json = await responseContent.ReadAsStringAsync();
-                    await DisplayAlert("", json, "Ok");
                     Client client = JsonConvert.DeserializeObject<Client>(json);
                     clientInfoStackLayout.BindingContext = client;
-                    //DisplayAlert("", client.FullName, "Ok");
-                }
-            }
-            catch (Exception ex)
-            {
-                DisplayAlert("Ошибка", $"HelpLink:\n{ex.HelpLink}\n\nSource:\n{ex.Source}\n\nStackTrace:\n{ex.StackTrace}\n\nMessage:\n{ex.Message}", "Ok");
-            }
-        }
-
-
-        protected MediaRecorder recorder;
-
-
-        private void StartRecording(string filePath)
-        {
-            try
-            {
-                if(recorder == null)
-                {
-                    recorder = new MediaRecorder();
+                    clientImage.Source = apiServerPath + "/Images/" + client.photoPath;
                 }
                 else
                 {
-                    recorder.Reset();
-                    recorder.SetAudioSource(AudioSource.Mic);
-                    recorder.SetOutputFormat(OutputFormat.ThreeGpp);
-                    recorder.SetAudioEncoder(AudioEncoder.AmrNb);
-
-                    recorder.SetOutputFile(filePath);
-                    recorder.Prepare();
-                    recorder.Start();
+                    ErrorResponce errorResponce = JsonConvert.DeserializeObject<ErrorResponce>(json);
+                    throw new Exception(errorResponce.error);
                 }
             }
             catch (Exception ex)
             {
-                DisplayAlert("", ex.Message, "Ok");
+                await DisplayAlert("Ошибка", $"{ex.Message}", "Ok");
+                //DisplayAlert("Ошибка", $"HelpLink:\n{ex.HelpLink}\n\nSource:\n{ex.Source}\n\nStackTrace:\n{ex.StackTrace}\n\nMessage:\n{ex.Message}", "Ok");
             }
-            /*
-            recorder = new MediaRecorder();
-            recorder.SetAudioSource(AudioSource.Default);
-            recorder.SetOutputFormat(OutputFormat.ThreeGpp);
-            recorder.SetOutputFile("test.mp3");
-            recorder.SetAudioEncoder(AudioEncoder.AmrNb);
-
-            try
-            {
-                recorder.Prepare();
-            }
-            catch (IOException ioe)
-            {
-                Log.Error("", ioe.ToString());
-            }
-
-            recorder.Start();*/
-        }
-
-        void StopRecording()
-        {/*
-            if (recorder == null)
-                return;
-            recorder.Stop();
-            recorder.Release();
-            recorder = null;*/
-        }
-
-        private void Button_Pressed(object sender, EventArgs e)
-        {
-            /*if (ActivityCompat.checkSelfPermission(activity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)
-            {
-                ActivityCompat.requestPermissions(activity(), new String[] { Manifest.permission.RECORD_AUDIO }, BuildDev.RECORD_AUDIO);
-            }
-            else
-            {
-                startRecording();
-            }*/
-            StartRecording("test.mp3");
-        }
-
-        private void Button_Released(object sender, EventArgs e)
-        {
-            StopRecording();
         }
     }
 
     
+    public class ErrorResponce
+    {
+        public string error { get; set; }
+    }
+
     public class Client
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int client_id { get; set; }
