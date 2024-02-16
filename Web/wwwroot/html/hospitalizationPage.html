@@ -133,10 +133,13 @@
                     lastVisitDate: document.getElementById("lastVisitDate").value,
                     nextVisitDate: document.getElementById("nextVisitDate").value,
                     insurancePolicyNumber: document.getElementById("insurancePolicyNumber").value,
-                    insurancePolicyEndDate: document.getElementById("insurancePolicyEndDate").value
+                    insurancePolicyEndDate: document.getElementById("insurancePolicyEndDate").value,
+                    insuranceCompany: document.getElementById("insuranceCompany").value
                 },
                 diagnosis: null
             }
+
+            console.log(JSON.stringify(hospitalization));
 
             const response = await fetch("/api/hospitalization", {
                 method: "POST",

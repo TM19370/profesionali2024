@@ -8,14 +8,12 @@ using DataBaseClasses;
 using static DataBaseClasses.DBInteract;
 
 string organizationName = "ГКБ Большие Кабаны";
-string imageFileName = "NULL";
+string imageFileName = "";
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
 app.UseStaticFiles();
-
-//можно поменять на hullable переменные вместо листов чтобы проверять существует ли
 
 app.Run(async (context) =>
 {
@@ -97,7 +95,7 @@ void ReplaceText(DocX file, string searchText, string newText)
         replaceOptions.NewValue = newText;
         file.ReplaceText(replaceOptions);
     }
-    catch (Exception ex) { }
+    catch (Exception exception) { }
 }
 
 async Task CancelHospitalization(HttpRequest request, HttpResponse response)
@@ -122,17 +120,12 @@ async Task SetHospitalizationDateTime(HttpRequest request, HttpResponse response
     try
     {
         int hospitalizationId = GetIdFromPath(request.Path);
-
-        Hospitalization? hospitalization1 = db.hospitalizations.Find(hospitalizationId);
-
-        List<Hospitalization> hospitalizations = db.hospitalizations.Where(x => x.hospitalization_id == hospitalizationId).ToList();
-        if (hospitalizations.Count == 0)
+        Hospitalization? hospitalization = db.hospitalizations.Find(hospitalizationId);
+        if (hospitalization == null)
             throw new Exception("Госпитацизации с таким кодом не существует");
-        Hospitalization hospitalization = hospitalizations.First();
         hospitalization.hospitalizationStartDate = Convert.ToDateTime(((string)request.Path).Split('/').Last());
         db.hospitalizations.Find(hospitalization.hospitalization_id).Edit(hospitalization);
         db.SaveChanges();
-
     }
     catch (Exception exception)
     {
@@ -145,10 +138,59 @@ async Task GetHospitalizationInfo(HttpRequest request, HttpResponse response)
     try
     {
         int hospitalizationId = GetIdFromPath(request.Path);
-        List<Hospitalization> hospitalizations = db.hospitalizations.Where(x => x.hospitalization_id == hospitalizationId).ToList();
-        if (hospitalizations.Count == 0)
+        Hospitalization? hospitalization = db.hospitalizations.Find(hospitalizationId);
+        if (hospitalization == null)
             throw new Exception("Госпитацизации с таким кодом не существует");
-        await response.WriteAsJsonAsync(hospitalizations.First());
+        await response.WriteAsJsonAsync(hospitalization);
+    }
+    catch (Exception exception)
+    {
+        await ReturnError(response, exception);
+    }
+}
+async Task MedicalCareContract(HttpRequest request, HttpResponse response)
+{
+    try
+    {
+        int clientId = GetIdFromPath(request.Path);
+        Client? client = db.clients.Find(clientId);
+        if (client == null)
+            throw new Exception("Клиента с таким кодом не существует");
+
+        string FIO = $"{client.secondName} {client.firstName} {client.lastName}";
+
+        string fileName = $"{Directory.GetCurrentDirectory()}/бланк договора предоставления платных медицинских услуг.docx";
+        var doc = DocX.Load(fileName);
+
+        ReplaceText(doc, "<currentDate>", DateTime.Now.ToString("dd.MM.yyyy"));
+        ReplaceText(doc, "<ORG>", organizationName);
+        ReplaceText(doc, "<position , full name>", "/////////////////");
+        ReplaceText(doc, "<osnovanie>", "/////////////////");
+        ReplaceText(doc, "<clientFIO>", FIO);
+        ReplaceText(doc, "<license>", "/////////////////");
+        ReplaceText(doc, "<licenseStartDate>", "/////////////////");
+        ReplaceText(doc, "<licenseEndDate>", "/////////////////");
+        ReplaceText(doc, "<licenseORGNameAddressPhoneNumber>", "/////////////////");
+        ReplaceText(doc, "<licenseORGEndDate>", "/////////////////");
+        ReplaceText(doc, "<services>", "/////////////////");
+        ReplaceText(doc, "<waitingDays>", "/////////////////");
+        ReplaceText(doc, "<position>", "/////////////////");
+        ReplaceText(doc, "<ORGAddress>", "/////////////////");
+        ReplaceText(doc, "<ORGEmail>", "/////////////////");
+        ReplaceText(doc, "<OGRN>", "/////////////////");
+        ReplaceText(doc, "<INN>", "/////////////////");
+        ReplaceText(doc, "<positionGW>", "/////////////////");
+        ReplaceText(doc, "<IO Fam>", "/////////////////");
+        ReplaceText(doc, "<clientAddress>", client.address);
+        ReplaceText(doc, "<clientOtherAddresses>", "/////////////////");
+        ReplaceText(doc, "<clientPassport>", $"{client.passportNumberAndSeries} {client.passportGetInfo}");
+        ReplaceText(doc, "<clientPhoneNumber>", client.phoneNumder);
+        ReplaceText(doc, "<clientIO Fam>", $"{client.firstName[0]}{client.lastName[0]} {client.secondName}");
+
+        string newFileName = $"Договор предоставления платных медицинских услуг {FIO} от {DateTime.Now.ToString("dd-M-yyyy")}.docx";
+        doc.SaveAs(Directory.GetCurrentDirectory() + "/wwwroot/medicalCareContract.docx");
+
+        await response.WriteAsJsonAsync(new { fileName = newFileName });
     }
     catch (Exception exception)
     {
@@ -156,88 +198,65 @@ async Task GetHospitalizationInfo(HttpRequest request, HttpResponse response)
     }
 }
 
-async Task MedicalCareContract(HttpRequest request, HttpResponse response)
-{
-    int clientId = GetIdFromPath(request.Path);
-    Client client = db.clients.Find(clientId);
-    string FIO = $"{client.secondName} {client.firstName} {client.lastName}";
-
-    string fileName = $"{Directory.GetCurrentDirectory()}/бланк договора предоставления платных медицинских услуг.docx";
-    var doc = DocX.Load(fileName);
-    
-    ReplaceText(doc, "<currentDate>", DateTime.Now.ToString("dd.MM.yyyy"));
-    ReplaceText(doc, "<ORG>", organizationName);
-    ReplaceText(doc, "<position , full name>", "/////////////////");
-    ReplaceText(doc, "<osnovanie>", "/////////////////");
-    ReplaceText(doc, "<clientFIO>", FIO);
-    ReplaceText(doc, "<license>", "/////////////////");
-    ReplaceText(doc, "<licenseStartDate>", "/////////////////");
-    ReplaceText(doc, "<licenseEndDate>", "/////////////////");
-    ReplaceText(doc, "<licenseORGNameAddressPhoneNumber>", "/////////////////");
-    ReplaceText(doc, "<licenseORGEndDate>", "/////////////////");
-    ReplaceText(doc, "<services>", "/////////////////");
-    ReplaceText(doc, "<waitingDays>", "/////////////////");
-    ReplaceText(doc, "<position>", "/////////////////");
-    ReplaceText(doc, "<ORGAddress>", "/////////////////");
-    ReplaceText(doc, "<ORGEmail>", "/////////////////");
-    ReplaceText(doc, "<OGRN>", "/////////////////");
-    ReplaceText(doc, "<INN>", "/////////////////");
-    ReplaceText(doc, "<positionGW>", "/////////////////");
-    ReplaceText(doc, "<IO Fam>", "/////////////////");
-    ReplaceText(doc, "<clientAddress>", client.address);
-    ReplaceText(doc, "<clientOtherAddresses>", "/////////////////");
-    ReplaceText(doc, "<clientPassport>", $"{client.passportNumberAndSeries} {client.passportGetInfo}");
-    ReplaceText(doc, "<clientPhoneNumber>", client.phoneNumder);
-    ReplaceText(doc, "<clientIO Fam>", $"{client.firstName[0]}{client.lastName[0]} {client.secondName}");
-
-    string newFileName = $"Договор предоставления платных медицинских услуг {FIO} от {DateTime.Now.ToString("dd-M-yyyy")}.docx";
-    doc.SaveAs(Directory.GetCurrentDirectory() + "/wwwroot/medicalCareContract.docx");
-
-    await response.WriteAsJsonAsync(new { fileName = newFileName });
-}
-
 async Task PersonalData(HttpRequest request, HttpResponse response)
 {
-    int clientId = GetIdFromPath(request.Path);
-    Client client = db.clients.Find(clientId);
+    try
+    {
+        int clientId = GetIdFromPath(request.Path);
+        Client? client = db.clients.Find(clientId);
+        if(client == null)
+            throw new Exception("Клиента с таким кодом не существует");
+        string fileName = $"{Directory.GetCurrentDirectory()}/бланк согласия на обработку персональных данных.docx";
+        var doc = DocX.Load(fileName);
 
-    string fileName = $"{Directory.GetCurrentDirectory()}/бланк согласия на обработку персональных данных.docx";
-    var doc = DocX.Load(fileName);
+        ReplaceText(doc, "<FIO>", client.FullName);
+        ReplaceText(doc, "<passportNumberAndSeries>", client.passportNumberAndSeries);
+        ReplaceText(doc, "<passportGetInfo>", client.passportGetInfo);
+        ReplaceText(doc, "<address>", client.address);
+        ReplaceText(doc, "<ORG>", organizationName);
+        ReplaceText(doc, "<currentDate>", DateTime.Now.ToString("dd MMMM yyyyг."));
+        ReplaceText(doc, "<target>", "медицинского обслуживания");
 
-    ReplaceText(doc, "<FIO>", client.FullName);
-    ReplaceText(doc, "<passportNumberAndSeries>", client.passportNumberAndSeries);
-    ReplaceText(doc, "<passportGetInfo>", client.passportGetInfo);
-    ReplaceText(doc, "<address>", client.address);
-    ReplaceText(doc, "<ORG>", organizationName);
-    ReplaceText(doc, "<currentDate>", DateTime.Now.ToString("dd MMMM yyyyг."));
-    ReplaceText(doc, "<target>", "медицинского обслуживания");
+        string newFileName = $"Согласие на обработку персоняльных данных {client.FullName} от {DateTime.Now.ToString("dd-M-yyyy")}.docx";
+        doc.SaveAs(Directory.GetCurrentDirectory() + "/wwwroot/personalData.docx");
 
-    string newFileName = $"Согласие на обработку персоняльных данных {client.FullName} от {DateTime.Now.ToString("dd-M-yyyy")}.docx";
-    doc.SaveAs(Directory.GetCurrentDirectory() + "/wwwroot/personalData.docx");
-
-    await response.WriteAsJsonAsync(new { fileName = newFileName });
+        await response.WriteAsJsonAsync(new { fileName = newFileName });
+    }
+    catch (Exception exception)
+    {
+        await ReturnError(response, exception);
+    }
 }
 
 async Task DecodeQRCode(HttpRequest request, HttpResponse response)
 {
-    IFormFile file = request.Form.Files[0];
-    string filePath = $"{Directory.GetCurrentDirectory()}/QRToDecode.png";
-    using (var fileStream = new FileStream(filePath, FileMode.Create))
+    try
     {
-        await file.CopyToAsync(fileStream);
+        IFormFile file = request.Form.Files[0];
+        string filePath = $"{Directory.GetCurrentDirectory()}/QRToDecode.png";
+        using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+        {
+            await file.CopyToAsync(fileStream);
+        }
+
+        string client_id;
+
+        using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
+        {
+            Bitmap img = new Bitmap(fileStream);
+            QRCodeDecoder decoder = new QRCodeDecoder();
+            client_id = decoder.Decode(new QRCodeBitmapImage(img));
+        }
+
+        Client? client = db.clients.Find(Convert.ToInt32(client_id));
+        if (client == null)
+            throw new Exception("Клиента с таким кодом не существует");
+        await response.WriteAsJsonAsync(client);
     }
-
-    string client_id;
-
-    using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
+    catch (Exception exception)
     {
-        Bitmap img = new Bitmap(fileStream);
-        QRCodeDecoder decoder = new QRCodeDecoder();
-        client_id = decoder.Decode(new QRCodeBitmapImage(img));
+        await ReturnError(response, exception);
     }
-
-    Client client = db.clients.Find(Convert.ToInt32(client_id));
-    await response.WriteAsJsonAsync(client);
 }
 
 async Task CreateQRCode(HttpRequest request, HttpResponse response)
@@ -247,7 +266,7 @@ async Task CreateQRCode(HttpRequest request, HttpResponse response)
     QRCodeEncoder encoder = new QRCodeEncoder();
     Bitmap qrCode = encoder.Encode(qrCodeText);
     string qrpath = $"{Directory.GetCurrentDirectory()}/wwwroot/qr.png";
-    using (var fileStream = new FileStream(qrpath, FileMode.Create))
+    using (FileStream fileStream = new FileStream(qrpath, FileMode.Create))
     {
         qrCode.Save(fileStream, System.Drawing.Imaging.ImageFormat.Png);
     }
@@ -264,7 +283,7 @@ async Task CreateImage(HttpRequest request, HttpResponse response)
     imageFileName = $"{DateTime.Now.ToString("dd-MM-yyyy-H-mm-ss-FFF")}.{file.FileName.Split('.').Last()}";
     string fullPath = $"{uploadPath}/{imageFileName}";
 
-    using (var fileStream = new FileStream(fullPath, FileMode.Create))
+    using (FileStream fileStream = new FileStream(fullPath, FileMode.Create))
     {
         await file.CopyToAsync(fileStream);
     }
@@ -282,21 +301,18 @@ async Task CreateHospitalization(HttpRequest request, HttpResponse response)
 
         string passportNumberAndSeries = hospitalization.client.passportNumberAndSeries;
 
-        List<Client> clients = db.clients.Where(x => x.passportNumberAndSeries == passportNumberAndSeries).ToList();
-        Client client;
-        if (clients.Count == 0)
+        if (db.clients.Any(x => x.passportNumberAndSeries == passportNumberAndSeries))
         {
-            client = hospitalization.client;
+            hospitalization.client = db.clients.Find(hospitalization.client.client_id);
+        }
+        else
+        {
+            Client client = hospitalization.client;
             client.gender = db.genders.Where(x => x.genderName == client.gender.genderName).First();
             db.clients.Add(client);
             db.SaveChanges();
             hospitalization.client = client;
         }
-        else
-        {
-            hospitalization.client = db.clients.Find(clients.First().client_id);
-        }
-
         db.hospitalizations.Add(hospitalization);
         db.SaveChanges();
     }
@@ -310,7 +326,7 @@ async Task CreateClient(HttpRequest request, HttpResponse response)
 {
     try
     {
-        if (imageFileName == "NULL")
+        if (imageFileName == "")
         {
             throw new Exception("Произошла ошибка при загрузке изображения");
         }
@@ -321,11 +337,9 @@ async Task CreateClient(HttpRequest request, HttpResponse response)
         client.gender = db.genders.Where(x => x.genderName == client.gender.genderName).First();
         client.photoPath = imageFileName;
 
-        List<Client> clients = db.clients.Where(x => x.passportNumberAndSeries == client.passportNumberAndSeries).ToList();
-        if (clients.Count != 0)
+        if (db.clients.Any(x => x.passportNumberAndSeries == client.passportNumberAndSeries))
             throw new Exception("Пользователь с таким пасспортом уже существует");
-        clients = db.clients.Where(x => x.medicalCardNumber == client.medicalCardNumber).ToList();
-        if (clients.Count != 0)
+        if (db.clients.Any(x => x.medicalCardNumber == client.medicalCardNumber))
             throw new Exception("Пользователь с таким идентификационным кодом медицинской карты уже существует");
         db.clients.Add(client);
         db.SaveChanges();
@@ -338,5 +352,5 @@ async Task CreateClient(HttpRequest request, HttpResponse response)
         File.Delete(fullPath);
         await ReturnError(response, exception);
     }
-    imageFileName = "NULL";
+    imageFileName = "";
 }
