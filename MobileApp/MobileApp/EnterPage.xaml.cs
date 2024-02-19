@@ -18,14 +18,14 @@ namespace MobileApp
             InitializeComponent();
         }
 
-        private void EMCButton_Clicked(object sender, EventArgs e)
+        private async void EMCButton_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new EMCPage());
+            await Navigation.PushAsync(new EMCPage());
         }
 
-        private void AppointmentButton_Clicked(object sender, EventArgs e)
+        private async void AppointmentButton_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new AppointmentPage());
+            await Navigation.PushAsync(new AppointmentPage());
         }
     }
 }

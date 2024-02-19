@@ -11,7 +11,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using DataBaseClasses;
+//using DataBaseClasses;
 using System.Diagnostics;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -67,7 +67,7 @@ namespace MobileApp
     {
         public string error { get; set; }
     }
-
+    /*
     public class Client
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int client_id { get; set; }
@@ -97,5 +97,5 @@ namespace MobileApp
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int gender_id { get; private set; }
         [Required] public string genderName { get; set; }
-    }
+    }*/
 }

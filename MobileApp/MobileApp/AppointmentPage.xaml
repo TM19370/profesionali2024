@@ -1,27 +1,70 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MobileApp.AppointmentPage">
+             x:Class="MobileApp.AppointmentPage" Title="Заполнение карты приема">
     <ContentPage.Content>
         <StackLayout>
             <ScrollView>
                 <StackLayout>
+                    <Label Style="{StaticResource InfoHeader}" Text="Код пациента:" Margin="0,10,0,0"/>
+                    <Entry x:Name="clientIdEntry" Margin="10,0,10,0"/>
+                    <Label Style="{StaticResource InfoHeader}" Text="Анамнез:" Margin="0,10,0,0"/>
+                    <Frame Padding="0" HeightRequest="200">
+                        <Editor x:Name="anamnesisEditor"/>
+                    </Frame>
                     <Label Style="{StaticResource InfoHeader}" Text="Симптомы:" Margin="0,10,0,0"/>
                     <Frame Padding="0" HeightRequest="200">
-                        <Editor/>
+                        <Editor x:Name="symptomsEditor"/>
                     </Frame>
                     <Label Style="{StaticResource InfoHeader}" Text="Диагноз:"/>
                     <Frame Padding="0" HeightRequest="200">
-                        <Editor/>
+                        <Editor x:Name="diagnosisEditor"/>
                     </Frame>
                     <Label Style="{StaticResource InfoHeader}" Text="Рекомендации по лечению:"/>
                     <Frame Padding="0" HeightRequest="200">
-                        <Editor/>
+                        <Editor x:Name="recommendationsEditor"/>
                     </Frame>
                     <Label Style="{StaticResource InfoHeader}" Text="Рецепты:"/>
-                    <Frame HeightRequest="500"/>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                        <Button Margin="0" HorizontalOptions="Fill" Text="Добавить рецепт" Clicked="addPrescriptionButton_Clicked"/>
+                        <Button Margin="0" HorizontalOptions="Fill" Text="Удалить рецепт" Clicked="deletePrescriptionButton_Clicked"/>
+                    </StackLayout>
+                    <Frame HeightRequest="490">
+                        <ListView VerticalOptions="Fill" x:Name="prescriptionListView" >
+                            <ListView.Header>
+                                <Grid HorizontalOptions="Fill">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" Text="Название препората"/>
+                                    <Label Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" Text="Дозировка"/>
+                                    <Label Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" Text="Формат приема"/>
+                                </Grid>
+                            </ListView.Header>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding medicament.medicamentName}"/>
+                                            <Label Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding dose}"/>
+                                            <Label Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding format}"/>
+                                        </Grid>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Frame>
                 </StackLayout>
             </ScrollView>
+            <Button Text="Сохранить информацию о приеме" Clicked="addAppointmentInfoButton_Clicked" Margin="20,0,20,10"/>
+            <Button Text="audio" Clicked="Button_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

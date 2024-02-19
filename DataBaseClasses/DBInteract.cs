@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DataBaseClasses.Migrations;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,11 @@ namespace DataBaseClasses
             }
             
             return response;
+        }
+
+        public class ErrorResponce
+        {
+            public string error { get; set; }
         }
     }
 }
