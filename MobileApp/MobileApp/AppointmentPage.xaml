@@ -29,8 +29,8 @@
                         <Button Margin="0" HorizontalOptions="Fill" Text="Добавить рецепт" Clicked="addPrescriptionButton_Clicked"/>
                         <Button Margin="0" HorizontalOptions="Fill" Text="Удалить рецепт" Clicked="deletePrescriptionButton_Clicked"/>
                     </StackLayout>
-                    <Frame HeightRequest="490">
-                        <ListView VerticalOptions="Fill" x:Name="prescriptionListView" >
+                    <Frame HeightRequest="490" Padding="5">
+                        <ListView VerticalOptions="Start" x:Name="prescriptionListView">
                             <ListView.Header>
                                 <Grid HorizontalOptions="Fill">
                                     <Grid.ColumnDefinitions>
@@ -61,10 +61,11 @@
                             </ListView.ItemTemplate>
                         </ListView>
                     </Frame>
+                    <Label Style="{StaticResource InfoHeader}" Text="Голосовое сообщение:"/>
+                    <Button Text="Записать голосовое сообщение" Clicked="RecordAudioButton_Clicked"/>
                 </StackLayout>
             </ScrollView>
             <Button Text="Сохранить информацию о приеме" Clicked="addAppointmentInfoButton_Clicked" Margin="20,0,20,10"/>
-            <Button Text="audio" Clicked="Button_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

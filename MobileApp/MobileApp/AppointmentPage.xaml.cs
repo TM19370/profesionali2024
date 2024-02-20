@@ -1,7 +1,4 @@
-﻿//using DataBaseClasses;
-using Android.Media;
-using Java.IO;
-//using DataBaseClasses.Migrations;
+﻿using Android.Media;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -21,27 +18,9 @@ namespace MobileApp
         public AppointmentPage()
         {
             InitializeComponent();
-            /*
-            List<Prescription> prescriptions = new List<Prescription>();
-
-            for (int i = 0; i < 10; i++)
-            {
-                prescriptions.Add(new Prescription()
-                {
-                    medicament = new Medicament()
-                    {
-                        medicamentName = "Пропитал"
-                    },
-                    dose = 0.5,
-                    format = "qqqqq"
-                });
-            }
-
-            prescriptionListView.ItemsSource = prescriptions;
-
-            List<Prescription> prescriptions1 = new List<Prescription>();
-            prescriptions1 = prescriptionListView.ItemsSource as List<Prescription>;*/
         }
+
+        public bool isAudioMessageExsist = false;
 
         private async Task ShowError(string massege)
         {
@@ -74,6 +53,30 @@ namespace MobileApp
             return responseObject;
         }
 
+        private async Task<string> SendRecord()
+        {
+            // адрес сервера
+            var serverAddress = "http://192.168.147.66:5120/Audio";
+            // пусть к файлу
+            var filePath = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyMusic)}/record.3gp";
+
+            // создаем MultipartFormDataContent
+            var multipartFormContent = new MultipartFormDataContent();
+            // Загружаем отправляемый файл
+            var fileStreamContent = new StreamContent(System.IO.File.OpenRead(filePath));
+            // Устанавливаем заголовок Content-Type
+            fileStreamContent.Headers.ContentType = new MediaTypeHeaderValue("audio/3gpp");
+            // Добавляем загруженный файл в MultipartFormDataContent
+            multipartFormContent.Add(fileStreamContent, name: "file", fileName: "record.3gp");
+
+            // Отправляем файл
+            var response = await httpClient.PostAsync(serverAddress, multipartFormContent);
+            // считываем ответ
+            var responseText = await response.Content.ReadAsStringAsync();
+
+            return responseText;
+        }
+
         private static HttpClient httpClient = new HttpClient();
 
         private async void addAppointmentInfoButton_Clicked(object sender, EventArgs e)
@@ -82,13 +85,20 @@ namespace MobileApp
             if (client == default)
                 return;
 
+            string audioMessageFileName = null;
+            if (isAudioMessageExsist)
+            {
+                audioMessageFileName = await SendRecord();
+            }
+
             AppointmentInfo appointmentInfo = new AppointmentInfo()
             {
                 client = client,
                 anamnesis = anamnesisEditor.Text,
                 symptoms = symptomsEditor.Text,
                 diagnosis = diagnosisEditor.Text,
-                recommendations = recommendationsEditor.Text
+                recommendations = recommendationsEditor.Text,
+                audioMessageFileName = audioMessageFileName
             };
             appointmentInfo = await SendRequest<AppointmentInfo>("/AppointmentInfo", HttpMethod.Post, appointmentInfo);
             if (appointmentInfo == default)
@@ -112,7 +122,7 @@ namespace MobileApp
                     return;
             }
 
-            await DisplayAlert("", "Информация загружена", "Ok");
+            await DisplayAlert("", "Информация загружена", "Ок");
             await Navigation.PopAsync();
         }
 
@@ -120,9 +130,24 @@ namespace MobileApp
 
         private async void addPrescriptionButton_Clicked(object sender, EventArgs e)
         {
+            if(prescriptionListView.ItemsSource != null && (prescriptionListView.ItemsSource as List<Prescription>).Count == 10)
+            {
+                await DisplayAlert("", "Рецептов не может быть более десяти.", "Ок");
+                return;
+            }
+
             string medicamentName = await DisplayPromptAsync("Добавление рецепта", "Введите название препората");
+            if (medicamentName == null) return;
             string dose = await DisplayPromptAsync("Добавление рецепта", "Введите дозировку препората", keyboard: Keyboard.Numeric);
+            if (dose == null) return;
             string format = await DisplayPromptAsync("Добавление рецепта", "Введите формат приема");
+            if (format == null) return;
+
+            if (medicamentName == "" || dose == "" || format == "")
+            {
+                await DisplayAlert("", "Одно из полей не заполнено, добавление отменено", "Ок");
+                return;
+            }
 
             Prescription prescription = new Prescription()
             {
@@ -150,7 +175,7 @@ namespace MobileApp
         }
 
         MediaRecorder recorder;
-        bool b = false;
+        bool isRecording = false;
 
         async void RecordAudio()
         {
@@ -158,13 +183,15 @@ namespace MobileApp
 
             try
             {
-                if (b)
+                if (isRecording)
                 {
                     recorder.Stop();
+                    isRecording = false;
+                    isAudioMessageExsist = true;
                 }
                 else
                 {
-                    File path = new File(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), "test.3gp/testmedia.3gp")/*System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic) + "/tst.3gp"*/;
+                    Java.IO.File path = new Java.IO.File(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), "record.3gp");
                     path.ParentFile.Mkdirs();
                     if (recorder == null)
                     {
@@ -179,46 +206,16 @@ namespace MobileApp
                     recorder.SetOutputFile(path.AbsolutePath);
                     recorder.Prepare();
                     recorder.Start();
-
+                    isRecording = true;
                 }
             }
             catch (Exception ex)
             {
-                DisplayAlert("", ex.Message, "Ok");
+                DisplayAlert("", ex.Message, "Ок");
             }
-            b = !b;
-            /*byte[] audioBuffer = new byte[100000];
-            var audRecorder = new AudioRecord(
-              // Hardware source of recording.
-              AudioSource.Mic,
-              // Frequency
-              11025,
-              // Mono or stereo
-              ChannelIn.Mono,
-              // Audio encoding
-              Android.Media.Encoding.Pcm16bit,
-              // Length of the audio clip.
-              audioBuffer.Length
-            );
-
-            audRecorder.StartRecording();
-            while (true)
-            {
-                try
-                {
-                    // Keep reading the buffer while there is audio input.
-                    audRecorder.Read(audioBuffer, 0, audioBuffer.Length);
-                    // Write out the audio file.
-                }
-                catch (Exception ex)
-                {
-                    Console.Out.WriteLine(ex.Message);
-                    break;
-                }
-            }*/
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private void RecordAudioButton_Clicked(object sender, EventArgs e)
         {
             RecordAudio();
         }

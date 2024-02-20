@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
+Random random = new Random();
 
 app.Run(async (context) =>
 {
@@ -23,10 +24,12 @@ app.Run(async (context) =>
     }
     else if (Regex.IsMatch(path, @"/Client/\d{1,}") && request.Method == "GET")
     {
+        //Получение клиента
         await GetClient(request, response);
     }
     else if (Regex.IsMatch(path, @"/Images/\S{1,}"))
     {
+        //возвращает изображение
         await response.SendFileAsync(Directory.GetCurrentDirectory() + @"\wwwroot\" + path);
     }
     else if(path == "/Medicament" && request.Method == "POST")
@@ -40,6 +43,10 @@ app.Run(async (context) =>
     else if(path == @"/Prescription" && request.Method == "POST")
     {
         await CreatePrescription(request, response);
+    }
+    else if (path == "/Audio" && request.Method == "POST")
+    {
+        await SaveAudioMessage(request, response);
     }
 
     Console.WriteLine($"Response status code: {response.StatusCode}");
@@ -62,6 +69,35 @@ async Task ReturnError(HttpResponse response, Exception exception)
     Console.WriteLine($"Error: {exception.Message}");
     response.StatusCode = 400;
     await response.WriteAsJsonAsync(new { error = exception.Message });
+}
+/* что нибудь придумать
+async Task<T> GetFromDB<T>(HttpRequest request, HttpResponse response)
+{
+    
+
+    return default;
+}
+*/
+async Task SaveAudioMessage(HttpRequest request, HttpResponse response)
+{
+    // получем коллецию загруженных файлов
+    IFormFile file = request.Form.Files.First();
+    // путь к папке, где будут храниться файлы
+    var uploadPath = $"{Directory.GetCurrentDirectory()}/uploads";
+    // создаем папку для хранения файлов
+    Directory.CreateDirectory(uploadPath);
+
+    // формируем путь к файлу в папке uploads
+    string fileName = $"{DateTime.Now.ToString("dd-MM-yyyy-H-mm-ss-FFF")}{random.Next(0, 1000).ToString("G3")}.{file.FileName.Split('.').Last()}";
+    string fullPath = $"{uploadPath}/{fileName}";
+
+    // сохраняем файл в папку uploads
+    using (var fileStream = new FileStream(fullPath, FileMode.Create))
+    {
+        await file.CopyToAsync(fileStream);
+    }
+
+    await response.WriteAsync(fileName);
 }
 
 async Task FindOrCreateMedicament(HttpRequest request, HttpResponse response)

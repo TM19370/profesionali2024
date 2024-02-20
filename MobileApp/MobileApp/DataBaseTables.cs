@@ -160,6 +160,7 @@ namespace MobileApp
         [Required] public string symptoms { get; set; }
         [Required] public string diagnosis { get; set; }
         [Required] public string recommendations { get; set; }
+        public string audioMessageFileName { get; set; }
     }
 
     public class Prescription
