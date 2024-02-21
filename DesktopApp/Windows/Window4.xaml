@@ -1,0 +1,81 @@
+﻿<Window x:Class="DesktopApp.Window4"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DesktopApp"
+        mc:Ignorable="d"
+        Title="Window4" Height="450" Width="800" MinHeight="450" MinWidth="800" FontFamily="sans-serif" FontSize="16">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="10,10,0,0"/>
+        </Style>
+        <Style TargetType="TextBox" BasedOn="{StaticResource standartTextBox}">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="VerticalContentAlignment" Value="Top"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Код клиента:"/>
+                <TextBox x:Name="clientIdTextBox" TextWrapping="NoWrap" VerticalContentAlignment="Center" Grid.Row="1"/>
+                <TextBlock Grid.Row="2" Text="Анамнез:"/>
+                <TextBox x:Name="anamnesisTextBox" Grid.Row="3"/>
+                <TextBlock Grid.Row="4" Text="Описание симптоматики:"/>
+                <TextBox x:Name="symptomsTextBox" Grid.Row="5"/>
+                <TextBlock Grid.Row="6" Text="Диагноз:"/>
+                <TextBox x:Name="diagnosisTextBox" Grid.Row="7"/>
+                <TextBlock Grid.Row="8" Text="Рекомендации по лечению:"/>
+                <TextBox x:Name="recommendationsTextBox" Grid.Row="9"/>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Рецепты:"/>
+                    <Button Grid.Column="1" Height="30" Margin="0,0,10,-9" Content="Добавить рецепт" Click="AddPrescriptionButton_Click"/>
+                    <Button Grid.Column="2" Height="30" Margin="0,0,10,-9" Content="Удалить рецепт" Click="DeletePrescriptionButton_Click"/>
+                </Grid>
+                
+                <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0" Margin="10,10,10,10">
+                    <DataGrid x:Name="prescriptionList" AutoGenerateColumns="False" HeadersVisibility="Column" FontSize="12" SelectionMode="Single">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Название препарата" Width="1.2*" Binding="{Binding medicament.medicamentName}"/>
+                            <DataGridTextColumn Header="Дозировка" Width="*" Binding="{Binding dose}"/>
+                            <DataGridTextColumn Header="Формат приема" Width="*" Binding="{Binding format}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+
+                <Button Grid.Row="2" Content="Сохранить информацию о приеме" Margin="10,0,10,10" Click="addAppointmentInfoButton_Click"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

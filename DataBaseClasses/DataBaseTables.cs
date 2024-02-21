@@ -39,6 +39,7 @@ namespace DataBaseClasses
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int account_id { get; set; }
         [Required] public string login { get; set; }
         [Required] public string password { get; set; }
+        //ДОБАВИТЬ ФИО И ССЫЛАТСЯ ОТ КАЖДОГО СОТРУДНИКА
     }
 
     public class Client

@@ -67,35 +67,4 @@ namespace MobileApp
     {
         public string error { get; set; }
     }
-    /*
-    public class Client
-    {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int client_id { get; set; }
-        public string photoPath { get; set; }
-        [Required] public string firstName { get; set; }
-        [Required] public string secondName { get; set; }
-        [Required] public string lastName { get; set; }
-        [Required] public string passportNumberAndSeries { get; set; }
-        [Required] public string passportGetInfo { get; set; }
-        [Required] public DateTime birthDate { get; set; }
-        [Required] public virtual Gender gender { get; set; }
-        [Required] public string workPlace { get; set; }
-        [Required] public string address { get; set; }
-        [Required] public string phoneNumder { get; set; }
-        [Required] public string email { get; set; }
-        [Required] public int medicalCardNumber { get; set; }
-        [Required] public DateTime getMedicalCardDate { get; set; }
-        [Required] public DateTime lastVisitDate { get; set; }
-        [Required] public DateTime nextVisitDate { get; set; }
-        [Required] public string insurancePolicyNumber { get; set; }
-        [Required] public DateTime insurancePolicyEndDate { get; set; }
-        [Required] public string insuranceCompany { get; set; }
-        public string FullName { get { return $"{secondName} {firstName} {lastName}"; } }
-    }
-    
-    public class Gender
-    {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int gender_id { get; private set; }
-        [Required] public string genderName { get; set; }
-    }*/
 }

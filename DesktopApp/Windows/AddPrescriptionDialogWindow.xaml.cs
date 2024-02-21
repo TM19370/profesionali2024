@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,17 +16,24 @@ using System.Windows.Shapes;
 namespace DesktopApp
 {
     /// <summary>
-    /// Логика взаимодействия для testWindow.xaml
+    /// Логика взаимодействия для AddPrescriptionDialogWindow.xaml
     /// </summary>
-    public partial class testWindow : Window
+    public partial class AddPrescriptionDialogWindow : Window
     {
-        public testWindow()
+        public AddPrescriptionDialogWindow()
         {
             InitializeComponent();
         }
 
         public string MedicamentName { get { return medicamentNameTextBox.Text; } set { medicamentNameTextBox.Text = value; } }
-        public double Dose { get { return Convert.ToDouble(doseTextBox.Text); } set { doseTextBox.Text = value.ToString(); } }
+        public double? Dose { get 
+            {
+
+                if (doseTextBox.Text == "" || Regex.IsMatch(doseTextBox.Text, @"[^\d\,]"))
+                    return null;
+                return Convert.ToDouble(doseTextBox.Text); 
+            } 
+            set { doseTextBox.Text = value.ToString(); } }
         public string Format { get { return formatTextBox.Text; } set { formatTextBox.Text = value; } }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)

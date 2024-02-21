@@ -24,9 +24,9 @@ namespace DesktopApp
         public EnterWindow()
         {
             InitializeComponent();
-            Window4 window4 = new Window4(db.clients.Find(450));
+            Window4 window4 = new Window4();
             window4.Show();
-            Close();
+            //Close();
         }
 
         private void EnterButton_Click(object sender, RoutedEventArgs e)

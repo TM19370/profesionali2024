@@ -24,8 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="карта отделения.png" />
-    <Resource Include="план стационара.png" />
+    <Resource Include="Images\карта отделения.png" />
+    <Resource Include="Images\план стационара.png" />
   </ItemGroup>
 
 </Project>

@@ -9,7 +9,7 @@
         FontFamily="sans-serif">
     <Grid>
         <Grid Height="840" Width="1072.8">
-            <Image Source="/план стационара.png" />
+            <Image Source="/Images/план стационара.png" />
             <Grid>
                 <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="Д101"  Margin="128,0,0,9"  />
                 <Canvas Background="Transparent" AllowDrop="True" Drop="human_Drop" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="47" Height="23" x:Name="Г101" Margin="128,0,0,131" />

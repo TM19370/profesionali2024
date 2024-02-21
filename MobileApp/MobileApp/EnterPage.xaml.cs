@@ -13,6 +13,7 @@ namespace MobileApp
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class EnterPage : ContentPage
     {
+        //цвета верхней и нижней частей прописываются в android/resources/values/styles.xml
         public EnterPage()
         {
             InitializeComponent();
