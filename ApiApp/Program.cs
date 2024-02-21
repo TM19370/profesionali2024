@@ -18,7 +18,7 @@ app.Run(async (context) =>
     Console.ResetColor();
     Console.WriteLine(path);
 
-    if (path == "/" || path == "/favicon.ico")//просто грузим страницу
+    if ((path == "/") || (path == "/favicon.ico"))//просто грузим страницу
     {
         
     }
