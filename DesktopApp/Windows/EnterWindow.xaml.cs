@@ -24,7 +24,7 @@ namespace DesktopApp
         public EnterWindow()
         {
             InitializeComponent();
-            Window4 window4 = new Window4();
+            Window3 window4 = new Window3();
             window4.Show();
             //Close();
         }
