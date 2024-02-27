@@ -59,11 +59,10 @@
                    name="insurancePolicyEndDate"
                    placeholder="Введите срок действия страхового полиса" required />
 
-            <label for="insuranceCompany">Выберите страховую компанию</label>
-            <select id="insuranceCompany" name="insuranceCompany" required>
-                <option value="1">Росгосстрах</option>
-                <option value="2">Альфа страхование</option>
-            </select>
+            <label for="insuranceCompany">Cтраховая компания</label>
+            <input type="text" id="insuranceCompany"
+                   name="insuranceCompany"
+                   placeholder="Введите название страховой компании" required />
 
             <label for="email">Email:</label>
             <input type="email" id="email"
@@ -141,7 +140,7 @@
 
             console.log(JSON.stringify(hospitalization));
 
-            const response = await fetch("/api/hospitalization", {
+            const response = await fetch("http://192.168.147.66:5120/Hospitalization", {
                 method: "POST",
                 headers: { "Accept": "application/json", "Content-Type": "application/json" },
                 body:

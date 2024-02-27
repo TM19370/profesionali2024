@@ -9,7 +9,7 @@
     <div class="qrcodemain">
         <h1>QR код</h1>
         <div class="QR">
-            <img src="../qr.png" height="200" width="200" id="qrCodeImage" name="qrCodeImage" />
+            <img src="http://192.168.147.66:5120/qr.png" height="200" width="200" id="qrCodeImage" name="qrCodeImage" />
             <label for="client_id">Введите id клиента</label>
             <input id="client_id" name="client_id" />
             <button id="createQRCodeButton" type="submit">
@@ -60,6 +60,10 @@
     </div>
     <script>
         document.getElementById("createQRCodeButton").addEventListener("click", async () => {
+            if (document.getElementById("client_id").value == "") {
+                alert("Введите id клиента");
+                return;
+            }
             await createQRCode();
         })
 
@@ -68,11 +72,19 @@
         })
 
         document.getElementById("getPersonalDataDoc").addEventListener("click", async () => {
+            if (document.getElementById("client_id").value == "") {
+                alert("Введите id клиента");
+                return;
+            }
             await getPersonalDataDoc();
 
         }) 
 
         document.getElementById("getMedicalCareContract").addEventListener("click", async () => {
+            if (document.getElementById("client_id").value == "") {
+                alert("Введите id клиента");
+                return;
+            }
             await getMedicalCareContract();
         })
 
@@ -89,37 +101,37 @@
         }
 
         async function getMedicalCareContract() {
-            const responce = await fetch("/api/medicalCareContract/" + document.getElementById("client_id").value, {
+            const responce = await fetch("http://192.168.147.66:5120/MedicalCareContract/" + document.getElementById("client_id").value, {
                 method: "GET"
             });
 
             if (responce.ok) {
                 const answer = await responce.json();
 
-                download("../medicalCareContract.docx", answer.fileName);
+                download("http://192.168.147.66:5120/medicalCareContract.docx", answer.fileName);
             }
         }
 
         async function getPersonalDataDoc() {
-            const responce = await fetch("/api/personalData/" + document.getElementById("client_id").value, {
+            const responce = await fetch("http://192.168.147.66:5120/PersonalData/" + document.getElementById("client_id").value, {
                 method: "GET"
             });
 
             if (responce.ok) {
                 const answer = await responce.json();
 
-                download("../personalData.docx", answer.fileName);
+                download("http://192.168.147.66:5120/personalData.docx", answer.fileName);
             }
         }
 
         async function createQRCode() {
-            const response = await fetch("/api/QRCode/" + document.getElementById("client_id").value, {
+            const response = await fetch("http://192.168.147.66:5120/QRCode/" + document.getElementById("client_id").value, {
                 method: "GET"
             });
 
             if (response.ok) {
                 location.reload();
-                document.qrCodeImage.src = "../qr.png"
+                document.qrCodeImage.src = "http://192.168.147.66:5120/qr.png"
             }
             else {
                 alert("ERR");
@@ -134,7 +146,7 @@
                 method: "POST",
                 body: formData
             };
-            const responce = await fetch("/api/DecodeQRCode", options);
+            const responce = await fetch("http://192.168.147.66:5120/DecodeQRCode", options);
 
             if (responce.ok) {
                 const clientInfo = await responce.json();

@@ -52,7 +52,7 @@ namespace DesktopApp
 
         void LogIn()
         {
-            Account account = db.accounts.Find(loginTextBox.Text);
+            Account? account = db.accounts.Where(x => x.login == loginTextBox.Text).FirstOrDefault();
             if (account != null && account.password == passwordTextBox.Text)
             {
                 PatientsWindow patientsWindow = new PatientsWindow();

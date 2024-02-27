@@ -34,21 +34,36 @@ namespace DataBaseClasses
         }
     }
 
+    public class FullName
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int fullName_id { get; set; }
+        [Required] public string firstName { get; set; }
+        [Required] public string secondName { get; set; }
+        [Required] public string lastName { get; set; }
+
+        public string GetFullName { get { return $"{secondName} {firstName} {lastName}"; } }
+    }
+
     public class Account
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int account_id { get; set; }
         [Required] public string login { get; set; }
         [Required] public string password { get; set; }
-        //ДОБАВИТЬ ФИО И ССЫЛАТСЯ ОТ КАЖДОГО СОТРУДНИКА
+        [Required] public virtual FullName FullName { get; set; }
+        [Required] public virtual AccountType accountType { get; set; }
+    }
+
+    public class AccountType
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int accountType_id { get; set; }
+        [Required] public string typeName { get; set; }
     }
 
     public class Client
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int client_id { get; set; }
         public string photoPath { get; set; }
-        [Required] public string firstName { get; set; }
-        [Required] public string secondName { get; set; }
-        [Required] public string lastName { get; set; }
+        [Required] public virtual FullName fullName { get; set; }
         [Required] public string passportNumberAndSeries { get; set; }
         [Required] public string passportGetInfo { get; set; }
         [Required] public DateTime birthDate { get; set; }
@@ -64,8 +79,6 @@ namespace DataBaseClasses
         [Required] public string insurancePolicyNumber { get; set; }
         [Required] public DateTime insurancePolicyEndDate { get; set; }
         [Required] public string insuranceCompany { get; set; }
-       
-        public string FullName { get { return $"{secondName} {firstName} {lastName}"; } }
     }
 
     public class Bed
@@ -116,14 +129,7 @@ namespace DataBaseClasses
     public class Doctor
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int doctor_id { get; set; }
-        [Required] public string firstName { get; set; }
-        [Required] public string secondName { get; set; }
-        [Required] public string lastName { get; set; }
-
-        public string GetFullName()
-        {
-            return $"{secondName} {firstName} {lastName}";
-        }
+        [Required] public virtual FullName fullName { get; set; }
     }
 
     public class MeasureType

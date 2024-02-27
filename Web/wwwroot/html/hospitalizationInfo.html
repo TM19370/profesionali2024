@@ -121,7 +121,7 @@
             const options = {
                 method: "POST"
             };
-            const response = await fetch("/api/cancelHospitalization/" + document.getElementById("hospitalizationCode").value
+            const response = await fetch("http://192.168.147.66:5120/CancelHospitalization/" + document.getElementById("hospitalizationCode").value
                 + "/" + hospitalizationCancelInfoInput, options);
 
             if (response.ok) {
@@ -138,7 +138,7 @@
             const options = {
                 method: "POST"
             };
-            const response = await fetch("/api/hospitalization/" + document.getElementById("hospitalizationCode").value + "/"
+            const response = await fetch("http://192.168.147.66:5120/Hospitalization/" + document.getElementById("hospitalizationCode").value + "/"
                 + document.getElementById("hospitalizationStartDateInput").value, options);
 
             if (response.ok) {
@@ -155,7 +155,7 @@
             const options = {
                 method: "GET"
             };
-            const response = await fetch("/api/hospitalization/" + document.getElementById("hospitalizationCode").value, options);
+            const response = await fetch("http://192.168.147.66:5120/Hospitalization/" + document.getElementById("hospitalizationCode").value, options);
 
             if (response.ok) {
 

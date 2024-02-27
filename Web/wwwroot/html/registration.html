@@ -63,11 +63,10 @@
                    name="insurancePolicyEndDate"
                    placeholder="Введите срок действия страхового полиса" required />
 
-            <label for="insuranceCompany">Выберите страховую компанию</label>
-            <select id="insuranceCompany" name="insuranceCompany" required>
-                <option value="Росгосстрах">Росгосстрах</option>
-                <option value="Альфа страхование">Альфа страхование</option>
-            </select>
+            <label for="insuranceCompany">Cтраховая компания</label>
+            <input type="text" id="insuranceCompany"
+                   name="insuranceCompany"
+                   placeholder="Введите название страховой компании" required />
 
             <label for="email">Email:</label>
             <input type="email" id="email"
@@ -137,8 +136,8 @@
                 method: "POST",
                 body: formData
             };
-            await fetch("api/image", options);
-
+            await fetch("http://192.168.147.66:5120/Image", options);
+            
             const client = {
                 firstName: document.getElementById("firstName").value,
                 secondName: document.getElementById("secondName").value,
@@ -161,8 +160,8 @@
                 insurancePolicyEndDate: document.getElementById("insurancePolicyEndDate").value,
                 insuranceCompany: document.getElementById("insuranceCompany").value
             }
-
-            const response = await fetch("api/clients", {
+            
+            const response = await fetch("http://192.168.147.66:5120/Clients", {
                 method: "POST",
                 headers: { "Accept": "application/json", "Content-Type": "application/json" },
                 body:

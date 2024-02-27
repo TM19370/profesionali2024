@@ -38,11 +38,13 @@ namespace DesktopApp
             {
                 tstList.Add(new tst()
                 {
+                    doctor_id = i,
                     doctorFullName = "Иванов Иван Иванович",
                     doc = new List<doc>()
                     {
                         new doc() {
                             dayOfWeek = DayOfWeek.Monday,
+                            cabinet = "101",
                             workTime = "12:00 - 14:00",
                             zapisi = new List<Zapisi>()
                             {
@@ -60,6 +62,7 @@ namespace DesktopApp
                         },
                         new doc() {
                             dayOfWeek = DayOfWeek.Tuesday,
+                            cabinet = "102",
                             workTime = "12:00 - 14:00",
                             zapisi = new List<Zapisi>()
                             {
@@ -71,7 +74,7 @@ namespace DesktopApp
                             }
                         }
                     }
-                });
+                }); ;
             }
 
 
@@ -158,17 +161,24 @@ namespace DesktopApp
 
             }
         }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 
     public class tst
     {
+        public int doctor_id { get; set; }
         public string doctorFullName { get; set; }
         public virtual List<doc> doc { get; set; }
     }
 
     public class doc
     {
-        public DayOfWeek dayOfWeek { get; set; }
+        public DayOfWeek dayOfWeek { get; set; }//поменять на string
+        public string cabinet { get; set; }
         public string workTime { get; set; }
         public virtual List<Zapisi> zapisi { get; set; }
     }
