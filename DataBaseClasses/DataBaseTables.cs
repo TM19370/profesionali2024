@@ -34,7 +34,7 @@ namespace DataBaseClasses
         }
     }
 
-    public class FullName
+    public class FullName//изменить
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int fullName_id { get; set; }
         [Required] public string firstName { get; set; }
@@ -172,27 +172,37 @@ namespace DataBaseClasses
         [Required] public virtual AppointmentInfo appointmentInfo { get; set; }
     }
 
-    public class Timetable
-    {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int timetable_id { get; set; }
-        [Required] public virtual WeekTimetable weekTimetable { get; set; }
-        [Required] public DayOfWeek dayOfWeek { get; set; }
-        public string? cabinet { get; set; }
-        public DateTime? startTime { get; set; }
-        public DateTime? endTime { get; set; }
 
-        public string GetAsString()
-        {
-            if (startTime == null || endTime == null)
-                return "";
-            return $"{((DateTime)startTime).TimeOfDay} - {((DateTime)endTime).TimeOfDay} {cabinet} каб.";
-        }
-    }
 
-    public class WeekTimetable
+
+
+    public class ScheduleElement
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int weekTimeTable_id { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int scheduleElement_id { get; set; }
         [Required] public virtual Account account { get; set; }
-        [Required] public DateTime weekFirstDayDate { get; set; }
+        [Required] public DateOnly date { get; set; }
+        [Required] public virtual DayOfWeek dayOfWeek { get; set; } // Зачем нужен день недели на русском если он нигде не используется
+    }
+    public class DayOfWeek
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int dayOfWeek_id { get; set; }
+        [Required] public string name { get; set; }
+    }
+    public class WorkTime
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int workTime_id { get; set; }
+        [Required] public TimeOnly startTime { get; set; }
+        [Required] public TimeOnly endTime { get; set; }
+    }
+    public class Appointment
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int appointment_id { get; set; }
+        [Required] public virtual Client client { get; set; }
+        [Required] public virtual Account account { get; set; }
+        [Required] public TimeOnly startTime { get; set; }
+        [Required] public TimeOnly endTime { get; set; }
+        [Required] public DateOnly date { get; set; }
+
+        public string GetTimeAsString { get { return $"{startTime} - {endTime}"; } }
     }
 }

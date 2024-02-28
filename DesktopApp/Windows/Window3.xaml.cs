@@ -23,121 +23,73 @@ namespace DesktopApp
     /// Логика взаимодействия для Window3.xaml
     /// </summary>
     public partial class Window3 : Window
-    {/*
-        List<WeekTimetablee> weekTimetableList;
-
-        List<WeekStringTimeTable> weekStringTimeTableList = new List<WeekStringTimeTable>();
-        */
+    {
         public Window3()
         {
             InitializeComponent();
 
-            List<tst> tstList = new List<tst>();
+            List<WeekSchedule> weekSchedules = new List<WeekSchedule>();
 
-            for (int i = 0; i < 10; i++)
+            List<Account> doctors = new List<Account>();
+            foreach (Account doctor in doctors)
             {
-                tstList.Add(new tst()
+                List<ScheduleElement> scheduleElements = db.scheduleElements.Where(x => x.account.account_id == doctor.account_id).ToList();
+
+                string pn = "";
+                string vt = "";
+                string sr = "";
+                string ct = "";
+                string pt = "";
+                string sb = "";
+
+                foreach (var scheduleElement in scheduleElements)
                 {
-                    doctor_id = i,
-                    doctorFullName = "Иванов Иван Иванович",
-                    doc = new List<doc>()
+                    List<Appointment> appointments = db.appointments.Where(x => x.date == scheduleElement.date).ToList();
+                    foreach (Appointment appointment in appointments)
                     {
-                        new doc() {
-                            dayOfWeek = DayOfWeek.Monday,
-                            cabinet = "101",
-                            workTime = "12:00 - 14:00",
-                            zapisi = new List<Zapisi>()
-                            {
-                                new Zapisi()
-                                {
-                                    time = "12:00 - 12:10",
-                                    clientFullName = "Данилов Данил Данилович"
-                                },
-                                new Zapisi()
-                                {
-                                    time = "12:10 - 12:20",
-                                    clientFullName = "Егоров Егор Егорович"
-                                }
-                            }
-                        },
-                        new doc() {
-                            dayOfWeek = DayOfWeek.Tuesday,
-                            cabinet = "102",
-                            workTime = "12:00 - 14:00",
-                            zapisi = new List<Zapisi>()
-                            {
-                                new Zapisi()
-                                {
-                                    time = "13:30 - 13:40",
-                                    clientFullName = "Денисов Денис Денисович"
-                                }
-                            }
+                        switch (appointment.date.DayOfWeek)
+                        {
+                            case System.DayOfWeek.Monday:
+                                pn += $"{appointment.GetTimeAsString}\n";
+                                break;
+                            case System.DayOfWeek.Tuesday:
+                                vt += $"{appointment.GetTimeAsString}\n";
+                                break;
+                            case System.DayOfWeek.Wednesday:
+                                sr += $"{appointment.GetTimeAsString}\n";
+                                break;
+                            case System.DayOfWeek.Thursday:
+                                ct += $"{appointment.GetTimeAsString}\n";
+                                break;
+                            case System.DayOfWeek.Friday:
+                                pt += $"{appointment.GetTimeAsString}\n";
+                                break;
+                            case System.DayOfWeek.Saturday:
+                                sb += $"{appointment.GetTimeAsString}\n";
+                                break;
                         }
                     }
-                }); ;
-            }
+                }
 
-
-            mainList.ItemsSource = tstList;
-
-
-            DateTime a = DateTime.Now;
-            DayOfWeek asasd = a.DayOfWeek;
-
-            /*
-            List<Doctor> doctors = db.doctors.ToList();
-
-            foreach (Doctor doctor in doctors)
-            {
-                WeekTimetable weekTimetable = db.weekTimetable.Where(x => x.doctor.doctor_id == doctor.doctor_id).First();
-                List<Timetable> timetables = db.timetables.Where(x => x.weekTimetable.weekTimeTable_id == weekTimetable.weekTimeTable_id).ToList();
-
-                WeekStringTimeTable weekStringTimeTable = new WeekStringTimeTable() 
-                { 
-                    doctorFullName = doctor.GetFullName(),
-                    monday = timetables.Where(x => x.dayOfWeek == DayOfWeek.Monday).First().GetAsString(),
-                    tuesday = timetables.Where(x => x.dayOfWeek == DayOfWeek.Tuesday).First().GetAsString(),
-                    wednesday = timetables.Where(x => x.dayOfWeek == DayOfWeek.Wednesday).First().GetAsString(),
-                    thursday = timetables.Where(x => x.dayOfWeek == DayOfWeek.Thursday).First().GetAsString(),
-                    friday = timetables.Where(x => x.dayOfWeek == DayOfWeek.Friday).First().GetAsString(),
-                    saturday = timetables.Where(x => x.dayOfWeek == DayOfWeek.Saturday).First().GetAsString()
-                };
-
-                weekStringTimeTableList.Add(weekStringTimeTable);
-            }
-
-            dataGrid.ItemsSource = weekStringTimeTableList;
-            */
-            /*
-            List<Doctor> doctors = db.doctors.ToList();
-
-            dg.ItemsSource = doctors;
-
-            List<Timetable> timetables = db.timetables.ToList();
-            /*
-            foreach (Doctor doctor in doctors)
-            {
-                List<Timetable> doctorsTimetable = timetables.Where(x => x.doctor == doctor).ToList();
-                
-                WeekTimetablee weekTimetable = new WeekTimetablee() 
+                weekSchedules.Add(new WeekSchedule
                 {
-                    doctor = doctor,
-                    cabinet = doctorsTimetable[0].cabinet,
-                    monday = doctorsTimetable.Where(x => x.dayOfWeek == DayOfWeek.Monday).First(),
-                    tuesday = doctorsTimetable.Where(x => x.dayOfWeek == DayOfWeek.Tuesday).First(),
-                    wednesday = doctorsTimetable.Where(x => x.dayOfWeek == DayOfWeek.Wednesday).First(),
-                    thursday = doctorsTimetable.Where(x => x.dayOfWeek == DayOfWeek.Tuesday).First(),
-                    friday = doctorsTimetable.Where(x => x.dayOfWeek == DayOfWeek.Friday).First(),
-                    saturday = doctorsTimetable.Where(x => x.dayOfWeek == DayOfWeek.Sunday).First(),
-                };
-
-                weekTimetableList.Add(weekTimetable);
+                    fullName = scheduleElements[0].account.FullName.GetFullName,
+                    pn = pn,
+                    vt = vt,
+                    sr = sr,
+                    ct = ct,
+                    pt = pt,
+                    sb = sb
+                });
             }
-            *
 
-            qwe.ItemsSource = timetables;*/
+
+
+
+            mainGrid.ItemsSource = weekSchedules;
         }
 
+        /// тестовая функция
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -165,54 +117,17 @@ namespace DesktopApp
 
             }
         }
-
-        private void EditButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        //////////////////////
     }
 
-    public class tst
+    public class WeekSchedule
     {
-        public int doctor_id { get; set; }
-        public string doctorFullName { get; set; }
-        public virtual List<doc> doc { get; set; }
+        public string fullName { get; set; }
+        public string pn { get; set; }
+        public string vt { get; set; }
+        public string sr { get; set; }
+        public string ct { get; set; }
+        public string pt { get; set; }
+        public string sb { get; set; }
     }
-
-    public class doc
-    {
-        public DayOfWeek dayOfWeek { get; set; }//поменять на string
-        public string cabinet { get; set; }
-        public string workTime { get; set; }
-        public virtual List<Zapisi> zapisi { get; set; }
-    }
-
-    public class Zapisi
-    {
-        public string time { get; set; }
-        public string clientFullName { get; set; }
-    }
-    /*
-    public class WeekStringTimeTable
-    {
-        public string doctorFullName { get; set; }
-        public string monday { get; set; }
-        public string tuesday { get; set; }
-        public string wednesday { get; set; }
-        public string thursday { get; set; }
-        public string friday { get; set; }
-        public string saturday { get; set; }
-    }
-
-    public class WeekTimetablee
-    {
-        public virtual Doctor doctor { get; set; }
-        public string cabinet { get; set; }
-        public Timetable monday { get; set; }
-        public Timetable tuesday { get; set; }
-        public Timetable wednesday { get; set; }
-        public Timetable thursday { get; set; }
-        public Timetable friday { get; set; }
-        public Timetable saturday { get; set; }
-    }*/
 }

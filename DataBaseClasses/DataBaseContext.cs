@@ -29,7 +29,11 @@ namespace DataBaseClasses
         public DbSet<Warehouse> warehouses { get; set; }
         public DbSet<AppointmentInfo> appointmentsInfo { get; set; }
         public DbSet<Prescription> prescriptions { get; set; }
-        public DbSet<Timetable> timetables { get; set; }
-        public DbSet<WeekTimetable> weekTimetable { get; set; }
+
+        
+        public DbSet<ScheduleElement> scheduleElements { get; set; }
+        public DbSet<DayOfWeek> dayOfWeeks { get; set; }
+        public DbSet<WorkTime> workTimes { get; set; }
+        public DbSet<Appointment> appointments { get; set; }
     }
 }
