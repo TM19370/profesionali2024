@@ -80,6 +80,10 @@ namespace DesktopApp
 
             mainList.ItemsSource = tstList;
 
+
+            DateTime a = DateTime.Now;
+            DayOfWeek asasd = a.DayOfWeek;
+
             /*
             List<Doctor> doctors = db.doctors.ToList();
 

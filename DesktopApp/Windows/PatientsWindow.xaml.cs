@@ -29,7 +29,7 @@ namespace DesktopApp
             InitializeComponent();
             clients = db.clients.ToList();
             dg.ItemsSource = clients;
-            generateClients();
+            //generateClients();
         }
 
         Random random = new Random();

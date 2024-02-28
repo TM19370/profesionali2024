@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace DesktopApp
 {
@@ -26,6 +27,7 @@ namespace DesktopApp
             InitializeComponent();
             Window3 window4 = new Window3();
             window4.Show();
+            //MessageBox.Show(Directory.GetFiles(Directory.GetCurrentDirectory())[2]);                      так можно брать фото для генерации клиентов
             //Close();
         }
 
