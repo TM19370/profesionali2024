@@ -25,7 +25,7 @@ namespace DesktopApp
         {
             InitializeComponent();
 
-            List<Bed> beds = db.Beds.ToList();
+            List<Bed> beds = db.beds.ToList();
             foreach (var bed in beds)
             {
                 if(bed.Client != null)
@@ -64,7 +64,7 @@ namespace DesktopApp
             Canvas newBedCanvas = (Canvas)sender;
             int newRoomNumber = Convert.ToInt32(newBedCanvas.Name[1].ToString() + newBedCanvas.Name[2].ToString() + newBedCanvas.Name[3].ToString());
             string newBedCode = newBedCanvas.Name[0].ToString();
-            Bed newBed = db.Beds.Where(x => x.roomNumber == newRoomNumber && x.bedCode == newBedCode).First();
+            Bed newBed = db.beds.Where(x => x.roomNumber == newRoomNumber && x.bedCode == newBedCode).First();
             if (newBed.Client != null)
             {
                 MessageBox.Show("Койка занята");
@@ -74,7 +74,7 @@ namespace DesktopApp
             Ellipse human = (Ellipse)e.Data.GetData(DataFormats.Serializable);
             int roomNumber = Convert.ToInt32(human.Name[2].ToString() + human.Name[3].ToString() + human.Name[4].ToString());
             string bedCode = human.Name[1].ToString();
-            Bed currentBed = db.Beds.Where(x => x.roomNumber == roomNumber && x.bedCode == bedCode).First();
+            Bed currentBed = db.beds.Where(x => x.roomNumber == roomNumber && x.bedCode == bedCode).First();
             newBed.EditClient(currentBed.Client);
             currentBed.EditClient(null);
 
@@ -91,7 +91,7 @@ namespace DesktopApp
             Ellipse human = (Ellipse)e.Data.GetData(DataFormats.Serializable);
             int roomNumber = Convert.ToInt32(human.Name[2].ToString() + human.Name[3].ToString() + human.Name[4].ToString());
             string bedCode = human.Name[1].ToString();
-            Bed currentBed = db.Beds.Where(x => x.roomNumber == roomNumber && x.bedCode == bedCode).First();
+            Bed currentBed = db.beds.Where(x => x.roomNumber == roomNumber && x.bedCode == bedCode).First();
             currentBed.EditClient(null);
             db.SaveChanges();
             mg.Children.Remove(human);

@@ -119,17 +119,11 @@ namespace DataBaseClasses
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int measure_id { get; set; }
         [Required] public virtual Client client { get; set; }
         [Required] public DateTime measureDate { get; set; }
-        [Required] public virtual Doctor doctor { get; set; }
+        //[Required] public virtual Account account { get; set; }  придумать что нибудь
         [Required] public virtual MeasureType measureType { get; set; }
         [Required] public string measureName { get; set; }
         [Required] public string measureResault { get; set; }
         [Required] public string recommendations { get; set; }
-    }
-
-    public class Doctor
-    {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int doctor_id { get; set; }
-        [Required] public virtual FullName fullName { get; set; }
     }
 
     public class MeasureType
@@ -198,7 +192,7 @@ namespace DataBaseClasses
     public class WeekTimetable
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int weekTimeTable_id { get; set; }
-        [Required] public virtual Doctor doctor { get; set; }
+        [Required] public virtual Account account { get; set; }
         [Required] public DateTime weekFirstDayDate { get; set; }
     }
 }

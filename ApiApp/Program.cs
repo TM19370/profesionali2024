@@ -193,15 +193,15 @@ async Task FindOrCreateMedicament(HttpRequest request, HttpResponse response)
         Medicament? medicament = await request.ReadFromJsonAsync<Medicament>();
         if (medicament == null)
             throw new Exception("Ќазвание медикамента пусто");
-        List<Medicament> medicaments = db.Medicaments.Where(x => x.medicamentName == medicament.medicamentName).ToList();
+        List<Medicament> medicaments = db.medicaments.Where(x => x.medicamentName == medicament.medicamentName).ToList();
 
         if(medicaments.Count == 0)
         {
-            db.Medicaments.Add(medicament);
+            db.medicaments.Add(medicament);
             db.SaveChanges();
         }
 
-        medicament = db.Medicaments.Where(x => x.medicamentName == medicament.medicamentName).First();
+        medicament = db.medicaments.Where(x => x.medicamentName == medicament.medicamentName).First();
 
         await response.WriteAsJsonAsync(medicament);
     }
@@ -246,7 +246,7 @@ async Task CreatePrescription(HttpRequest request, HttpResponse response)
 
         int medicamentId = prescription.medicament.medicament_id;
         int appointmentInfoId = prescription.appointmentInfo.appointmentInfo_id;
-        Medicament? medicament = db.Medicaments.Find(medicamentId);
+        Medicament? medicament = db.medicaments.Find(medicamentId);
         AppointmentInfo? appointmentInfo = db.appointmentsInfo.Find(appointmentInfoId);
         if (appointmentInfo == null)
             throw new Exception("»нформаци€ о приеме пуста");
@@ -382,7 +382,7 @@ async Task MedicalCareContract(HttpRequest request, HttpResponse response)
         ReplaceText(doc, "<ORG>", organizationName);
         ReplaceText(doc, "<position , full name>", "// // // // // // // // /");
         ReplaceText(doc, "<osnovanie>", "// // // // // // // // /");
-        ReplaceText(doc, "<clientFIO>", client.FullName);
+        ReplaceText(doc, "<clientFIO>", client.fullName.GetFullName);
         ReplaceText(doc, "<license>", "// // // // // // // // /");
         ReplaceText(doc, "<licenseStartDate>", "// // // // // // // // /");
         ReplaceText(doc, "<licenseEndDate>", "// // // // // // // // /");
@@ -401,10 +401,10 @@ async Task MedicalCareContract(HttpRequest request, HttpResponse response)
         ReplaceText(doc, "<clientOtherAddresses>", "// // // // // // // // /");
         ReplaceText(doc, "<clientPassport>", $"{client.passportNumberAndSeries} {client.passportGetInfo}");
         ReplaceText(doc, "<clientPhoneNumber>", client.phoneNumder);
-        ReplaceText(doc, "<clientIO Fam>", $"{client.firstName[0]}{client.lastName[0]} {client.secondName}");
+        ReplaceText(doc, "<clientIO Fam>", $"{client.fullName.firstName[0]}{client.fullName.lastName[0]} {client.fullName.secondName}");
 
         // создаем новое название файла
-        string fileName = $"ƒоговор предоставлени€ платных медицинских услуг {client.FullName} от " +
+        string fileName = $"ƒоговор предоставлени€ платных медицинских услуг {client.fullName.GetFullName} от " +
             $"{DateTime.Now.ToString("dd-M-yyyy")}.docx";
         // сохран€ем файл
         doc.SaveAs(Directory.GetCurrentDirectory() + "/wwwroot/medicalCareContract.docx");
@@ -435,7 +435,7 @@ async Task PersonalData(HttpRequest request, HttpResponse response)
         var doc = DocX.Load(fullPath);
 
         // замена текста
-        ReplaceText(doc, "<FIO>", client.FullName);
+        ReplaceText(doc, "<FIO>", client.fullName.GetFullName);
         ReplaceText(doc, "<passportNumberAndSeries>", client.passportNumberAndSeries);
         ReplaceText(doc, "<passportGetInfo>", client.passportGetInfo);
         ReplaceText(doc, "<address>", client.address);
@@ -444,7 +444,7 @@ async Task PersonalData(HttpRequest request, HttpResponse response)
         ReplaceText(doc, "<target>", "медицинского обслуживани€");
 
         // создаем новое название файла
-        string fileName = $"—огласие на обработку персон€льных данных {client.FullName} от {DateTime.Now.ToString("dd-M-yyyy")}.docx";
+        string fileName = $"—огласие на обработку персон€льных данных {client.fullName.GetFullName} от {DateTime.Now.ToString("dd-M-yyyy")}.docx";
         // сохран€ем файл
         doc.SaveAs(Directory.GetCurrentDirectory() + "/wwwroot/personalData.docx");
 

@@ -29,7 +29,7 @@ namespace DesktopApp
             InitializeComponent();
             clients = db.clients.ToList();
             dg.ItemsSource = clients;
-            //generateClients();
+            generateClients();
         }
 
         Random random = new Random();
@@ -48,7 +48,9 @@ namespace DesktopApp
             for (int i = 0; i < 100; i++)
             {
                 int gender;
-                if (clients.Where(x => x.gender.genderName == "мужской").Count() >= 35)
+                if (clients.Count() == 0)
+                    gender = random.Next(0, 2);
+                else if (clients.Where(x => x.gender.genderName == "мужской").Count() >= 35)
                     gender = 0;
                 else if(clients.Where(x => x.gender.genderName == "женский").Count() >= 65)
                     gender = 1;
@@ -56,7 +58,7 @@ namespace DesktopApp
                     gender = random.Next(0, 2);
                 string fileName = $"{DateTime.Now.ToString("dd-MM-yyyy-H-mm-ss-FFF")}-{random.Next(0,1000).ToString("G3")}.jpg";
 
-                var uploadPath = $"{Directory.GetCurrentDirectory()}/clientImages";
+                var uploadPath = @"D:\Users\buev.ty2128\source\repos\МИС «ГКБ Большие Кабаны»\ApiApp\wwwroot\Images\";
                 Directory.CreateDirectory(uploadPath);
 
                 if (gender == 0)
@@ -69,16 +71,18 @@ namespace DesktopApp
                 string workPlace = work[random.Next(0, 3)];
                 string insuranceCompany = insuranceCompanies[random.Next(0, 2)];
 
-                //копировать изображения
                 Client newClient = new Client()
                 {
                     photoPath = fileName,
-                    firstName = names[gender, random.Next(0, 10)],
-                    secondName = sNames[random.Next(0, 10)] + (gender == 0 ? "а" : ""),
-                    lastName = sNames[random.Next(0, 10)] + (gender == 0 ? "на" : "ич"),
+                    fullName = new FullName()
+                    {
+                        firstName = names[gender, random.Next(0, 10)],
+                        secondName = sNames[random.Next(0, 10)] + (gender == 0 ? "а" : ""),
+                        lastName = sNames[random.Next(0, 10)] + (gender == 0 ? "на" : "ич")
+                    },
                     passportNumberAndSeries = $"{random.Next(1, 100).ToString("G2")}{random.Next(1, 100).ToString("G2")}{random.Next(1, 1000000).ToString("G6")}",
                     birthDate = birthDate,
-                    gender = db.genders.Find(random.Next(1, 3)),
+                    gender = db.genders.Find(gender + 1),
                     address = $"г. Большие Кабаны ул. {streets[random.Next(0,3)]} д. {random.Next(1,100).ToString("G2")} кв. {random.Next(1,100).ToString("G2")}",
                     phoneNumder = $"+7{random.Next(0, 1000).ToString("G3")}{random.Next(0, 1000).ToString("G3")}{random.Next(0, 100).ToString("G2")}{random.Next(0, 100).ToString("G2")}",
                     email = $"{random.Next(0, 1000).ToString("G3")}{DateTime.Now.ToString("fffffff")}@mail.ru",
@@ -114,7 +118,7 @@ namespace DesktopApp
                 return;
             }
 
-            dg.ItemsSource = clients.Where(x => x.firstName == searchTextBox.Text || x.secondName == searchTextBox.Text || x.lastName == searchTextBox.Text).ToList();
+            dg.ItemsSource = clients.Where(x => x.fullName.secondName == searchTextBox.Text || x.fullName.secondName == searchTextBox.Text || x.fullName.lastName == searchTextBox.Text).ToList();
         }
     }
 }

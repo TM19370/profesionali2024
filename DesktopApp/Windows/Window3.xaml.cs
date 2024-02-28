@@ -153,8 +153,8 @@ namespace DesktopApp
                     //DisplayAlert("", client.FullName, "Ok");
                 }
 
-                client = GetClientByID(450).Result;
-                MessageBox.Show(client.FullName);
+                //client = GetClientByID(450).Result;
+                //MessageBox.Show(client.FullName);
             }
             catch (Exception ex) 
             {

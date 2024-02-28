@@ -21,7 +21,7 @@
                 </Frame>
                 <Label Style="{StaticResource InfoHeader}" Text="ФИО:"/>
                 <Frame>
-                    <Label Text="{Binding FullName}"/>
+                    <Label Text="{Binding fullName.GetFullName}"/>
                 </Frame>
                 <Label Style="{StaticResource InfoHeader}" Text="Номер и серия паспорта:"/>
                 <Frame>
