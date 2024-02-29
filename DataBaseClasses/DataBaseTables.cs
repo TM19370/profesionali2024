@@ -198,7 +198,7 @@ namespace DataBaseClasses
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int appointment_id { get; set; }
         [Required] public virtual Client client { get; set; }
-        [Required] public virtual Account account { get; set; }
+        //[Required] public virtual Account account { get; set; }
         [Required] public TimeOnly startTime { get; set; }
         [Required] public TimeOnly endTime { get; set; }
         [Required] public DateOnly date { get; set; }

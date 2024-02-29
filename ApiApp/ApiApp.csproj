@@ -42,4 +42,7 @@
     <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
 </Project>
