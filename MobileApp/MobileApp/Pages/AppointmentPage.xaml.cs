@@ -56,7 +56,7 @@ namespace MobileApp
         private async Task<string> SendRecord()
         {
             // адрес сервера
-            var serverAddress = "http://192.168.147.66:5120/Audio";
+            var serverAddress = "http://192.168.147.66:5120/appointment/audio";
             // пусть к файлу
             var filePath = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyMusic)}/record.3gp";
 
@@ -81,7 +81,7 @@ namespace MobileApp
 
         private async void addAppointmentInfoButton_Clicked(object sender, EventArgs e)
         {
-            Client client = await SendRequest<Client>("/Client/" + clientIdEntry.Text, HttpMethod.Get, null);
+            Client client = await SendRequest<Client>("/clients/" + clientIdEntry.Text, HttpMethod.Get, null);
             if (client == default)
                 return;
 
@@ -100,7 +100,7 @@ namespace MobileApp
                 recommendations = recommendationsEditor.Text,
                 audioMessageFileName = audioMessageFileName
             };
-            appointmentInfo = await SendRequest<AppointmentInfo>("/AppointmentInfo", HttpMethod.Post, appointmentInfo);
+            appointmentInfo = await SendRequest<AppointmentInfo>("/appointment/info/create", HttpMethod.Post, appointmentInfo);
             if (appointmentInfo == default)
                 return;
 
@@ -110,14 +110,14 @@ namespace MobileApp
             foreach (Prescription prescription in prescriptions)
             {
                 Medicament medicament = prescription.medicament;
-                medicament = await SendRequest<Medicament>("/Medicament", HttpMethod.Post, medicament);
+                medicament = await SendRequest<Medicament>("/appointment/medicament", HttpMethod.Post, medicament);
                 if (medicament == default)
                     return;
 
                 prescription.medicament = medicament;
                 prescription.appointmentInfo = appointmentInfo;
 
-                Prescription newPrescription = await SendRequest<Prescription>("/Prescription", HttpMethod.Post, prescription);
+                Prescription newPrescription = await SendRequest<Prescription>("/appointment/prescription", HttpMethod.Post, prescription);
                 if (newPrescription == default)
                     return;
             }

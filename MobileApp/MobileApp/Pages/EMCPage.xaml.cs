@@ -36,7 +36,7 @@ namespace MobileApp
             {
                 HttpClient httpClient = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage();
-                request.RequestUri = new Uri(apiServerPath + "/Client/" + clientIdEntry.Text);
+                request.RequestUri = new Uri(apiServerPath + "/clients/" + clientIdEntry.Text);
                 request.Method = HttpMethod.Get;
                 request.Headers.Add("Accept", "application/json");
                 HttpResponseMessage response = await httpClient.SendAsync(request);

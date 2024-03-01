@@ -1,12 +1,3 @@
-using System.Text.RegularExpressions;
-using DataBaseClasses;
-using static DataBaseClasses.DBInteract;
-using Newtonsoft.Json;
-using System.Drawing;
-using MessagingToolkit.QRCode.Codec;
-using MessagingToolkit.QRCode.Codec.Data;
-using Xceed.Words.NET;
-using Xceed.Document.NET;
 using System.Reflection;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";

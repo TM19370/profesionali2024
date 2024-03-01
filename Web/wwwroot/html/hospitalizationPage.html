@@ -140,7 +140,7 @@
 
             console.log(JSON.stringify(hospitalization));
 
-            const response = await fetch("http://192.168.147.66:5120/Hospitalization", {
+            const response = await fetch("http://192.168.147.66:5120/hospitalization/create", {
                 method: "POST",
                 headers: { "Accept": "application/json", "Content-Type": "application/json" },
                 body:

@@ -92,7 +92,7 @@
                 alert("Введите код на госпитализацию");
                 return;
             }
-            await readQRCode();
+            await GetHospitalizationInfo();
         })
 
         document.getElementById("setHospitalizationDateTime").addEventListener("click", async () => {
@@ -119,10 +119,11 @@
             }
 
             const options = {
-                method: "POST"
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify(new { message = hospitalizationCancelInfoInput })
             };
-            const response = await fetch("http://192.168.147.66:5120/CancelHospitalization/" + document.getElementById("hospitalizationCode").value
-                + "/" + hospitalizationCancelInfoInput, options);
+            const response = await fetch("http://192.168.147.66:5120/hospitalizations/" + document.getElementById("hospitalizationCode").value + "/cancel", options);
 
             if (response.ok) {
                 alert("Госпитализация отменена")
@@ -138,7 +139,7 @@
             const options = {
                 method: "POST"
             };
-            const response = await fetch("http://192.168.147.66:5120/Hospitalization/" + document.getElementById("hospitalizationCode").value + "/"
+            const response = await fetch("http://192.168.147.66:5120/hospitalizations/" + document.getElementById("hospitalizationCode").value + "/date/"
                 + document.getElementById("hospitalizationStartDateInput").value, options);
 
             if (response.ok) {
@@ -151,11 +152,11 @@
             }
         }
 
-        async function readQRCode() {
+        async function GetHospitalizationInfo() {
             const options = {
                 method: "GET"
             };
-            const response = await fetch("http://192.168.147.66:5120/Hospitalization/" + document.getElementById("hospitalizationCode").value, options);
+            const response = await fetch("http://192.168.147.66:5120/hospitalizations/" + document.getElementById("hospitalizationCode").value, options);
 
             if (response.ok) {
 

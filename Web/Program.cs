@@ -1,12 +1,3 @@
-using System.Drawing;
-using MessagingToolkit.QRCode.Codec;
-using MessagingToolkit.QRCode.Codec.Data;
-using Xceed.Words.NET;
-using Xceed.Document.NET;
-using System.Text.RegularExpressions;
-using DataBaseClasses;
-using static DataBaseClasses.DBInteract;
-
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);

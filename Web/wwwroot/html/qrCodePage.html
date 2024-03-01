@@ -101,7 +101,7 @@
         }
 
         async function getMedicalCareContract() {
-            const responce = await fetch("http://192.168.147.66:5120/MedicalCareContract/" + document.getElementById("client_id").value, {
+            const responce = await fetch("http://192.168.147.66:5120/document/medicalcarecontract/" + document.getElementById("client_id").value, {
                 method: "GET"
             });
 
@@ -113,7 +113,7 @@
         }
 
         async function getPersonalDataDoc() {
-            const responce = await fetch("http://192.168.147.66:5120/PersonalData/" + document.getElementById("client_id").value, {
+            const responce = await fetch("http://192.168.147.66:5120/document/personaldata/" + document.getElementById("client_id").value, {
                 method: "GET"
             });
 
@@ -125,7 +125,7 @@
         }
 
         async function createQRCode() {
-            const response = await fetch("http://192.168.147.66:5120/QRCode/" + document.getElementById("client_id").value, {
+            const response = await fetch("http://192.168.147.66:5120/qrcode/" + document.getElementById("client_id").value + "/create", {
                 method: "GET"
             });
 
@@ -146,7 +146,7 @@
                 method: "POST",
                 body: formData
             };
-            const responce = await fetch("http://192.168.147.66:5120/DecodeQRCode", options);
+            const responce = await fetch("http://192.168.147.66:5120/qrcode/decode", options);
 
             if (responce.ok) {
                 const clientInfo = await responce.json();

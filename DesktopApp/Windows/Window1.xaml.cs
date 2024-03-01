@@ -31,15 +31,15 @@ namespace DesktopApp
 
             requestTimer.Tick += request;
             requestTimer.Interval = TimeSpan.FromSeconds(3);
-            //requestTimer.Start();                                                             нет сервера API
+            requestTimer.Start();
         }
 
         async void request(object sender, EventArgs e)
         {
             HttpClient httpClient = new HttpClient();
-            HttpResponseMessage response = await httpClient.GetAsync("http://10.30.76.66:8082/PersonLocations");
+            HttpResponseMessage response = await httpClient.GetAsync("http://192.168.147.53:4914/PersonLocations");
             string responseBody = await response.Content.ReadAsStringAsync();
-            List<PersonLocation> personsLocation = JsonConvert.DeserializeObject<List<PersonLocation>>(responseBody);
+            List<PersonLocation> personsLocation = JsonConvert.DeserializeObject<JsonRoot>(responseBody).response;
             humansGrid.Children.Clear();
             foreach (var personLocation in personsLocation)
             {
@@ -52,7 +52,7 @@ namespace DesktopApp
             Canvas currentRoom;
             if (personLocation.LastSecurityPointDirection == "in")
                 currentRoom = (Canvas)humansGrid.FindName("skud" + personLocation.lastSecurityPointNumber);
-            else if (personLocation.lastSecurityPointNumber != "0" || personLocation.lastSecurityPointNumber != "1")
+            else if (personLocation.lastSecurityPointNumber != 0 || personLocation.lastSecurityPointNumber != 1)
                 currentRoom = skud0;
             else
                 return;
@@ -106,12 +106,16 @@ namespace DesktopApp
         }
     }
 
-    class PersonLocation
+    public class PersonLocation
     {
         public int personCode { get; set; }
         public string personRole { get; set; }
-        public string lastSecurityPointNumber { get; set; }
+        public int lastSecurityPointNumber { get; set; }
         public string LastSecurityPointDirection { get; set; }
         public string lastSecurityPointTime { get; set; }
+    }
+    public class JsonRoot
+    {
+        public List<PersonLocation> response { get; set; }
     }
 }

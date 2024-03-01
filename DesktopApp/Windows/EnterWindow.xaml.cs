@@ -25,7 +25,7 @@ namespace DesktopApp
         public EnterWindow()
         {
             InitializeComponent();
-            Window3 window4 = new Window3();
+            Window1 window4 = new Window1();
             window4.Show();
             //MessageBox.Show(Directory.GetFiles(Directory.GetCurrentDirectory())[2]);                      так можно брать фото для генерации клиентов
             //Close();

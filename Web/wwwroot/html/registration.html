@@ -136,7 +136,7 @@
                 method: "POST",
                 body: formData
             };
-            await fetch("http://192.168.147.66:5120/Image", options);
+            await fetch("http://192.168.147.66:5120/clients/image", options);
             
             const client = {
                 firstName: document.getElementById("firstName").value,
@@ -161,7 +161,7 @@
                 insuranceCompany: document.getElementById("insuranceCompany").value
             }
             
-            const response = await fetch("http://192.168.147.66:5120/Clients", {
+            const response = await fetch("http://192.168.147.66:5120/clients/create", {
                 method: "POST",
                 headers: { "Accept": "application/json", "Content-Type": "application/json" },
                 body:
