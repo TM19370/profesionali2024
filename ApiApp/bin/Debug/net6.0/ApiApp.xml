@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ApiApp</name>
+    </assembly>
+    <members>
+        <member name="M:ApiApp.Controllers.AppointmentController.CreateAppointmentInfo(DataBaseClasses.AppointmentInfo)">
+            <summary>
+            Обработчик создания информации о приеме
+            </summary>
+            <param name="appointmentInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiApp.Controllers.AppointmentController.FindOrCreateMedicament(DataBaseClasses.Medicament)">
+            <summary>
+            Обработчик нахождения или создания медикамента
+            </summary>
+            <param name="medicament"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiApp.Controllers.AppointmentController.CreatePrescription(DataBaseClasses.Prescription)">
+            <summary>
+            Обработчик создания направления
+            </summary>
+            <param name="prescription"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiApp.Controllers.AppointmentController.SaveAudioMessage(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Обработчик сохранения аудио сообщения
+            </summary>
+            <param name="file"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiApp.Controllers.ClientController.Create(DataBaseClasses.Client)">
+            <summary>
+            Обработчик создания клиента
+            </summary>
+            <param name="client"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiApp.Controllers.ClientController.Image(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Обработчик создания фотографии
+            </summary>
+            <param name="file"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiApp.Controllers.ClientController.GetClient(System.Int32)">
+            <summary>
+            Обработчик получения клиента
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiApp.Controllers.DocumentsController.GetPersonalData(System.Int32)">
+            <summary>
+            Обработчик получения согласия на обработку персональных данных
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiApp.Controllers.DocumentsController.GetMedicalCareContract(System.Int32)">
+            <summary>
+            Обработчик получения договора предоставления платных медицинских услуг
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiApp.Controllers.HospitalizationController.CreateHospitalization(DataBaseClasses.Hospitalization)">
+            <summary>
+            Обработчик создания госпитализации
+            </summary>
+            <param name="hospitalization"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiApp.Controllers.HospitalizationController.GetHospitalization(System.Int32)">
+            <summary>
+            Обработчик получения клиента
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiApp.Controllers.HospitalizationController.CancelHospitalization(System.Int32,ApiApp.Controllers.Json.MessageJson)">
+            <summary>
+            Обработчик отмены госпитализации
+            </summary>
+            <param name="id"></param>
+            <param name="cancelInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiApp.Controllers.HospitalizationController.SetHospitalizationDate(System.Int32,System.DateTime)">
+            <summary>
+            Обработчик установки даты и времени
+            </summary>
+            <param name="id"></param>
+            <param name="date"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiApp.Controllers.QRCodeController.CreateQRCode(System.String)">
+            <summary>
+            Обработчик создания QR кода
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiApp.Controllers.QRCodeController.DecodeQRCode(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Обработчик декодирования QR кода
+            </summary>
+            <param name="file"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
