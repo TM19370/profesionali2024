@@ -35,5 +35,6 @@ namespace DataBaseClasses
         public DbSet<DayOfWeek> dayOfWeeks { get; set; }
         public DbSet<WorkTime> workTimes { get; set; }
         public DbSet<Appointment> appointments { get; set; }
+        public DbSet<Event> events { get; set; }
     }
 }

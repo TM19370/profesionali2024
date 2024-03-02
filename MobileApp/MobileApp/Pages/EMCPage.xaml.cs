@@ -1,26 +1,12 @@
-﻿using Android.Media;
-using Android.Util;
-using Java.IO;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
-//using DataBaseClasses;
-using System.Diagnostics;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Android.Security;
-using Android.Content.Res;
 
 namespace MobileApp
 {
-    
+
     public partial class EMCPage : ContentPage
     {
         private string apiServerPath = "http://192.168.147.66:5120";

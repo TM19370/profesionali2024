@@ -205,4 +205,11 @@ namespace DataBaseClasses
 
         public string GetTimeAsString { get { return $"{startTime} - {endTime}"; } }
     }
+
+    public class Event
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int event_id { get; set; }
+        [Required] public string name { get; set; }
+        [Required] public string color { get; set; }
+    }
 }

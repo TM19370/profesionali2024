@@ -28,6 +28,8 @@ namespace DesktopApp
         {
             InitializeComponent();
 
+            //asd.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#FFF"); цвета для отмечания событий
+
             List<WeekSchedule> weekSchedules = new List<WeekSchedule>();
 
             List<Account> doctors = new List<Account>();

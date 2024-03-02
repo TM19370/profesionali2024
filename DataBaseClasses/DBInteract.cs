@@ -13,12 +13,6 @@ namespace DataBaseClasses
 {
     public class DBInteract
     {
-        public static string apiServerUrl = "http://192.168.147.66:5120";
         public static DataBaseContext db = new DataBaseContext();
-
-        public class ErrorResponce
-        {
-            public string error { get; set; }
-        }
     }
 }
