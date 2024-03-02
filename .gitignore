@@ -359,3 +359,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/MobileApp/MobileApp/bin/Debug/netstandard2.0/Mono.Android.xml
